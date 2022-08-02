@@ -24,6 +24,8 @@ public class Contact {
 
     private String postZipCode;
 
+    private String landMark;
+
     private String state_province;
 
     private String country;
