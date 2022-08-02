@@ -15,6 +15,10 @@ public class NewContact {
 
     private String city;
 
+    private String postZipCode;
+
+    private String landMark;
+
     private String state_province;
 
     private String country;
