@@ -1,4 +1,4 @@
-package com.teacher.address;
+package com.teacher.address.entity;
 
 import com.teacher.address.dao.ContactRepository;
 import com.teacher.address.entity.Contact;
