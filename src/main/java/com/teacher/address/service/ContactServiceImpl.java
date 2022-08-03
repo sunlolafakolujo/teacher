@@ -2,6 +2,7 @@ package com.teacher.address.service;
 
 import com.teacher.address.dao.ContactRepository;
 import com.teacher.address.entity.Contact;
+import com.teacher.address.exception.ContactException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public class ContactServiceImpl implements ContactService{
 
     @Override
     public Contact findContactById(Long id) {
-        Contact contact=contactRepository.findById(id).orElseThrow(()-> new RuntimeException("Contact "+id+" does not exist"));
+        Contact contact=contactRepository.findById(id).orElseThrow(()-> new ContactException("Contact "+id+" Not Found"));
 
         return contact;
     }
@@ -40,7 +41,7 @@ public class ContactServiceImpl implements ContactService{
 
     @Override
     public Contact updateContact(Contact contact, Long id) {
-        Contact savedContact=contactRepository.findById(id).orElseThrow(()-> new RuntimeException("Contact "+id+" does not exist"));
+        Contact savedContact=contactRepository.findById(id).orElseThrow(()-> new ContactException("Contact "+id+" Not Found"));
 
         if (Objects.nonNull(contact.getStreetNumber()) || "".equalsIgnoreCase(contact.getStreetNumber())){
             savedContact.setStreetNumber(contact.getStreetNumber());
@@ -69,7 +70,7 @@ public class ContactServiceImpl implements ContactService{
 
         if (optionalContact.isEmpty()){
             log.info("Contact is deleted");
-        }else throw new RuntimeException("Contact is not deleted");
+        }else throw new ContactException("Contact ID "+id+" Not Deleted");
 
     }
 
