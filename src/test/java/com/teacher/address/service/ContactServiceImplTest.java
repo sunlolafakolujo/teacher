@@ -2,6 +2,7 @@ package com.teacher.address.service;
 
 import com.teacher.address.dao.ContactRepository;
 import com.teacher.address.entity.Contact;
+import com.teacher.address.exception.ContactException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,7 +56,7 @@ class ContactServiceImplTest {
     }
 
     @Test
-    void testThatYouCanMockFindContactByIdMethod() {
+    void testThatYouCanMockFindContactByIdMethod() throws ContactException {
         Long id=2L;
         Mockito.when(contactRepository.findById(id)).thenReturn(Optional.of(contact));
 
@@ -72,7 +73,7 @@ class ContactServiceImplTest {
     }
 
     @Test
-    void updateContact() {
+    void updateContact() throws ContactException {
         Long id=1L;
 
         Mockito.when(contactRepository.findById(id)).thenReturn(Optional.of(contact));
@@ -83,7 +84,7 @@ class ContactServiceImplTest {
     }
 
     @Test
-    void deleteContactById() {
+    void deleteContactById() throws ContactException {
         Long id=2L;
         doNothing().when(contactRepository).deleteById(id);
 
