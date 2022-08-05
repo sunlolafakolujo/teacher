@@ -26,7 +26,7 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @Override
-    public Contact findContactById(Long id) {
+    public Contact findContactById(Long id) throws ContactException {
         Contact contact=contactRepository.findById(id).orElseThrow(()-> new ContactException("Contact "+id+" Not Found"));
 
         return contact;
@@ -40,7 +40,7 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @Override
-    public Contact updateContact(Contact contact, Long id) {
+    public Contact updateContact(Contact contact, Long id) throws ContactException {
         Contact savedContact=contactRepository.findById(id).orElseThrow(()-> new ContactException("Contact "+id+" Not Found"));
 
         if (Objects.nonNull(contact.getStreetNumber()) || "".equalsIgnoreCase(contact.getStreetNumber())){
@@ -53,17 +53,17 @@ public class ContactServiceImpl implements ContactService{
             savedContact.setPostZipCode(contact.getPostZipCode());
         }if (Objects.nonNull(contact.getLandMark())||"".equalsIgnoreCase(contact.getLandMark())){
             savedContact.setLandMark(contact.getLandMark());
-        }if (Objects.nonNull(contact.getState_province()) || "".equalsIgnoreCase(contact.getState_province())){
-            savedContact.setState_province(contact.getState_province());
+        }if (Objects.nonNull(contact.getStateProvince()) || "".equalsIgnoreCase(contact.getStateProvince())){
+            savedContact.setStateProvince(contact.getStateProvince());
         }if (Objects.nonNull(contact.getCountry())||"".equalsIgnoreCase(contact.getCountry())){
             savedContact.setCountry(contact.getCountry());
         }
 
-        return contactRepository.save(contact);
+        return contactRepository.save(savedContact);
     }
 
     @Override
-    public void deleteContactById(Long id) {
+    public void deleteContactById(Long id) throws ContactException {
         contactRepository.deleteById(id);
 
         Optional<Contact> optionalContact=contactRepository.findById(id);
