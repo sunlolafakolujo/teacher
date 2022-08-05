@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 
 @Data
 @Entity
@@ -18,17 +20,22 @@ public class Contact extends BaseAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Street Number can't be blank")
     private String streetNumber;
 
+    @NotEmpty(message = "Street Name can't be blank")
     private String StreetName;
 
+    @NotEmpty(message = "City can't be blank")
     private String city;
 
     private String postZipCode;
 
     private String landMark;
 
-    private String state_province;
+    @NotEmpty(message = "State can't be blank")
+    private String stateProvince;
 
+    @NotEmpty(message = "Country can't be blank")
     private String country;
 }
