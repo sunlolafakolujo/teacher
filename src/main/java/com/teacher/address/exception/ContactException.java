@@ -1,6 +1,9 @@
 package com.teacher.address.exception;
 
-public class ContactException extends RuntimeException{
+
+
+public class ContactException extends Exception{
+
     public ContactException() {
         super();
     }
