@@ -15,7 +15,7 @@ public class ContactDto {
 
     private String streetNumber;
 
-    private String StreetName;
+    private String streetName;
 
     private String city;
 
@@ -23,7 +23,7 @@ public class ContactDto {
 
     private String landMark;
 
-    private String state_province;
+    private String stateProvince;
 
     private String country;
 }
