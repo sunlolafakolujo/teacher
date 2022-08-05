@@ -35,7 +35,7 @@ class ContactRepositoryTest {
         contact.setStreetNumber("2A");
         contact.setStreetName("Animashaun Street Ijesha Tedo Surulere");
         contact.setCity("Surulere");
-        contact.setState_province("Lagos");
+        contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
 
         log.info("Contact repo before saving {}", contact);
@@ -73,11 +73,11 @@ class ContactRepositoryTest {
 
         String state_province="Ogun";
 
-        contact.setState_province(state_province);
+        contact.setStateProvince(state_province);
 
         assertDoesNotThrow(()->contactRepository.save(contact));
 
-        assertThat(contact.getState_province()).isEqualTo(state_province);
+        assertThat(contact.getStateProvince()).isEqualTo(state_province);
 
         log.info("Updated state {}", contact);
     }
