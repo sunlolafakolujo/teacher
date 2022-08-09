@@ -1,7 +1,7 @@
 package com.teacher.contact.service;
 
 import com.teacher.contact.dao.ContactRepository;
-import com.teacher.contact.entity.Contact;
+import com.teacher.contact.model.Contact;
 import com.teacher.contact.exception.ContactException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -33,10 +34,13 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @Override
-    public Page<Contact> findAllContact(Pageable pageable) {
-        pageable= PageRequest.of(0, 10);
+    public List<Contact> findAllContact(Integer PageNumber, Integer pageSize) {
 
-        return contactRepository.findAll(pageable);
+        Pageable pageable= PageRequest.of(PageNumber, pageSize);
+
+        Page<Contact> pageResult= contactRepository.findAll(pageable);
+
+        return pageResult.toList();
     }
 
     @Override

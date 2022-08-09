@@ -1,9 +1,9 @@
 package com.teacher.contact.controller;
 
-import com.teacher.contact.entity.Contact;
-import com.teacher.contact.entity.ContactDto;
-import com.teacher.contact.entity.ModifyContact;
-import com.teacher.contact.entity.NewContact;
+import com.teacher.contact.model.Contact;
+import com.teacher.contact.model.ContactDto;
+import com.teacher.contact.model.ModifyContact;
+import com.teacher.contact.model.NewContact;
 import com.teacher.contact.exception.ContactException;
 import com.teacher.contact.service.ContactService;
 import lombok.RequiredArgsConstructor;
@@ -50,9 +50,8 @@ public class ContactRestController {
 
     @GetMapping("/findAllContact")
     public ResponseEntity<List<ContactDto>> getAllContact(){
-        Pageable pageable= PageRequest.of(0, 10);
 
-        return new ResponseEntity<>(contactService.findAllContact(pageable)
+        return new ResponseEntity<>(contactService.findAllContact(0,10)
                 .stream()
                 .map(this::convertContactToDto)
                 .collect(Collectors.toList()), HttpStatus.OK);

@@ -1,4 +1,4 @@
-package com.teacher.contact.entity;
+package com.teacher.contact.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

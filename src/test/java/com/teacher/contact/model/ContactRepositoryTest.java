@@ -1,4 +1,4 @@
-package com.teacher.contact.entity;
+package com.teacher.contact.model;
 
 import com.teacher.contact.dao.ContactRepository;
 import lombok.extern.slf4j.Slf4j;

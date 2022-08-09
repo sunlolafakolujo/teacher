@@ -1,4 +1,4 @@
-package com.teacher.contact.entity;
+package com.teacher.contact.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
