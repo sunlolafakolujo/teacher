@@ -1,6 +1,8 @@
-package com.teacher.contact.model;
+package com.teacher.contact.doa;
 
 import com.teacher.contact.dao.ContactRepository;
+import com.teacher.contact.exception.ContactException;
+import com.teacher.contact.model.Contact;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,9 +49,9 @@ class ContactRepositoryTest {
     }
 
     @Test
-    void testThatYouCanFindContactById(){
+    void testThatYouCanFindContactById() throws ContactException {
         Long id=1L;
-        contact=contactRepository.findById(id).orElseThrow(()-> new RuntimeException("Contact does not exist"));
+        contact=contactRepository.findById(id).orElseThrow(()-> new ContactException("Contact does not exist"));
 
         assertEquals(id, contact.getId());
 
@@ -66,9 +68,9 @@ class ContactRepositoryTest {
     }
 
     @Test
-    void testThatYouCanUpdateContact(){
+    void testThatYouCanUpdateContact() throws ContactException {
         Long id=1L;
-        contact=contactRepository.findById(id).orElseThrow(()-> new RuntimeException("Contact "+id+" does not exist"));
+        contact=contactRepository.findById(id).orElseThrow(()-> new ContactException("Contact "+id+" does not exist"));
 
         String state_province="Ogun";
 
@@ -83,7 +85,7 @@ class ContactRepositoryTest {
 
     @Test
     @Rollback(value = false)
-    void testThatYouCanDeleteContactById(){
+    void testThatYouCanDeleteContactById() throws ContactException {
         Long id=2L;
 
         contactRepository.deleteById(id);
@@ -91,7 +93,7 @@ class ContactRepositoryTest {
         Optional<Contact> optionalContact=contactRepository.findById(id);
 
         if (optionalContact.isPresent()){
-            throw new RuntimeException("Contact "+id+" is not deleted");
+            throw new ContactException("Contact "+id+" is not deleted");
         }
     }
 
