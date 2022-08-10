@@ -13,6 +13,8 @@ public class UpdateQualification {
 
     private String subject;
 
+    private String degreeTitle;
+
     private String classOfDegree;
 
     private String school;
