@@ -1,17 +1,19 @@
 package com.teacher.qualification.model;
 
+import com.teacher.baseaudit.BaseAudit;
 import com.teacher.contact.model.Contact;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Qualification {
+public class Qualification extends BaseAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,6 +34,6 @@ public class Qualification {
     @NotBlank(message = "School is required")
     private String school;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Contact contact;
 }
