@@ -15,7 +15,19 @@ public class QualificationDto {
 
     private String subject;
 
+    private String degreeTitle;
+
     private String classOfDegree;
 
     private String school;
+
+    private String streetNumber;
+
+    private String streetName;
+
+    private String city;
+
+    private String stateProvince;
+
+    private String country;
 }
