@@ -59,15 +59,15 @@ public class QualificationRestController {
                 .collect(Collectors.toList()),HttpStatus.OK);
     }
 
-    @DeleteMapping("/DeleteQualificationById/{id}")
-    public ResponseEntity<?> deleteQualificationById(@PathVariable(value = "Id") Long id) throws QualificationException {
+    @DeleteMapping("/deleteQualificationById/{id}")
+    public ResponseEntity<?> deleteQualificationById(@PathVariable(value = "id") Long id) throws QualificationException {
 
         qualificationService.deleteQualificationById(id);
 
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/deleteAllQualification")
+    @DeleteMapping("/deleteAllQualifications")
     public ResponseEntity<?> deleteAllQualifications(){
 
         qualificationService.deleteAllQualification();
@@ -106,8 +106,14 @@ public class QualificationRestController {
         QualificationDto qualificationDto=new QualificationDto();
 
         qualificationDto.setSubject(qualification.getSubject());
+        qualificationDto.setDegreeTitle(qualification.getDegreeTitle());
         qualificationDto.setClassOfDegree(qualification.getClassOfDegree());
         qualificationDto.setSchool(qualification.getSchool());
+        qualificationDto.setStreetNumber(qualification.getContact().getStreetNumber());
+        qualificationDto.setStreetName(qualification.getContact().getStreetName());
+        qualificationDto.setCity(qualification.getContact().getCity());
+        qualificationDto.setStateProvince(qualification.getContact().getStateProvince());
+        qualificationDto.setCountry(qualification.getContact().getCountry());
 
         return qualificationDto;
     }
