@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
-
 import java.util.List;
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
+
 @SpringBootTest
 @Slf4j
 @Sql(scripts = {"classpath:db/insert.sql"})
@@ -86,7 +86,7 @@ class ContactRepositoryTest {
     @Test
     @Rollback(value = false)
     void testThatYouCanDeleteContactById() throws ContactException {
-        Long id=2L;
+        Long id=1L;
 
         contactRepository.deleteById(id);
 

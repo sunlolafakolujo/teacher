@@ -6,6 +6,7 @@ import com.teacher.qualification.model.Qualification;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -41,7 +42,8 @@ public class Contact extends BaseAudit {
     @NotEmpty(message = "Country can't be blank")
     private String country;
 
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Qualification qualification;
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(mappedBy = "contact")
+    private Qualification qualification;
 }
