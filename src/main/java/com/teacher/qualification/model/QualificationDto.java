@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +22,10 @@ public class QualificationDto {
     private String classOfDegree;
 
     private String school;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
 
     private String streetNumber;
 
