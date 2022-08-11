@@ -1,6 +1,6 @@
 package com.teacher.qualification.service;
 
-import com.teacher.qualification.doa.QualificationRepository;
+import com.teacher.qualification.dao.QualificationRepository;
 import com.teacher.qualification.exception.QualificationException;
 import com.teacher.qualification.model.Qualification;
 import lombok.extern.slf4j.Slf4j;
