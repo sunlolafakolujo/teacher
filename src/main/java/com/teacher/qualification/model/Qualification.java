@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -31,8 +33,13 @@ public class Qualification extends BaseAudit {
     private String classOfDegree;
 
     @Column(updatable = false)
-    @NotBlank(message = "School is required")
     private String school;
+
+    @Column(updatable = false,nullable = false)
+    private LocalDate startDate;
+
+    @Column(updatable = false,nullable = false)
+    private LocalDate endDate;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Contact contact;
