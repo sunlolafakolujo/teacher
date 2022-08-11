@@ -12,8 +12,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ResponseStatus
 public class ContactExceptionRestControllerHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(ContactException.class)
-    public ResponseEntity<ValidateErrorMessage> contactExceptionRestController(ContactException contactException){
+    @ExceptionHandler(ContactNotFoundException.class)
+    public ResponseEntity<ValidateErrorMessage> contactExceptionRestController(ContactNotFoundException contactException){
 
         ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND, contactException.getMessage());
 

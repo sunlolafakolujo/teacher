@@ -1,4 +1,4 @@
-package com.teacher.qualification.exception;
+package com.teacher.workexperience.exception;
 
 import com.teacher.message.ValidateErrorMessage;
 import org.springframework.http.HttpStatus;
@@ -7,14 +7,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-@ResponseStatus
+
 @ControllerAdvice
-public class QualificationRestExceptionHandler extends ResponseEntityExceptionHandler {
+@ResponseStatus
+public class WorkExperienceRestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(QualificationNotFoundException.class)
-    public ResponseEntity<ValidateErrorMessage> qualificationExceptionHandler(QualificationNotFoundException qualificationException){
+    @ExceptionHandler(WorkExperienceNotFoundException.class)
+    public ResponseEntity<ValidateErrorMessage> workExperienceNotFoundException(WorkExperienceNotFoundException workExperienceNotFoundException){
 
-        ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND, qualificationException.getMessage());
+        ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND, workExperienceNotFoundException.getMessage());
 
         return new ResponseEntity<>(vem, HttpStatus.NOT_FOUND);
     }

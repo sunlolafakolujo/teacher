@@ -4,7 +4,7 @@ import com.teacher.contact.model.Contact;
 import com.teacher.contact.model.ContactDto;
 import com.teacher.contact.model.ModifyContact;
 import com.teacher.contact.model.NewContact;
-import com.teacher.contact.exception.ContactException;
+import com.teacher.contact.exception.ContactNotFoundException;
 import com.teacher.contact.service.ContactService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -37,7 +37,7 @@ public class ContactRestController {
     }
 
     @GetMapping("/findContactById/{id}")
-    public ResponseEntity<ContactDto> getContactById(@PathVariable(value = "id") Long id) throws ContactException {
+    public ResponseEntity<ContactDto> getContactById(@PathVariable(value = "id") Long id) throws ContactNotFoundException {
 
         Contact contact=contactService.findContactById(id);
 
@@ -57,7 +57,7 @@ public class ContactRestController {
 
     @PutMapping("/updateContact/{id}")
     public ResponseEntity<ModifyContact> updateContact(@RequestBody @Valid ModifyContact modifyContact,
-                                                       @PathVariable(value = "id") Long id) throws ContactException {
+                                                       @PathVariable(value = "id") Long id) throws ContactNotFoundException {
         Contact contact=modelMapper.map(modifyContact, Contact.class);
 
         Contact updateContact=contactService.updateContact(contact, id);
@@ -68,7 +68,7 @@ public class ContactRestController {
     }
 
     @DeleteMapping("/deleteContactById/{id}")
-    public ResponseEntity<?> deleteContactById(@PathVariable(value = "id") Long id) throws ContactException {
+    public ResponseEntity<?> deleteContactById(@PathVariable(value = "id") Long id) throws ContactNotFoundException {
         contactService.deleteContactById(id);
 
         return ResponseEntity.noContent().build();

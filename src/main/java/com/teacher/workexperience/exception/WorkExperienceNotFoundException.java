@@ -1,26 +1,26 @@
-package com.teacher.qualification.exception;
+package com.teacher.workexperience.exception;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-public class QualificationException extends Throwable{
-    public QualificationException() {
+public class WorkExperienceNotFoundException extends Throwable{
+    public WorkExperienceNotFoundException() {
         super();
     }
 
-    public QualificationException(String message) {
+    public WorkExperienceNotFoundException(String message) {
         super(message);
     }
 
-    public QualificationException(String message, Throwable cause) {
+    public WorkExperienceNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public QualificationException(Throwable cause) {
+    public WorkExperienceNotFoundException(Throwable cause) {
         super(cause);
     }
 
-    protected QualificationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected WorkExperienceNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

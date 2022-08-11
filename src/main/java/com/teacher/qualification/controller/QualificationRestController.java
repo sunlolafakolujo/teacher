@@ -1,6 +1,6 @@
 package com.teacher.qualification.controller;
 
-import com.teacher.qualification.exception.QualificationException;
+import com.teacher.qualification.exception.QualificationNotFoundException;
 import com.teacher.qualification.model.NewQualification;
 import com.teacher.qualification.model.Qualification;
 import com.teacher.qualification.model.QualificationDto;
@@ -39,7 +39,7 @@ public class QualificationRestController {
     }
 
     @GetMapping("/findQualificationById/{id}")
-    public ResponseEntity<QualificationDto> getQualificationById(@PathVariable(value = "id") Long id) throws QualificationException {
+    public ResponseEntity<QualificationDto> getQualificationById(@PathVariable(value = "id") Long id) throws QualificationNotFoundException {
 
         Qualification qualification=qualificationService.findQualificationById(id);
 
@@ -60,7 +60,7 @@ public class QualificationRestController {
     }
 
     @DeleteMapping("/deleteQualificationById/{id}")
-    public ResponseEntity<?> deleteQualificationById(@PathVariable(value = "id") Long id) throws QualificationException {
+    public ResponseEntity<?> deleteQualificationById(@PathVariable(value = "id") Long id) throws QualificationNotFoundException {
 
         qualificationService.deleteQualificationById(id);
 

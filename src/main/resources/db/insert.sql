@@ -7,4 +7,8 @@ INSERT INTO qualification(subject,degree_title ,class_of_degree, school, start_d
 VALUES ('Yoruba','Bachelor of Art' ,'Pass', 'Lagos State University, Ojo','2015-09-01','2020-07-31', 1),
        ('Economics', 'Bechelor of Science','2nd Class Upper','University of Lagos','2015-09-01','2020-07-31',2);
 
+INSERT INTO work_experience(company,position,status,start_date,end_date)
+VALUES ('Babington Macaulay Junior Seminary','Teacher','YES','2015-09-01',null),
+       ('Dansol High School', 'Head Teacher','YES','2015-09-01',null);
+
 

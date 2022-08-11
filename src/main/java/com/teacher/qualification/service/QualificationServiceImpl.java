@@ -1,7 +1,7 @@
 package com.teacher.qualification.service;
 
 import com.teacher.qualification.dao.QualificationRepository;
-import com.teacher.qualification.exception.QualificationException;
+import com.teacher.qualification.exception.QualificationNotFoundException;
 import com.teacher.qualification.model.Qualification;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +31,11 @@ public class QualificationServiceImpl implements QualificationService{
     }
 
     @Override
-    public Qualification findQualificationById(Long id) throws QualificationException {
+    public Qualification findQualificationById(Long id) throws QualificationNotFoundException {
         log.info("fetching Qualification by id {}", id);
 
         Qualification qualification=qualificationRepository.findById(id)
-                .orElseThrow(()->new QualificationException("Qualification ID "+id+" Not found"));
+                .orElseThrow(()->new QualificationNotFoundException("Qualification ID "+id+" Not found"));
 
         return qualification;
     }
@@ -53,7 +53,7 @@ public class QualificationServiceImpl implements QualificationService{
     }
 
     @Override
-    public void deleteQualificationById(Long id) throws QualificationException {
+    public void deleteQualificationById(Long id) throws QualificationNotFoundException {
 
         log.info("deleting Qualification by id {}", id);
 
@@ -63,7 +63,7 @@ public class QualificationServiceImpl implements QualificationService{
 
         if (optionalQualification.isEmpty()){
             log.info("Qualification ID "+id+" is deleted");
-        }else throw new QualificationException("Qualification ID "+id+" is not deleted");
+        }else throw new QualificationNotFoundException("Qualification ID "+id+" is not deleted");
     }
 
     @Override

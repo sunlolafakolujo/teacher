@@ -1,7 +1,7 @@
 package com.teacher.qualification.service;
 
 import com.teacher.qualification.dao.QualificationRepository;
-import com.teacher.qualification.exception.QualificationException;
+import com.teacher.qualification.exception.QualificationNotFoundException;
 import com.teacher.qualification.model.Qualification;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,7 +60,7 @@ class QualificationServiceImplTest {
     }
 
     @Test
-    void testThatYouCanMockFindQualificationByIdMethod() throws QualificationException {
+    void testThatYouCanMockFindQualificationByIdMethod() throws QualificationNotFoundException {
         Long id=1L;
         Mockito.when(qualificationRepository.findById(id)).thenReturn(Optional.of(qualification));
 
@@ -86,7 +86,7 @@ class QualificationServiceImplTest {
     }
 
     @Test
-    void testThatYouCanMockDeleteQualificationByIdMethod() throws QualificationException {
+    void testThatYouCanMockDeleteQualificationByIdMethod() throws QualificationNotFoundException {
 
         Long id =1L;
 

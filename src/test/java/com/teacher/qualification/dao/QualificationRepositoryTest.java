@@ -1,9 +1,9 @@
 package com.teacher.qualification.dao;
 
 import com.teacher.contact.dao.ContactRepository;
-import com.teacher.contact.exception.ContactException;
+import com.teacher.contact.exception.ContactNotFoundException;
 import com.teacher.contact.model.Contact;
-import com.teacher.qualification.exception.QualificationException;
+import com.teacher.qualification.exception.QualificationNotFoundException;
 import com.teacher.qualification.model.Qualification;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,9 +42,9 @@ class QualificationRepositoryTest {
     }
 
     @Test
-    void testThatYouCanSaveQualification() throws ContactException {
+    void testThatYouCanSaveQualification() throws ContactNotFoundException {
         Long id=1L;
-        contact=contactRepository.findById(id).orElseThrow(()->new ContactException("Contact "+id+" Not Found"));
+        contact=contactRepository.findById(id).orElseThrow(()->new ContactNotFoundException("Contact "+id+" Not Found"));
 
         qualification.setContact(contact);
         qualification.setSubject("Mechanical Engineering");
@@ -62,11 +62,11 @@ class QualificationRepositoryTest {
     }
 
     @Test
-    void testThatYouCanFindQualificationById() throws QualificationException {
+    void testThatYouCanFindQualificationById() throws QualificationNotFoundException {
         Long id=2L;
 
         qualification=qualificationRepository.findById(id)
-                .orElseThrow(()->new QualificationException("Qualification "+id+" Not found"));
+                .orElseThrow(()->new QualificationNotFoundException("Qualification "+id+" Not found"));
 
         assertEquals(2, qualification.getId());
 
@@ -87,7 +87,7 @@ class QualificationRepositoryTest {
 
     @Test
     @Rollback(false)
-    void testThatYouCanDeleteQualification() throws QualificationException {
+    void testThatYouCanDeleteQualification() throws QualificationNotFoundException {
         Long id=2L;
 
         qualificationRepository.deleteById(id);
@@ -96,7 +96,7 @@ class QualificationRepositoryTest {
 
         if (optionalQualification.isEmpty()){
             log.info("Qualification ID "+id+" is deleted");
-        }else throw new QualificationException("Qualification ID"+id+" is not deleted");
+        }else throw new QualificationNotFoundException("Qualification ID"+id+" is not deleted");
     }
 
     @Test

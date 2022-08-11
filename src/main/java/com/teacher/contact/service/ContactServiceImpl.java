@@ -2,7 +2,7 @@ package com.teacher.contact.service;
 
 import com.teacher.contact.dao.ContactRepository;
 import com.teacher.contact.model.Contact;
-import com.teacher.contact.exception.ContactException;
+import com.teacher.contact.exception.ContactNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,8 +27,8 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @Override
-    public Contact findContactById(Long id) throws ContactException {
-        Contact contact=contactRepository.findById(id).orElseThrow(()-> new ContactException("Contact "+id+" Not Found"));
+    public Contact findContactById(Long id) throws ContactNotFoundException {
+        Contact contact=contactRepository.findById(id).orElseThrow(()-> new ContactNotFoundException("Contact "+id+" Not Found"));
 
         return contact;
     }
@@ -44,8 +44,8 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @Override
-    public Contact updateContact(Contact contact, Long id) throws ContactException {
-        Contact savedContact=contactRepository.findById(id).orElseThrow(()-> new ContactException("Contact "+id+" Not Found"));
+    public Contact updateContact(Contact contact, Long id) throws ContactNotFoundException {
+        Contact savedContact=contactRepository.findById(id).orElseThrow(()-> new ContactNotFoundException("Contact "+id+" Not Found"));
 
         if (Objects.nonNull(contact.getStreetNumber()) || "".equalsIgnoreCase(contact.getStreetNumber())){
             savedContact.setStreetNumber(contact.getStreetNumber());
@@ -67,14 +67,14 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @Override
-    public void deleteContactById(Long id) throws ContactException {
+    public void deleteContactById(Long id) throws ContactNotFoundException {
         contactRepository.deleteById(id);
 
         Optional<Contact> optionalContact=contactRepository.findById(id);
 
         if (optionalContact.isEmpty()){
             log.info("Contact is deleted");
-        }else throw new ContactException("Contact ID "+id+" Not Deleted");
+        }else throw new ContactNotFoundException("Contact ID "+id+" Not Deleted");
 
     }
 
