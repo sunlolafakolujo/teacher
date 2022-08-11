@@ -1,4 +1,4 @@
-package com.teacher.qualification.doa;
+package com.teacher.qualification.dao;
 
 import com.teacher.contact.dao.ContactRepository;
 import com.teacher.contact.exception.ContactException;
