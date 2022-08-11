@@ -59,7 +59,7 @@ class ContactRepositoryTest {
     }
 
     @Test
-    void testThatYouCanFindAllcontacts(){
+    void testThatYouCanFindAllContacts(){
         List<Contact> contacts=contactRepository.findAll();
 
         assertNotNull(contacts);
@@ -72,13 +72,13 @@ class ContactRepositoryTest {
         Long id=1L;
         contact=contactRepository.findById(id).orElseThrow(()-> new ContactException("Contact "+id+" does not exist"));
 
-        String state_province="Ogun";
+        String stateProvince="Ogun";
 
-        contact.setStateProvince(state_province);
+        contact.setStateProvince(stateProvince);
 
         assertDoesNotThrow(()->contactRepository.save(contact));
 
-        assertThat(contact.getStateProvince()).isEqualTo(state_province);
+        assertThat(contact.getStateProvince()).isEqualTo(stateProvince);
 
         log.info("Updated state {}", contact);
     }
