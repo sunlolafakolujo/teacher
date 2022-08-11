@@ -14,6 +14,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,8 @@ class QualificationRepositoryTest {
         qualification.setDegreeTitle("Bachelor of Science");
         qualification.setClassOfDegree("2nd Class Upper");
         qualification.setSchool("Lagos State University of Technology");
+        qualification.setStartDate(LocalDate.parse("2010-09-01"));
+        qualification.setEndDate(LocalDate.parse("2015-07-31"));
 
         log.info("Qualification before saving{}", qualification);
 
