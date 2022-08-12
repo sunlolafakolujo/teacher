@@ -1,6 +1,7 @@
 package com.teacher.qualification.model;
 
 import com.teacher.contact.model.Contact;
+import com.teacher.staticdata.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ public class NewQualification {
     private String classOfDegree;
 
     private String school;
+
+    private Status status;
 
     private LocalDate startDate;
 

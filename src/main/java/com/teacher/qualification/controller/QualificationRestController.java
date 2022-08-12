@@ -109,6 +109,7 @@ public class QualificationRestController {
         qualificationDto.setDegreeTitle(qualification.getDegreeTitle());
         qualificationDto.setClassOfDegree(qualification.getClassOfDegree());
         qualificationDto.setSchool(qualification.getSchool());
+        qualificationDto.setStatus(qualification.getStatus());
         qualificationDto.setStartDate(qualification.getStartDate());
         qualificationDto.setEndDate(qualification.getEndDate());
         qualificationDto.setStreetNumber(qualification.getContact().getStreetNumber());

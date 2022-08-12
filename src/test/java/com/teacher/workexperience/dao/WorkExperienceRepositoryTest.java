@@ -36,7 +36,7 @@ class WorkExperienceRepositoryTest {
     void testThatYouCanSaveWorkExperience(){
         workExperience.setCompany("Mind Builders Group of Schools");
         workExperience.setPosition("Head Teacher");
-        workExperience.setStatus(YES);
+        workExperience.setCurrent(YES);
         workExperience.setStartDate(LocalDate.parse("2010-01-01"));
 
         log.info("Work experience repo before saving {}", workExperience);

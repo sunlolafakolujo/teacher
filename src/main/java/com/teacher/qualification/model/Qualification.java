@@ -2,6 +2,7 @@ package com.teacher.qualification.model;
 
 import com.teacher.baseaudit.BaseAudit;
 import com.teacher.contact.model.Contact;
+import com.teacher.staticdata.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,9 @@ public class Qualification extends BaseAudit {
 
     @Column(updatable = false)
     private String school;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @Column(updatable = false,nullable = false)
     private LocalDate startDate;

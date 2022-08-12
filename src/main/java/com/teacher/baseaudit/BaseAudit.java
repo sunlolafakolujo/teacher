@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter
 @Setter
-public class BaseAudit implements Serializable {
+public abstract class BaseAudit implements Serializable {
 
     @CreationTimestamp
     private LocalDateTime createdDate;

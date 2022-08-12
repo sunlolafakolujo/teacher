@@ -16,7 +16,7 @@ public class NewWorkExperience {
 
     private String position;
 
-    private Status current;
+    private Status status;
 
     private LocalDate startDate;
 
