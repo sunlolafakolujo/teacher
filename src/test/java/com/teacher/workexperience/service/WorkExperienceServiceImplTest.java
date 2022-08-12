@@ -36,6 +36,7 @@ class WorkExperienceServiceImplTest {
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
         workExperience=new WorkExperience();
     }
 
