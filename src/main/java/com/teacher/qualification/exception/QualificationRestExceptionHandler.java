@@ -24,6 +24,6 @@ public class QualificationRestExceptionHandler extends ResponseEntityExceptionHa
                 wr.getDescription(false),
                 new Date());
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vem);
+        return ResponseEntity.ok().body(vem);
     }
 }

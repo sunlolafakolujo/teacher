@@ -42,7 +42,7 @@ public class WorkExperienceRestController {
 
         WorkExperience workExperience=workExperienceService.findWorkExperienceById(id);
 
-        WorkExperienceDto workExperienceDto=converWorkExperienceToDto(workExperience);
+        WorkExperienceDto workExperienceDto=convertWorkExperienceToDto(workExperience);
 
         return new ResponseEntity<>(workExperienceDto, HttpStatus.OK);
     }
@@ -53,7 +53,7 @@ public class WorkExperienceRestController {
 
         return new ResponseEntity<>(workExperienceService.findAllWorkExperience(pageable)
                 .stream()
-                .map(this::converWorkExperienceToDto)
+                .map(this::convertWorkExperienceToDto)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
@@ -100,7 +100,7 @@ public class WorkExperienceRestController {
 
 
 
-    WorkExperienceDto converWorkExperienceToDto(WorkExperience workExperience){
+    WorkExperienceDto convertWorkExperienceToDto(WorkExperience workExperience){
 
         WorkExperienceDto workExperienceDto=new WorkExperienceDto();
 

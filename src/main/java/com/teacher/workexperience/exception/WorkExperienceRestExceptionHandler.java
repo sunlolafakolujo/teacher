@@ -24,6 +24,6 @@ public class WorkExperienceRestExceptionHandler extends ResponseEntityExceptionH
                 wr.getDescription(false),
                 new Date());
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vem);
+        return ResponseEntity.ok().body(vem);
     }
 }
