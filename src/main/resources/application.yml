@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    username: teacher
+    initialization-mode: always
+    schema: classpath:/schema.sql
+    url: jdbc:postgresql://localhost:5432/teacherdb
+    continue-on-error: 'true'
+    password: teacher123
+    initialize: 'true'
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: 'true'
+    hibernate:
+      show-sql: 'true'
+      ddl-auto: create

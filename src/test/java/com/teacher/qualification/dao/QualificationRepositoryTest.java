@@ -43,8 +43,12 @@ class QualificationRepositoryTest {
 
     @Test
     void testThatYouCanSaveQualification() throws ContactNotFoundException {
-        Long id=1L;
-        contact=contactRepository.findById(id).orElseThrow(()->new ContactNotFoundException("Contact "+id+" Not Found"));
+//        Long id=1L;
+        contact.setCountry("Nigeria");
+        contact.setStateProvince("Ogun");
+        contact.setCity("Abeokuta");
+        contact.setStreetName("Adeaga Street Okemosun");
+        contact.setStreetNumber("24");
 
         qualification.setContact(contact);
         qualification.setSubject("Mechanical Engineering");

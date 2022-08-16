@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,8 @@ public class QualificationRestController {
     private final QualificationService qualificationService;
 
     private final ModelMapper modelMapper;
+
+    private Qualification qualification;
 
     @PostMapping("/saveQualification")
     public ResponseEntity<NewQualification> saveQualification(@RequestBody @Valid NewQualification newQualification){
@@ -51,7 +54,7 @@ public class QualificationRestController {
     @GetMapping("/findAllQualifications")
     public ResponseEntity<List<QualificationDto>> getAllQualifications(){
 
-        Pageable pageable= PageRequest.of(0, 10);
+        Pageable pageable= PageRequest.of(0, 10, Sort.by(qualification.getSubject()).ascending());
 
         return new ResponseEntity<>(qualificationService.findAllQualifications(pageable)
                 .stream()

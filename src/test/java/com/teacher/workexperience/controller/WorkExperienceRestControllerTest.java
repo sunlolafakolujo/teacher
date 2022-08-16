@@ -17,11 +17,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -68,22 +69,43 @@ class WorkExperienceRestControllerTest {
     }
 
     @Test
-    void getWorkExperienceById() {
+    void testThatWhenYouCallGetWorkExperienceById_thenWorkExperienceIsReturned() throws Exception {
+
+        this.mockMvc.perform(get("/api/workExperience/findWorkExperienceById/1")
+                .header(AUTHORIZATION, "Bearer "))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$.company").value("Babington Macaulay Junior Seminary"))
+                .andReturn();
     }
 
     @Test
-    void getAllWorkExperiences() {
+    void testThatWhenYouCallGetAllWorkExperiences_thenWorkExperiencesAreReturned() throws Exception {
+
+        this.mockMvc.perform(get("/api/workExperience/findAllWorkExperiences")
+                .header(AUTHORIZATION, "Bearer "))
+                .andDo(print())
+                .andExpect(jsonPath("$.*", hasSize(2)))
+                .andExpect(jsonPath("$[1].company").value("Dansol High School"))
+                .andReturn();
     }
 
     @Test
-    void deleteWorkExperienceById() {
+    void testThatWhenYouCallDeleteWorkExperienceById_thenWorkExperienceIsDeleted() throws Exception {
+
+        this.mockMvc.perform(delete("/api/workExperience/deleteWorkExperienceById/1")
+                .header(AUTHORIZATION, "Bearer "))
+                .andExpect(status().isNoContent())
+                .andReturn();
     }
 
     @Test
-    void deleteAllWorkExperiences() {
-    }
+    void testThatWhenYouCallDeleteAllWorkExperiences_thenWorkExperiencesAreDeleted() throws Exception {
 
-    @Test
-    void convertWorkExperienceToDto() {
+        this.mockMvc.perform(delete("/api/workExperience/deleteAllWorkExperiences")
+                .header(AUTHORIZATION, "Bearer "))
+                .andExpect(status().isNoContent())
+                .andReturn();
     }
 }

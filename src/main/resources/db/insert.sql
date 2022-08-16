@@ -11,4 +11,7 @@ INSERT INTO work_experience(company,position,status,start_date,end_date)
 VALUES ('Babington Macaulay Junior Seminary','Teacher','YES','2015-09-01',null),
        ('Dansol High School', 'Head Teacher','YES','2015-09-01',null);
 
+INSERT INTO referee(first_name,last_name,email,phone,reference_letter)
+VALUES ('Toye','Okedara','tokedara@yahoo,com','09087654223','https://resources.workable.com/wp-content/uploads/2016/02/screencapture-resources-workable-employee-reference-letter-2021-04-01-15_38_11.png'),
+       ('Tokunbo', 'Akeju','ta@gmail.com','07086545617','https://resumegenius.com/letter-of-recommendation');
 

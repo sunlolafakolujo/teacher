@@ -8,10 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
@@ -72,11 +69,11 @@ class QualificationServiceImplTest {
 
         List<Qualification> qualificationList=new ArrayList<>();
 
-        Page<Qualification> qualifications=new PageImpl<>(qualificationList);
+        Page<Qualification> qualificationPage=new PageImpl<>(qualificationList);
 
-        Pageable pageable=PageRequest.of(0, 10);
+        Pageable pageable=PageRequest.of(0, 10, Sort.by(qualification.getDegreeTitle()).ascending());
 
-        Mockito.when(qualificationRepository.findAll(pageable)).thenReturn(qualifications);
+        Mockito.when(qualificationRepository.findAll(pageable)).thenReturn(qualificationPage);
 
         qualificationService.findAllQualifications(pageable);
 

@@ -42,9 +42,9 @@ public class Qualification extends BaseAudit {
     @Column(updatable = false,nullable = false)
     private LocalDate startDate;
 
-    @Column(updatable = false,nullable = false)
+//    @Column(updatable = false,nullable = false)
     private LocalDate endDate;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Contact contact;
 }

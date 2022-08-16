@@ -5,16 +5,22 @@ import com.teacher.contact.model.Contact;
 import com.teacher.contact.service.ContactService;
 import com.teacher.qualification.model.Qualification;
 import com.teacher.qualification.service.QualificationService;
+import com.teacher.staticdata.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
@@ -66,6 +72,8 @@ class QualificationRestControllerTest {
         qualification.setSubject("Physics");
         qualification.setDegreeTitle("Bachelor of Education");
         qualification.setClassOfDegree("Upper Credit");
+        qualification.setStatus(Status.YES);
+        qualification.setStartDate(LocalDate.parse("1996-01-20"));
         qualification.setContact(contact);
 
         this.mockMvc.perform(post("/api/qualification/saveQualification")
