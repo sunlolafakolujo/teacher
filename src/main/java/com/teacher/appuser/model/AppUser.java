@@ -1,13 +1,14 @@
 package com.teacher.appuser.model;
 
+import com.teacher.userrole.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.usertype.UserType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -19,6 +20,9 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
+
     private String username;
 
     private String password;
@@ -28,4 +32,7 @@ public class AppUser {
     private String phone;
 
     private Boolean enabled= false;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Collection<UserRole> userRoles=new ArrayList<>();
 }
