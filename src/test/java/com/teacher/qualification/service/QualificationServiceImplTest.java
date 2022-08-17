@@ -1,6 +1,6 @@
 package com.teacher.qualification.service;
 
-import com.teacher.qualification.dao.QualificationRepository;
+import com.teacher.qualification.repository.QualificationRepository;
 import com.teacher.qualification.exception.QualificationNotFoundException;
 import com.teacher.qualification.model.Qualification;
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +71,7 @@ class QualificationServiceImplTest {
 
         Page<Qualification> qualificationPage=new PageImpl<>(qualificationList);
 
-        Pageable pageable=PageRequest.of(0, 10, Sort.by(qualification.getDegreeTitle()).ascending());
+        Pageable pageable=PageRequest.of(0, 10);
 
         Mockito.when(qualificationRepository.findAll(pageable)).thenReturn(qualificationPage);
 

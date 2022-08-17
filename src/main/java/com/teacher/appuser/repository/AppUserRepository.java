@@ -1,2 +1,9 @@
-package com.teacher.appuser.repository;public interface AppUserRepository {
+package com.teacher.appuser.repository;
+
+import com.teacher.appuser.model.AppUser;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 }

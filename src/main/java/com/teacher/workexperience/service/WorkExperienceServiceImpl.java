@@ -1,6 +1,6 @@
 package com.teacher.workexperience.service;
 
-import com.teacher.workexperience.dao.WorkExperienceRepository;
+import com.teacher.workexperience.repository.WorkExperienceRepository;
 import com.teacher.workexperience.exception.WorkExperienceNotFoundException;
 import com.teacher.workexperience.model.WorkExperience;
 import org.springframework.beans.factory.annotation.Autowired;

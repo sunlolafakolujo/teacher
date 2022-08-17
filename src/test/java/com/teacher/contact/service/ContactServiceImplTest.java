@@ -1,6 +1,6 @@
 package com.teacher.contact.service;
 
-import com.teacher.contact.dao.ContactRepository;
+import com.teacher.contact.repository.ContactRepository;
 import com.teacher.contact.model.Contact;
 import com.teacher.contact.exception.ContactNotFoundException;
 import lombok.extern.slf4j.Slf4j;

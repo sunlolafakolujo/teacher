@@ -1,4 +1,4 @@
-package com.teacher.workexperience.dao;
+package com.teacher.workexperience.repository;
 
 import com.teacher.workexperience.model.WorkExperience;
 import org.springframework.data.jpa.repository.JpaRepository;

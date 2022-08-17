@@ -1,26 +1,26 @@
-package com.teacher.reference.exception;
+package com.teacher.appuser.exception;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-public class ReferenceNotFoundException extends Throwable{
-    public ReferenceNotFoundException() {
+public class AppUserException extends Throwable{
+    public AppUserException() {
         super();
     }
 
-    public ReferenceNotFoundException(String message) {
+    public AppUserException(String message) {
         super(message);
     }
 
-    public ReferenceNotFoundException(String message, Throwable cause) {
+    public AppUserException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ReferenceNotFoundException(Throwable cause) {
+    public AppUserException(Throwable cause) {
         super(cause);
     }
 
-    protected ReferenceNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected AppUserException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

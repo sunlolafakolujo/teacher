@@ -1,6 +1,6 @@
 package com.teacher.contact.service;
 
-import com.teacher.contact.dao.ContactRepository;
+import com.teacher.contact.repository.ContactRepository;
 import com.teacher.contact.model.Contact;
 import com.teacher.contact.exception.ContactNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,9 @@ public class ContactServiceImpl implements ContactService{
 
     @Override
     public Contact findContactById(Long id) throws ContactNotFoundException {
-        Contact contact=contactRepository.findById(id).orElseThrow(()-> new ContactNotFoundException("Contact "+id+" Not Found"));
+        Contact contact=contactRepository
+                .findById(id)
+                .orElseThrow(()-> new ContactNotFoundException("Contact "+id+" Not Found"));
 
         return contact;
     }
@@ -47,19 +49,19 @@ public class ContactServiceImpl implements ContactService{
     public Contact updateContact(Contact contact, Long id) throws ContactNotFoundException {
         Contact savedContact=contactRepository.findById(id).orElseThrow(()-> new ContactNotFoundException("Contact "+id+" Not Found"));
 
-        if (Objects.nonNull(contact.getStreetNumber()) || "".equalsIgnoreCase(contact.getStreetNumber())){
+        if (Objects.nonNull(contact.getStreetNumber()) && !"".equalsIgnoreCase(contact.getStreetNumber())){
             savedContact.setStreetNumber(contact.getStreetNumber());
-        }if (Objects.nonNull(contact.getStreetName())||"".equalsIgnoreCase(contact.getStreetName())){
+        }if (Objects.nonNull(contact.getStreetName()) && !"".equalsIgnoreCase(contact.getStreetName())){
             savedContact.setStreetName(contact.getStreetName());
-        }if (Objects.nonNull(contact.getCity())||"".equalsIgnoreCase(contact.getCity())){
+        }if (Objects.nonNull(contact.getCity()) && !"".equalsIgnoreCase(contact.getCity())){
             savedContact.setCity(contact.getCity());
-        }if (Objects.nonNull(contact.getPostZipCode())||"".equalsIgnoreCase(contact.getPostZipCode())){
+        }if (Objects.nonNull(contact.getPostZipCode()) && !"".equalsIgnoreCase(contact.getPostZipCode())){
             savedContact.setPostZipCode(contact.getPostZipCode());
-        }if (Objects.nonNull(contact.getLandMark())||"".equalsIgnoreCase(contact.getLandMark())){
+        }if (Objects.nonNull(contact.getLandMark()) && !"".equalsIgnoreCase(contact.getLandMark())){
             savedContact.setLandMark(contact.getLandMark());
-        }if (Objects.nonNull(contact.getStateProvince()) || "".equalsIgnoreCase(contact.getStateProvince())){
+        }if (Objects.nonNull(contact.getStateProvince()) && !"".equalsIgnoreCase(contact.getStateProvince())){
             savedContact.setStateProvince(contact.getStateProvince());
-        }if (Objects.nonNull(contact.getCountry())||"".equalsIgnoreCase(contact.getCountry())){
+        }if (Objects.nonNull(contact.getCountry()) && !"".equalsIgnoreCase(contact.getCountry())){
             savedContact.setCountry(contact.getCountry());
         }
 

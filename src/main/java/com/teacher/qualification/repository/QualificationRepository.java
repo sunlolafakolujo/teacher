@@ -1,4 +1,4 @@
-package com.teacher.qualification.dao;
+package com.teacher.qualification.repository;
 
 import com.teacher.qualification.model.Qualification;
 import org.springframework.data.jpa.repository.JpaRepository;

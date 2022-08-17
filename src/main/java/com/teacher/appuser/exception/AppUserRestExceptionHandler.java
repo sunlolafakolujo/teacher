@@ -1,28 +1,29 @@
-package com.teacher.reference.exception;
+package com.teacher.appuser.exception;
 
 import com.teacher.message.ValidateErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Date;
 
-@RestControllerAdvice
-public class ReferenceRestExceptionHandler extends ResponseEntityExceptionHandler {
+@RestController
+public class AppUserRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseStatus
-    @ExceptionHandler(ReferenceNotFoundException.class)
-    public ResponseEntity<ValidateErrorMessage> referenceNotFound(ReferenceNotFoundException referenceNotFoundException, WebRequest wr){
+    @ExceptionHandler(AppUserException.class)
+    public ResponseEntity<ValidateErrorMessage> appUserExceptionHandler(AppUserException appUserException, WebRequest wr ){
 
-        ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND,
-                referenceNotFoundException.getMessage(),
+        ValidateErrorMessage vem= new ValidateErrorMessage(HttpStatus.NOT_FOUND,
+                appUserException.getMessage(),
                 wr.getDescription(false),
                 new Date());
 
         return new ResponseEntity<>(vem, HttpStatus.OK);
+
     }
 }

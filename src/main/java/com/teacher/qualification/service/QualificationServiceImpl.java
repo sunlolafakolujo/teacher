@@ -1,6 +1,6 @@
 package com.teacher.qualification.service;
 
-import com.teacher.qualification.dao.QualificationRepository;
+import com.teacher.qualification.repository.QualificationRepository;
 import com.teacher.qualification.exception.QualificationNotFoundException;
 import com.teacher.qualification.model.Qualification;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,9 +61,9 @@ public class QualificationServiceImpl implements QualificationService{
 
         Optional<Qualification> optionalQualification=qualificationRepository.findById(id);
 
-        if (optionalQualification.isEmpty()){
-            log.info("Qualification ID "+id+" is deleted");
-        }else throw new QualificationNotFoundException("Qualification ID "+id+" is not deleted");
+        if (optionalQualification.isPresent()){
+            throw new QualificationNotFoundException("Qualification ID "+id+" is not deleted");
+        }
     }
 
     @Override

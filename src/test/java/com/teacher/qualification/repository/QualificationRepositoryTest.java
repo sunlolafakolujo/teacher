@@ -1,6 +1,6 @@
-package com.teacher.qualification.dao;
+package com.teacher.qualification.repository;
 
-import com.teacher.contact.dao.ContactRepository;
+import com.teacher.contact.repository.ContactRepository;
 import com.teacher.contact.exception.ContactNotFoundException;
 import com.teacher.contact.model.Contact;
 import com.teacher.qualification.exception.QualificationNotFoundException;

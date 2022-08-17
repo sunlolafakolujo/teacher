@@ -1,6 +1,5 @@
-package com.teacher.workexperience.dao;
+package com.teacher.workexperience.repository;
 
-import com.teacher.staticdata.Status;
 import com.teacher.workexperience.exception.WorkExperienceNotFoundException;
 import com.teacher.workexperience.model.WorkExperience;
 import lombok.extern.slf4j.Slf4j;
