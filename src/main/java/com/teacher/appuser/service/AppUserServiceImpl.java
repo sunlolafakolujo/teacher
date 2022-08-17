@@ -2,6 +2,9 @@ package com.teacher.appuser.service;
 
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
+import com.teacher.staticdata.RoleName;
+import com.teacher.userrole.model.UserRole;
+import com.teacher.userrole.repository.UserRoleRepository;
 import com.teacher.verificationtoken.model.VerificationToken;
 import com.teacher.verificationtoken.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     @Override
     public AppUser userRegistration(AppUser appUser) {
