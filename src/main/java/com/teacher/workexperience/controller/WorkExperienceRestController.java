@@ -109,6 +109,10 @@ public class WorkExperienceRestController {
         workExperienceDto.setStatus(workExperience.getStatus());
         workExperienceDto.setStartDate(workExperience.getStartDate());
         workExperienceDto.setEndDate(workExperience.getEndDate());
+        workExperienceDto.setAppUserFirstName(workExperience.getAppUser().getFirstName());
+        workExperienceDto.setAppUserLastName(workExperience.getAppUser().getLastName());
+        workExperienceDto.setAppUserEmail(workExperience.getAppUser().getEmail());
+        workExperienceDto.setAppUserPhone(workExperience.getAppUser().getPhone());
 
         return workExperienceDto;
     }

@@ -39,4 +39,12 @@ public class QualificationDto {
     private String stateProvince;
 
     private String country;
+
+    private String appUserFirstName;
+
+    private String appUserLastName;
+
+    private String appUserEmail;
+
+    private String appUserPhone;
 }

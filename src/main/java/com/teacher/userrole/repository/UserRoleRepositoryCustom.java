@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface UserRoleRepositoryCustom {
 
     @Query("From UserRole u Where u.roleName=?1")
-    UserRole findUserRoleByName(RoleName roleName);
+    UserRole findUserRoleByName(String roleName);
 }

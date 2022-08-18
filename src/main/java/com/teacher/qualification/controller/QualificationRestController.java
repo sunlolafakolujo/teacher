@@ -120,6 +120,10 @@ public class QualificationRestController {
         qualificationDto.setCity(qualification.getContact().getCity());
         qualificationDto.setStateProvince(qualification.getContact().getStateProvince());
         qualificationDto.setCountry(qualification.getContact().getCountry());
+        qualificationDto.setAppUserFirstName(qualification.getAppUser().getFirstName());
+        qualificationDto.setAppUserLastName(qualification.getAppUser().getLastName());
+        qualificationDto.setAppUserEmail(qualification.getAppUser().getEmail());
+        qualificationDto.setAppUserPhone(qualification.getAppUser().getPhone());
 
         return qualificationDto;
     }

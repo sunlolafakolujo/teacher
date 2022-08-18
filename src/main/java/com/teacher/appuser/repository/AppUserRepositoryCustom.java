@@ -15,7 +15,7 @@ public interface AppUserRepositoryCustom {
     @Query("From AppUser a Where a.phone=?1")
     AppUser findUserByPhone(String phone);
 
-    @Query("From AppUser a Where a.enable=?1")
-    AppUser findUserByStatus(Boolean enable);
+//    @Query("From AppUser a Where a.enable=?1")
+//    AppUser findUserByStatus(Boolean enable);
 
 }

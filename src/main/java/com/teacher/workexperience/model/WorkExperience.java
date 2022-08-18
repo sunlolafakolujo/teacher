@@ -1,10 +1,13 @@
 package com.teacher.workexperience.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teacher.appuser.model.AppUser;
 import com.teacher.baseaudit.BaseAudit;
 import com.teacher.staticdata.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -38,4 +41,9 @@ public class WorkExperience extends BaseAudit {
 
     @Column(updatable = false)
     private LocalDate endDate;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private AppUser appUser;
 }

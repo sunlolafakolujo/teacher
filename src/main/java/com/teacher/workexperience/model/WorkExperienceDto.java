@@ -25,4 +25,12 @@ public class WorkExperienceDto {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    private String appUserFirstName;
+
+    private String appUserLastName;
+
+    private String appUserEmail;
+
+    private String appUserPhone;
 }

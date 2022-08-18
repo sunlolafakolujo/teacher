@@ -1,11 +1,15 @@
 package com.teacher.qualification.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teacher.appuser.model.AppUser;
 import com.teacher.baseaudit.BaseAudit;
 import com.teacher.contact.model.Contact;
 import com.teacher.staticdata.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -47,4 +51,9 @@ public class Qualification extends BaseAudit {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Contact contact;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private AppUser appUser;
 }

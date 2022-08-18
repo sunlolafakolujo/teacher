@@ -1,9 +1,12 @@
 package com.teacher.reference.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teacher.appuser.model.AppUser;
 import com.teacher.baseaudit.BaseAudit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -35,4 +38,9 @@ public class Referee extends BaseAudit {
 
     @NotBlank(message = "Attach reference letter")
     private String referenceLetter;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private AppUser appUser;
 }

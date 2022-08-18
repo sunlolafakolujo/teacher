@@ -8,10 +8,12 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Slf4j
+@Component
 public class RegistrationCompleteEventListener implements ApplicationListener<RegistrationCompleteEvent> {
 
     @Autowired
@@ -26,7 +28,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         appUserService.saveVerificationTokenForUser(token, appUser);
 
         //Send mail to User
-        String url= event.getApplicationUrl() + "verifyRegistration?token" + token;
+        String url= event.getApplicationUrl() + "/verifyRegistration?token=" + token;
 
         log.info("click the link to verify your account: {}", url);
 

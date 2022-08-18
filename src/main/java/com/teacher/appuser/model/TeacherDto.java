@@ -21,12 +21,20 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AppUserDto {
+public class TeacherDto {
 
     @JsonIgnore
     private Long id;
 
     private UserType userType;
+
+    private Title title;
+
+    private String firstName;
+
+    private String lastName;
+
+    private Gender gender;
 
     private String username;
 
@@ -36,25 +44,9 @@ public class AppUserDto {
 
     private String phone;
 
-    private String firstName;
-
-    private String lastName;
-
-    private String name;
-
-    private Title title;
-
-    private Gender gender;
-
-    private String picUrl;
-
-    private String webSite;
-
-    private Integer age;
-
     private LocalDate dateOfBirth;
 
-    private String rcNumber;
+    private String picUrl;
 
     private MeansOfIdentification meansOfIdentification;
 

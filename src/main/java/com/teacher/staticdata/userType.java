@@ -1,13 +1,13 @@
 package com.teacher.staticdata;
 
-public enum userType {
+public enum UserType {
     TEACHER("TEACHER"),
     PARENT("PATENT"),
     SCHOOL("SCHOOL");
 
     private final String userType;
 
-    userType(String userType) {
+    UserType(String userType) {
         this.userType = userType;
     }
 
