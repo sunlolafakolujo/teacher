@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,6 +41,8 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Override
     public AppUser userRegistration(AppUser appUser) {
+
+        appUser.setAge(Period.between(LocalDate.now(), appUser.getDateOfBirth()).getYears());
 
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
 
