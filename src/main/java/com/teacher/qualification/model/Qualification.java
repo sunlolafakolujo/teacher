@@ -38,10 +38,10 @@ public class Qualification extends BaseAudit {
     private String classOfDegree;
 
     @Column(updatable = false)
-    private String school;
+    private String schoolName;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status currentQualification;
 
     @Column(updatable = false,nullable = false)
     private LocalDate startDate;
@@ -49,8 +49,7 @@ public class Qualification extends BaseAudit {
 //    @Column(updatable = false,nullable = false)
     private LocalDate endDate;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    private Contact contact;
+    private String institutionAddress;
 
     @JsonIgnore
     @ToString.Exclude

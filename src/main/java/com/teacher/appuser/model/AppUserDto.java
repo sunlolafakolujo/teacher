@@ -40,7 +40,7 @@ public class AppUserDto {
 
     private String lastName;
 
-    private String name;
+    private String schoolName;
 
     private Title title;
 
@@ -58,17 +58,27 @@ public class AppUserDto {
 
     private MeansOfIdentification meansOfIdentification;
 
-    private String meansOfIdentificationIssueDate;
+    private LocalDate meansOfIdentificationIssueDate;
 
-    private String meansOfIdentificationExpiryDate;
+    private LocalDate meansOfIdentificationExpiryDate;
 
-    private Contact contact;
+    private String streetNumber;
+
+    private String streetName;
+
+    private String city;
+
+    private String landMark;
+
+    private String postZipCode;
+
+    private String stateProvince;
+
+    private String country;
 
     private List<Qualification> qualifications;
 
     private List<WorkExperience> workExperiences;
 
     private List<Referee> referees;
-
-    private Collection<UserRole> userRoles;
 }

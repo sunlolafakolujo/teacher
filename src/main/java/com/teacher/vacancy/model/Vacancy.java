@@ -1,4 +1,4 @@
-package com.teacher.vacancy;
+package com.teacher.vacancy.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

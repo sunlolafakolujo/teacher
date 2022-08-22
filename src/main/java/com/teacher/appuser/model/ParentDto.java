@@ -53,5 +53,5 @@ public class ParentDto {
 
     private List<Referee> referees;
 
-    private Collection<UserRole> userRoles;
+    private List<UserRole> userRoles;
 }

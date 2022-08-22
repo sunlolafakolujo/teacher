@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,16 +35,20 @@ public class AppUser {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
+    @NotBlank(message = "Username is required")
     @Column(unique = true)
     private String username;
 
+    @NotBlank(message = "Password is required")
     private String password;
 
     @Email
     @Column(unique = true)
+    @NotBlank(message = "Email is required")
     private String email;
 
     @Column(unique = true)
+    @NotBlank(message = "Phone is required")
     private String phone;
 
     private Boolean enabled= false;
@@ -52,7 +57,7 @@ public class AppUser {
 
     private String lastName;
 
-    private String name;
+    private String schoolName;
 
     @Enumerated(EnumType.STRING)
     private Title title;
@@ -71,9 +76,9 @@ public class AppUser {
     @Enumerated(EnumType.STRING)
     private MeansOfIdentification meansOfIdentification;
 
-    private String meansOfIdentificationIssueDate;
+    private LocalDate meansOfIdentificationIssueDate;
 
-    private String meansOfIdentificationExpiryDate;
+    private LocalDate meansOfIdentificationExpiryDate;
 
     private String rcNumber;
 
@@ -92,6 +97,6 @@ public class AppUser {
     @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Referee> referees;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Collection<UserRole> userRoles=new ArrayList<>();
 }

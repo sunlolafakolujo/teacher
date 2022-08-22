@@ -111,15 +111,11 @@ public class QualificationRestController {
         qualificationDto.setSubject(qualification.getSubject());
         qualificationDto.setDegreeTitle(qualification.getDegreeTitle());
         qualificationDto.setClassOfDegree(qualification.getClassOfDegree());
-        qualificationDto.setSchool(qualification.getSchool());
-        qualificationDto.setStatus(qualification.getStatus());
+        qualificationDto.setSchoolName(qualification.getSchoolName());
+        qualificationDto.setCurrentQualification(qualification.getCurrentQualification());
         qualificationDto.setStartDate(qualification.getStartDate());
         qualificationDto.setEndDate(qualification.getEndDate());
-        qualificationDto.setStreetNumber(qualification.getContact().getStreetNumber());
-        qualificationDto.setStreetName(qualification.getContact().getStreetName());
-        qualificationDto.setCity(qualification.getContact().getCity());
-        qualificationDto.setStateProvince(qualification.getContact().getStateProvince());
-        qualificationDto.setCountry(qualification.getContact().getCountry());
+        qualificationDto.setStreetNumber(qualification.getInstitutionAddress());
         qualificationDto.setAppUserFirstName(qualification.getAppUser().getFirstName());
         qualificationDto.setAppUserLastName(qualification.getAppUser().getLastName());
         qualificationDto.setAppUserEmail(qualification.getAppUser().getEmail());

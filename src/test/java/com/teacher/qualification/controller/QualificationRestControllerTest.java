@@ -60,21 +60,14 @@ class QualificationRestControllerTest {
 
     @Test
     void testThatWhenYouCallSaveQualificationMethod_thenQualificationIsSaved() throws Exception {
-        contact.setStreetNumber("KM 10");
-        contact.setStreetName("Lagos Badagry Expressway");
-        contact.setCity("Ijanikin");
-        contact.setPostZipCode("110001");
-        contact.setLandMark("Ijanikin Bus stop");
-        contact.setStateProvince("Lagos");
-        contact.setCountry("Nigeria");
 
-        qualification.setSchool("College of Education");
+        qualification.setSchoolName("College of Education");
         qualification.setSubject("Physics");
         qualification.setDegreeTitle("Bachelor of Education");
         qualification.setClassOfDegree("Upper Credit");
-        qualification.setStatus(Status.YES);
+        qualification.setCurrentQualification(Status.YES);
         qualification.setStartDate(LocalDate.parse("1996-01-20"));
-        qualification.setContact(contact);
+        qualification.setInstitutionAddress("Ijanikin, Lagos Badagry Expressway");
 
         this.mockMvc.perform(post("/api/qualification/saveQualification")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer ")

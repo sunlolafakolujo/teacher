@@ -41,9 +41,4 @@ public class Contact extends BaseAudit {
 
     @NotEmpty(message = "Country can't be blank")
     private String country;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToOne(mappedBy = "contact")
-    private Qualification qualification;
 }

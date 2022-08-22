@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -20,7 +21,7 @@ public class SchoolDto {
 
     private UserType userType;
 
-    private String name;
+    private String schoolName;
 
     private String username;
 
@@ -34,5 +35,6 @@ public class SchoolDto {
 
     private Contact contact;
 
-    private Collection<UserRole> userRoles;
+    private List<UserRole> userRoles;
+
 }

@@ -36,6 +36,8 @@ public class TeacherDto {
 
     private Gender gender;
 
+    private Integer age;
+
     private String username;
 
     private String password;
@@ -62,5 +64,5 @@ public class TeacherDto {
 
     private List<Referee> referees;
 
-    private Collection<UserRole> userRoles;
+    private List<UserRole> userRoles;
 }

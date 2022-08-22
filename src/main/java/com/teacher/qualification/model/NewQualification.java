@@ -21,9 +21,9 @@ public class NewQualification {
 
     private String classOfDegree;
 
-    private String school;
+    private String schoolName;
 
-    private Status status;
+    private Status currentQualification;
 
     private LocalDate startDate;
 

@@ -15,8 +15,8 @@ import java.util.Date;
 public class AppUserRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseStatus
-    @ExceptionHandler(AppUserException.class)
-    public ResponseEntity<ValidateErrorMessage> appUserExceptionHandler(AppUserException appUserException, WebRequest wr ){
+    @ExceptionHandler(AppUserNotFoundException.class)
+    public ResponseEntity<ValidateErrorMessage> appUserExceptionHandler(AppUserNotFoundException appUserException, WebRequest wr ){
 
         ValidateErrorMessage vem= new ValidateErrorMessage(HttpStatus.NOT_FOUND,
                 appUserException.getMessage(),

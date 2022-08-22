@@ -2,9 +2,11 @@ package com.teacher.userrole.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teacher.appuser.model.AppUser;
+import com.teacher.staticdata.RoleName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -20,9 +22,9 @@ public class UserRole {
     private Long id;
 
     private String roleName;
-
     @JsonIgnore
-    @ManyToMany(mappedBy = "userRoles")
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "userRoles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<AppUser> appUsers;
 
 }

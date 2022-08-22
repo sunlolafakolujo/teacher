@@ -1,8 +1,14 @@
 package com.teacher.appuser.model;
 
+import com.teacher.contact.model.Contact;
+import com.teacher.reference.model.Referee;
+import com.teacher.staticdata.MeansOfIdentification;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -11,11 +17,29 @@ public class UpdateAppUser {
 
     private Long id;
 
-    private String username;
-
     private String password;
 
     private String email;
 
     private String phone;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String schoolName;
+
+    private String picUrl;
+
+    private String webSite;
+
+    private MeansOfIdentification meansOfIdentification;
+
+    private String meansOfIdentificationIssueDate;
+
+    private String meansOfIdentificationExpiryDate;
+
+    private Contact contact;
+
+    private List<Referee> referees;
 }

@@ -2,7 +2,10 @@ package com.teacher.appuser.repository;
 
 import com.teacher.appuser.model.AppUser;
 import org.apache.el.parser.BooleanNode;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface AppUserRepositoryCustom {
 
@@ -15,7 +18,12 @@ public interface AppUserRepositoryCustom {
     @Query("From AppUser a Where a.phone=?1")
     AppUser findUserByPhone(String phone);
 
-//    @Query("From AppUser a Where a.enable=?1")
-//    AppUser findUserByStatus(Boolean enable);
+    @Query("From AppUser a Where a.firstName Like %?#%")
+    List<AppUser> findUserByFirstName(String firstName, Pageable pageable);
 
+    @Query("From AppUser a Where a.lastName Like %?#%")
+    List<AppUser> findUserByLastName(String lastName, Pageable pageable);
+
+    @Query("From AppUser a Where a.schoolName Like %?#%")
+    List<AppUser> findBySchoolName(String schoolName);
 }

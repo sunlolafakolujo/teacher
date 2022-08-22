@@ -52,7 +52,7 @@ class WorkExperienceRestControllerTest {
     @Test
     void testThatWhenYouCannSaveWorkExperience_thenWorkExperienceIsSaved() throws Exception {
 
-        workExperience.setStatus(Status.YES);
+        workExperience.setCurrentWork(Status.YES);
         workExperience.setPosition("Teacher");
         workExperience.setCompany("Hill Crest School");
         workExperience.setStartDate(LocalDate.parse("2020-01-23"));

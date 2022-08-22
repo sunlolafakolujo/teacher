@@ -33,7 +33,7 @@ public class WorkExperience extends BaseAudit {
 
     @NotNull(message = "Status is required")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status currentWork;
 
     @NotNull(message = "Start Date is required")
     @Column(nullable = false, updatable = false)

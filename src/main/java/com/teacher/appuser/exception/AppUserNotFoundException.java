@@ -3,24 +3,24 @@ package com.teacher.appuser.exception;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-public class AppUserException extends Throwable{
-    public AppUserException() {
+public class AppUserNotFoundException extends Throwable{
+    public AppUserNotFoundException() {
         super();
     }
 
-    public AppUserException(String message) {
+    public AppUserNotFoundException(String message) {
         super(message);
     }
 
-    public AppUserException(String message, Throwable cause) {
+    public AppUserNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public AppUserException(Throwable cause) {
+    public AppUserNotFoundException(Throwable cause) {
         super(cause);
     }
 
-    protected AppUserException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected AppUserNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

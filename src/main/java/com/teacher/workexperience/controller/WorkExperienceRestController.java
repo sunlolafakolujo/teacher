@@ -106,7 +106,7 @@ public class WorkExperienceRestController {
 
         workExperienceDto.setCompany(workExperience.getCompany());
         workExperienceDto.setPosition(workExperience.getPosition());
-        workExperienceDto.setStatus(workExperience.getStatus());
+        workExperienceDto.setCurrentWork(workExperience.getCurrentWork());
         workExperienceDto.setStartDate(workExperience.getStartDate());
         workExperienceDto.setEndDate(workExperience.getEndDate());
         workExperienceDto.setAppUserFirstName(workExperience.getAppUser().getFirstName());

@@ -50,11 +50,11 @@ class QualificationRepositoryTest {
         contact.setStreetName("Adeaga Street Okemosun");
         contact.setStreetNumber("24");
 
-        qualification.setContact(contact);
+        qualification.setInstitutionAddress("Ijanikin, Lagos Badagry Expressway");
         qualification.setSubject("Mechanical Engineering");
         qualification.setDegreeTitle("Bachelor of Science");
         qualification.setClassOfDegree("2nd Class Upper");
-        qualification.setSchool("Lagos State University of Technology");
+        qualification.setSchoolName("Lagos State University of Technology");
         qualification.setStartDate(LocalDate.parse("2010-09-01"));
         qualification.setEndDate(LocalDate.parse("2015-07-31"));
 
