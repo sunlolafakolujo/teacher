@@ -1,7 +1,6 @@
-package com.teacher.resetpassword.model;
+package com.teacher.password.model;
 
 import com.teacher.appuser.model.AppUser;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -49,6 +48,5 @@ public class PasswordResetToken {
         calendar.add(Calendar.MINUTE, expirationTime);
 
         return new Date(calendar.getTime().getTime());
-
     }
 }

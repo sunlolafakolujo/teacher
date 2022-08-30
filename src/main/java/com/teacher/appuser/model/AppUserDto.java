@@ -28,6 +28,20 @@ public class AppUserDto {
 
     private UserType userType;
 
+    private Title title;
+
+    private String firstName;
+
+    private String lastName;
+
+    private Gender gender;
+
+    private LocalDate dateOfBirth;
+
+    private Integer age;
+
+    private String schoolName;
+
     private String username;
 
     private String password;
@@ -36,23 +50,9 @@ public class AppUserDto {
 
     private String phone;
 
-    private String firstName;
-
-    private String lastName;
-
-    private String schoolName;
-
-    private Title title;
-
-    private Gender gender;
-
     private String picUrl;
 
     private String webSite;
-
-    private Integer age;
-
-    private LocalDate dateOfBirth;
 
     private String rcNumber;
 

@@ -33,6 +33,8 @@ public class SchoolDto {
 
     private String rcNumber;
 
+    private String picUrl;
+
     private Contact contact;
 
     private List<UserRole> userRoles;

@@ -2,6 +2,7 @@ package com.teacher.appuser.service;
 
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
+import com.teacher.staticdata.UserType;
 import com.teacher.verificationtoken.model.VerificationToken;
 import org.springframework.data.domain.Pageable;
 
@@ -39,6 +40,8 @@ public interface AppUserService {
     List<AppUser> findUserByLastName(String lastName, Pageable pageable);
 
     List<AppUser> findBySchoolName(String schoolName);
+
+    List<AppUser> findByUserType(UserType userType, Pageable pageable);
 
     List<AppUser> findAllUsers(Pageable pageable);
 

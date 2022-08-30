@@ -1,6 +1,6 @@
-package com.teacher.resetpassword.repository;
+package com.teacher.password.repository;
 
-import com.teacher.resetpassword.model.PasswordResetToken;
+import com.teacher.password.model.PasswordResetToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

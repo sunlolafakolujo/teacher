@@ -8,6 +8,7 @@ import com.teacher.staticdata.MeansOfIdentification;
 import com.teacher.staticdata.Title;
 import com.teacher.staticdata.UserType;
 import com.teacher.userrole.model.UserRole;
+import com.teacher.verificationtoken.model.VerificationToken;
 import com.teacher.workexperience.model.WorkExperience;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +36,22 @@ public class AppUser {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
+    @Enumerated(EnumType.STRING)
+    private Title title;
+
+    private String firstName;
+
+    private String lastName;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    private LocalDate dateOfBirth;
+
+    private Integer age;
+
+    private String schoolName;
+
     @NotBlank(message = "Username is required")
     @Column(unique = true)
     private String username;
@@ -51,27 +68,11 @@ public class AppUser {
     @NotBlank(message = "Phone is required")
     private String phone;
 
-    private Boolean enabled= false;
-
-    private String firstName;
-
-    private String lastName;
-
-    private String schoolName;
-
-    @Enumerated(EnumType.STRING)
-    private Title title;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
     private String picUrl;
 
+    private Boolean enabled= false;
+
     private String webSite;
-
-    private Integer age;
-
-    private LocalDate dateOfBirth;
 
     @Enumerated(EnumType.STRING)
     private MeansOfIdentification meansOfIdentification;

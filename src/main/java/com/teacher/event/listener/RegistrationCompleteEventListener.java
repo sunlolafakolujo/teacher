@@ -32,6 +32,5 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         String url= event.getApplicationUrl() + "/api/appUser/verifyRegistration/" + token;
 
         log.info("click the link to verify your account: {}", url);
-
     }
 }

@@ -4,7 +4,7 @@ import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.*;
 import com.teacher.appuser.service.AppUserService;
 import com.teacher.event.RegistrationCompleteEvent;
-import com.teacher.resetpassword.model.PasswordModel;
+import com.teacher.password.model.PasswordModel;
 import com.teacher.staticdata.UserType;
 import com.teacher.userrole.model.UserRole;
 import com.teacher.userrole.service.UserRoleService;
@@ -304,16 +304,13 @@ public class AppUserRestController {
         return url;
     }
 
-
-
-
-
-
     private AppUserDto convertAppUserToDto(AppUser appUser){
 
         AppUserDto appUserDto=new AppUserDto();
 
         appUserDto.setUserType(appUser.getUserType());
+        appUserDto.setUsername(appUser.getUsername());
+        appUserDto.setPassword(appUser.getPassword());
         appUserDto.setEmail(appUser.getEmail());
         appUserDto.setAge(appUserDto.getAge());
         appUserDto.setMeansOfIdentification(appUser.getMeansOfIdentification());

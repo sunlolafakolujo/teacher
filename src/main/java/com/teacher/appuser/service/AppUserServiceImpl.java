@@ -3,8 +3,9 @@ package com.teacher.appuser.service;
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
-import com.teacher.resetpassword.model.PasswordResetToken;
-import com.teacher.resetpassword.repository.PasswordResetTokenRepository;
+import com.teacher.password.model.PasswordResetToken;
+import com.teacher.password.repository.PasswordResetTokenRepository;
+import com.teacher.staticdata.UserType;
 import com.teacher.userrole.repository.UserRoleRepository;
 import com.teacher.verificationtoken.model.VerificationToken;
 import com.teacher.verificationtoken.repository.VerificationTokenRepository;
@@ -98,17 +99,6 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
-    public AppUser findUserByUsername(String username) throws AppUserNotFoundException {
-        AppUser appUser= appUserRepository.findUserByUsername(username);
-
-        if (appUser==null){
-            throw new AppUserNotFoundException("User with username "+username+" Not Found");
-        }
-
-        return appUser;
-    }
-
-    @Override
     public String validatePasswordRestToken(String token) {
         PasswordResetToken passwordResetToken=passwordResetTokenRepository.findByToken(token);
 
@@ -143,6 +133,17 @@ public class AppUserServiceImpl implements AppUserService{
     public AppUser findUserById(Long id) throws AppUserNotFoundException {
         AppUser appUser=appUserRepository.findById(id)
                 .orElseThrow(()->new AppUserNotFoundException("User ID "+id+" Not Found"));
+
+        return appUser;
+    }
+
+    @Override
+    public AppUser findUserByUsername(String username) throws AppUserNotFoundException {
+        AppUser appUser= appUserRepository.findUserByUsername(username);
+
+        if (appUser==null){
+            throw new AppUserNotFoundException("User with username "+username+" Not Found");
+        }
 
         return appUser;
     }
@@ -191,6 +192,16 @@ public class AppUserServiceImpl implements AppUserService{
     public List<AppUser> findBySchoolName(String schoolName) {
 
         return appUserRepository.findBySchoolName(schoolName);
+    }
+
+    @Override
+    public List<AppUser> findByUserType(UserType userType, Pageable pageable) {
+
+        pageable=PageRequest.of(0, 10);
+
+        List<AppUser> appUserPage=appUserRepository.findByUserType(userType, pageable);
+
+        return appUserPage;
     }
 
     @Override
@@ -246,7 +257,6 @@ public class AppUserServiceImpl implements AppUserService{
         if (optionalAppUser.isPresent()){
             throw new AppUserNotFoundException("User ID "+id+" is Not Deleted");
         }
-
     }
 
     @Override
