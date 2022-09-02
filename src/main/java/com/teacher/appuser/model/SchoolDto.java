@@ -19,6 +19,8 @@ public class SchoolDto {
     @JsonIgnore
     private Long id;
 
+    private String userId;
+
     private UserType userType;
 
     private String schoolName;
@@ -34,6 +36,8 @@ public class SchoolDto {
     private String rcNumber;
 
     private String picUrl;
+
+    private String webSite;
 
     private Contact contact;
 

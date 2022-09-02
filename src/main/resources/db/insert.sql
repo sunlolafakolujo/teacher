@@ -18,5 +18,5 @@ VALUES ('Toye','Okedara','tokedara@yahoo,com','09087654223','https://resources.w
 
 
 INSERT INTO user_role(role_name)
-VALUES ('TEACHER'),('SCHOOL'),('PARENT');
+VALUES ('TEACHER'),('SCHOOL'),('PARENT'),('ADMIN');
 

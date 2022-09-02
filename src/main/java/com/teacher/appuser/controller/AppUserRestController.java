@@ -57,6 +57,8 @@ public class AppUserRestController {
 
         schoolDto.setUserRoles(userRoles);
 
+        schoolDto.setUserId("SCH-".concat(UUID.randomUUID().toString()));
+
         AppUser appUser=modelMapper.map(schoolDto, AppUser.class);
 
         AppUser post=appUserService.userRegistration(appUser);
@@ -82,6 +84,8 @@ public class AppUserRestController {
         userRoles.add(userRole);
 
         teacherDto.setUserRoles(userRoles);
+
+        teacherDto.setUserId("TCH-".concat(UUID.randomUUID().toString()));
 
         teacherDto.setAge(Period.between(teacherDto.getDateOfBirth(),LocalDate.now()).getYears());
 
@@ -112,6 +116,8 @@ public class AppUserRestController {
 
         parentDto.setUserRoles(userRoles);
 
+        parentDto.setUserId("PAR-".concat(UUID.randomUUID().toString()));
+
         AppUser appUser=modelMapper.map(parentDto, AppUser.class);
 
         AppUser post= appUserService.userRegistration(appUser);
@@ -125,8 +131,8 @@ public class AppUserRestController {
         return new ResponseEntity<>(posted, HttpStatus.CREATED);
     }
 
-    @PostMapping("resetPassword")
-    public String resetPassword(@RequestBody PasswordModel passwordModel,
+    @PostMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(@RequestBody PasswordModel passwordModel,
                                 HttpServletRequest httpServletRequest) throws AppUserNotFoundException {
 
         AppUser appUser=appUserService.findUserByUsername(passwordModel.getUsername());
@@ -140,13 +146,13 @@ public class AppUserRestController {
             url=passwordResetTokenMail(appUser,applicationUrl(httpServletRequest),token);
         }
 
-        return url;
+        return new ResponseEntity<>(url, HttpStatus.OK);
     }
 
-    @PostMapping("/savePassword")
-    public String savePassword(@RequestParam("token") String token, @RequestBody PasswordModel passwordModel){
+    @PostMapping("/savePassword/{token}")
+    public String savePassword(@PathVariable(value= "token") String token, @RequestBody PasswordModel passwordModel){
 
-        String result=appUserService.validatePasswordRestToken(token);
+        String result=appUserService.validatePasswordResetToken(token);
 
         if (!result.equalsIgnoreCase("valid")){
             return "Invalid Token";
@@ -163,6 +169,19 @@ public class AppUserRestController {
         }else return "Invalid Token";
     }
 
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestBody PasswordModel passwordModel) throws AppUserNotFoundException {
+        AppUser appUser=appUserService.findUserByUsername(passwordModel.getUsername());
+
+        if (!appUserService.checkIfOldPassword(appUser, passwordModel.getOldPassword())){
+
+            return "Invalid Old Password";
+        }
+
+        return "Password changed successfully";
+
+    }
+
     @GetMapping("/verifyRegistration/{token}")
     public String verifyRegistration(@PathVariable(value="token") String token){
         String result =appUserService.validateVerificationToken(token);
@@ -174,8 +193,8 @@ public class AppUserRestController {
         return "Bad User";
     }
 
-    @GetMapping("/resendVerificationToken")
-    public String resendVerificationToken(@RequestParam("token") String oldToken, HttpServletRequest httpServletRequest){
+    @GetMapping("/resendVerificationToken/{token}")
+    public String resendVerificationToken(@PathVariable(value = "token") String oldToken, HttpServletRequest httpServletRequest){
         VerificationToken verificationToken=appUserService.generateNewVerificationToken(oldToken);
 
         AppUser appUser=verificationToken.getAppUser();
@@ -289,17 +308,17 @@ public class AppUserRestController {
 
     private void resendVerificationTokenMail(AppUser appUser, String applicationUrl, VerificationToken verificationToken) {
         String url=
-                applicationUrl + "/verifyRegistration?token=" + verificationToken.getToken();
+                applicationUrl + "/api/appUser/verifyRegistration/" + verificationToken.getToken();
 
-        log.info("click the link to verify your account: {}", url);
+        log.info("Click the link to verify your account: {}", url);
     }
 
     private String passwordResetTokenMail(AppUser appUser, String applicationUrl, String token) {
 
         String url=
-                applicationUrl + "/savePassword?token=" + token;
+                applicationUrl + "/savePassword/" + token;
 
-        log.info("click the link to Reset your password: {}", url);
+        log.info("Click the link to Reset your password: {}", url);
 
         return url;
     }
@@ -308,6 +327,7 @@ public class AppUserRestController {
 
         AppUserDto appUserDto=new AppUserDto();
 
+        appUserDto.setUserId(appUser.getUserId());
         appUserDto.setUserType(appUser.getUserType());
         appUserDto.setUsername(appUser.getUsername());
         appUserDto.setPassword(appUser.getPassword());

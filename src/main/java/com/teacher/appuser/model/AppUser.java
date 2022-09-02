@@ -33,6 +33,8 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String userId;
+
     @Enumerated(EnumType.STRING)
     private UserType userType;
 

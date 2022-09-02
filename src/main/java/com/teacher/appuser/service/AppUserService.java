@@ -23,11 +23,13 @@ public interface AppUserService {
 
     AppUser findUserByUsername(String username) throws AppUserNotFoundException;
 
-    String validatePasswordRestToken(String token);
+    String validatePasswordResetToken(String token);
 
     Optional<AppUser> getUserByPasswordResetToken(String token);
 
     void changePassword(AppUser appUser, String newPassword);
+
+    boolean checkIfOldPassword(AppUser appUser, String oldPassword);
 
     AppUser findUserById(Long id) throws AppUserNotFoundException;
 

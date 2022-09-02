@@ -59,7 +59,7 @@ public class AppUserServiceImpl implements AppUserService{
         VerificationToken verificationToken=verificationTokenRepository.findByToken(token);
 
         if (verificationToken== null){
-            return "invalid";
+            return "invalid token";
         }
 
         AppUser appUser=verificationToken.getAppUser();
@@ -70,13 +70,13 @@ public class AppUserServiceImpl implements AppUserService{
 
             verificationTokenRepository.delete(verificationToken);
 
-            return "expired";
+            return "token expired";
         }
 
         appUser.setEnabled(true);
         appUserRepository.save(appUser);
 
-        return "valid";
+        return "valid token";
     }
 
     @Override
@@ -99,7 +99,7 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
-    public String validatePasswordRestToken(String token) {
+    public String validatePasswordResetToken(String token) {
         PasswordResetToken passwordResetToken=passwordResetTokenRepository.findByToken(token);
 
         if (passwordResetToken==null){
@@ -127,6 +127,11 @@ public class AppUserServiceImpl implements AppUserService{
         appUser.setPassword(passwordEncoder.encode(newPassword));
 
         appUserRepository.save(appUser);
+    }
+
+    @Override
+    public boolean checkIfOldPassword(AppUser appUser, String oldPassword) {
+        return passwordEncoder.matches(oldPassword, appUser.getPassword());
     }
 
     @Override
@@ -263,5 +268,6 @@ public class AppUserServiceImpl implements AppUserService{
     public void deleteAllUsers() {
         appUserRepository.deleteAll();
     }
+
 
 }

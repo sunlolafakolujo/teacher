@@ -26,6 +26,8 @@ public class TeacherDto {
     @JsonIgnore
     private Long id;
 
+    private String userId;
+
     private UserType userType;
 
     private Title title;
