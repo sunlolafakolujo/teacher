@@ -151,9 +151,6 @@ public class AppUserRestController {
            passwordResetTokenMail(applicationUrl(httpServletRequest),token,appUser);
         }
 
-//        return new ResponseEntity<>(messageSource.getMessage("message.resetPasswordEmail",
-//                null, httpServletRequest.getLocale()), HttpStatus.OK);
-
         return ResponseEntity.ok("You should receive an Password Reset Email shortly");
     }
 
