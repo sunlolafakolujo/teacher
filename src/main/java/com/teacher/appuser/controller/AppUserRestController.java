@@ -37,12 +37,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AppUserRestController {
 
-//    private final JavaMailSender javaMailSender;
-
-    private final MessageSource messageSource;
-
-    private final Environment environment;
-
     private final AppUserService appUserService;
 
     private final UserRoleService userRoleService;
