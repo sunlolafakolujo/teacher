@@ -10,6 +10,7 @@ import com.teacher.userrole.repository.UserRoleRepository;
 import com.teacher.verificationtoken.model.VerificationToken;
 import com.teacher.verificationtoken.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContextException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +40,11 @@ public class AppUserServiceImpl implements AppUserService{
     private PasswordResetTokenRepository passwordResetTokenRepository;
 
     @Override
-    public AppUser userRegistration(AppUser appUser) {
+    public AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException {
+//
+//        if(appUser.getUsername() !=null || appUser.getEmail()!=null || appUser.getPhone()!=null){
+//            throw new AppUserNotFoundException("User "+appUser+" already exist");
+//        }
 
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
 
@@ -59,7 +64,8 @@ public class AppUserServiceImpl implements AppUserService{
         VerificationToken verificationToken=verificationTokenRepository.findByToken(token);
 
         if (verificationToken== null){
-            return "invalid token";
+//            return "invalid token";
+            throw new ApplicationContextException("Invalid Token");
         }
 
         AppUser appUser=verificationToken.getAppUser();
@@ -70,13 +76,14 @@ public class AppUserServiceImpl implements AppUserService{
 
             verificationTokenRepository.delete(verificationToken);
 
-            return "token expired";
+//            return "token expired";
+            throw new ApplicationContextException("Token Expired");
         }
 
-        appUser.setEnabled(true);
+        appUser.setIsEnabled(true);
         appUserRepository.save(appUser);
 
-        return "valid token";
+        return "Valid token";
     }
 
     @Override
@@ -91,7 +98,7 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
-    public void createPasswordTokenForUser(AppUser appUser, String token) {
+    public void savePasswordTokenForUser(AppUser appUser, String token) {
 
         PasswordResetToken passwordResetToken=new PasswordResetToken(token, appUser);
 
@@ -106,7 +113,6 @@ public class AppUserServiceImpl implements AppUserService{
             return "invalid";
         }
 
-//        AppUser appUser=passwordResetToken.getAppUser();
         Calendar calendar=Calendar.getInstance();
 
         if(passwordResetToken.getExpirationTime().getTime()- calendar.getTime().getTime()<=0){

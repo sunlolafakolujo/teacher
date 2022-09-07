@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
+import java.util.Locale;
+
 @Setter
 @Getter
 public class RegistrationCompleteEvent extends ApplicationEvent {

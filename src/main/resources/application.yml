@@ -1,19 +1,40 @@
-spring:
-  datasource:
-    username: teacher
-    initialization-mode: always
-    schema: classpath:/schema.sql
-    url: jdbc:postgresql://localhost:5432/teacherdb
-    continue-on-error: 'true'
-    password: teacher123
-    initialize: 'true'
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        jdbc:
-          lob:
-            non_contextual_creation: 'true'
-    hibernate:
-      show-sql: 'true'
-      ddl-auto: create
+#spring:
+#  datasource:
+#    username: teacher
+#    initialization-mode: always
+#    schema: classpath:/schema.sql
+#    url: jdbc:postgresql://localhost:5432/teacherdb
+#    continue-on-error: true
+#    password: teacher123
+#    initialize: true
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        jdbc:
+#          lob:
+#            non_contextual_creation: true
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: create
+#
+#    mail:
+#      username: ${EMAIL}
+#      password: ${PASSWORD}
+#      port: 587
+#      host: smtp.gmail.com
+#      properties:
+#          mail:
+#            transport:
+#              protocol:smtp
+#            debug: true
+#            smtp:
+#              ssl:
+#                trust: "*"
+#              auth: true
+#              starttls:
+#                enable: true
+#                required: true
+#              connectiontimeout: 8000
+#              timeout: 6000
+#

@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface AppUserService {
 
-    AppUser userRegistration(AppUser appUser);
+    AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException;
 
     void saveVerificationTokenForUser(String token, AppUser appUser);
 
@@ -19,9 +19,7 @@ public interface AppUserService {
 
     VerificationToken generateNewVerificationToken(String oldToken);
 
-    void createPasswordTokenForUser(AppUser appUser, String token);
-
-    AppUser findUserByUsername(String username) throws AppUserNotFoundException;
+    void savePasswordTokenForUser(AppUser appUser, String token);
 
     String validatePasswordResetToken(String token);
 
@@ -32,6 +30,8 @@ public interface AppUserService {
     boolean checkIfOldPassword(AppUser appUser, String oldPassword);
 
     AppUser findUserById(Long id) throws AppUserNotFoundException;
+
+    AppUser findUserByUsername(String username) throws AppUserNotFoundException;
 
     AppUser findUserByEmail(String email) throws AppUserNotFoundException;
 

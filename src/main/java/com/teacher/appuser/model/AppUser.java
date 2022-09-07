@@ -72,7 +72,7 @@ public class AppUser {
 
     private String picUrl;
 
-    private Boolean enabled= false;
+    private Boolean isEnabled = false;
 
     private String webSite;
 

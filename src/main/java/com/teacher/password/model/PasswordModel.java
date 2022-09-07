@@ -11,6 +11,7 @@ public class  PasswordModel {
     private String username;
     private String email;
     private String phone;
+    private String token;
     private String oldPassword;
     private String newPassword;
 }
