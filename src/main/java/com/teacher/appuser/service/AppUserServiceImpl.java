@@ -3,14 +3,9 @@ package com.teacher.appuser.service;
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
-import com.teacher.password.model.PasswordResetToken;
-import com.teacher.password.repository.PasswordResetTokenRepository;
+import com.teacher.password.repository.PasswordTokenRepository;
 import com.teacher.staticdata.UserType;
-import com.teacher.userrole.repository.UserRoleRepository;
-import com.teacher.verificationtoken.model.VerificationToken;
-import com.teacher.verificationtoken.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContextException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,116 +23,17 @@ public class AppUserServiceImpl implements AppUserService{
     private AppUserRepository appUserRepository;
 
     @Autowired
-    private VerificationTokenRepository verificationTokenRepository;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
-
-    @Autowired
-    private PasswordResetTokenRepository passwordResetTokenRepository;
+    private PasswordTokenRepository passwordResetTokenRepository;
 
     @Override
     public AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException {
-//
-//        if(appUser.getUsername() !=null || appUser.getEmail()!=null || appUser.getPhone()!=null){
-//            throw new AppUserNotFoundException("User "+appUser+" already exist");
-//        }
 
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
 
         return appUserRepository.save(appUser);
-    }
-
-    @Override
-    public void saveVerificationTokenForUser(String token, AppUser appUser) {
-
-        VerificationToken verificationToken=new VerificationToken(token, appUser);
-
-        verificationTokenRepository.save(verificationToken);
-    }
-
-    @Override
-    public String validateVerificationToken(String token) {
-        VerificationToken verificationToken=verificationTokenRepository.findByToken(token);
-
-        if (verificationToken== null){
-//            return "invalid token";
-            throw new ApplicationContextException("Invalid Token");
-        }
-
-        AppUser appUser=verificationToken.getAppUser();
-        Calendar calendar=Calendar.getInstance();
-
-        if((verificationToken.getExpirationTime().getTime()
-                - calendar.getTime().getTime())<=0){
-
-            verificationTokenRepository.delete(verificationToken);
-
-//            return "token expired";
-            throw new ApplicationContextException("Token Expired");
-        }
-
-        appUser.setIsEnabled(true);
-        appUserRepository.save(appUser);
-
-        return "Valid token";
-    }
-
-    @Override
-    public VerificationToken generateNewVerificationToken(String oldToken) {
-        VerificationToken verificationToken=verificationTokenRepository.findByToken(oldToken);
-
-        verificationToken.setToken(UUID.randomUUID().toString());
-
-        verificationTokenRepository.save(verificationToken);
-
-        return verificationToken;
-    }
-
-    @Override
-    public void savePasswordTokenForUser(AppUser appUser, String token) {
-
-        PasswordResetToken passwordResetToken=new PasswordResetToken(token, appUser);
-
-        passwordResetTokenRepository.save(passwordResetToken);
-    }
-
-    @Override
-    public String validatePasswordResetToken(String token) {
-        PasswordResetToken passwordResetToken=passwordResetTokenRepository.findByToken(token);
-
-        if (passwordResetToken==null){
-            return "invalid";
-        }
-
-        Calendar calendar=Calendar.getInstance();
-
-        if(passwordResetToken.getExpirationTime().getTime()- calendar.getTime().getTime()<=0){
-            passwordResetTokenRepository.delete(passwordResetToken);
-            return "expired";
-        }
-
-        return "valid ";
-    }
-
-    @Override
-    public Optional<AppUser> getUserByPasswordResetToken(String token) {
-        return Optional.ofNullable(passwordResetTokenRepository.findByToken(token).getAppUser());
-    }
-
-    @Override
-    public void changePassword(AppUser appUser, String newPassword) {
-        appUser.setPassword(passwordEncoder.encode(newPassword));
-
-        appUserRepository.save(appUser);
-    }
-
-    @Override
-    public boolean checkIfOldPassword(AppUser appUser, String oldPassword) {
-        return passwordEncoder.matches(oldPassword, appUser.getPassword());
     }
 
     @Override

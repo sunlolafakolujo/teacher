@@ -7,4 +7,5 @@ public interface UserRoleService {
 
     UserRole saveUserRole(UserRole userRole);
     UserRole findUserRoleByName(String roleName);
+    void addRoleToUser(String username, String roleName);
 }

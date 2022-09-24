@@ -19,13 +19,13 @@ public interface AppUserRepositoryCustom {
     @Query("From AppUser a Where a.phone=?1")
     AppUser findUserByPhone(String phone);
 
-    @Query("From AppUser a Where a.firstName Like %?#{[0].toUpperCase}%")
+    @Query("From AppUser a Where a.firstName Like %?1%")
     List<AppUser> findUserByFirstName(String firstName, Pageable pageable);
 
-    @Query("From AppUser a Where a.lastName Like %?#{[0].toUpperCase}%")
+    @Query("From AppUser a Where a.lastName Like %?1%")
     List<AppUser> findUserByLastName(String lastName, Pageable pageable);
 
-    @Query("From AppUser a Where a.schoolName Like %?#{[0].toUpperCase}%")
+    @Query("From AppUser a Where a.schoolName Like %?1%")
     List<AppUser> findBySchoolName(String schoolName);
 
     @Query("From AppUser a Where a.userType=?1")

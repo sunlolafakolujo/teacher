@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @Entity
 @NoArgsConstructor
-public class PasswordResetToken {
+public class PasswordToken {
 
     private static final Integer EXPIRATION_TIME = 10;
 
@@ -29,14 +29,14 @@ public class PasswordResetToken {
             foreignKey = @ForeignKey(name = "FK_APP_USER_PASSWORD_TOKEN"))
     private AppUser appUser;
 
-    public PasswordResetToken(String token, AppUser appUser) {
+    public PasswordToken(String token, AppUser appUser) {
         super();
         this.token = token;
         this.appUser = appUser;
         this.expirationTime = calculateExpirationDate(EXPIRATION_TIME);
     }
 
-    public PasswordResetToken(String token) {
+    public PasswordToken(String token) {
         super();
         this.token = token;
         this.expirationTime = calculateExpirationDate(EXPIRATION_TIME);

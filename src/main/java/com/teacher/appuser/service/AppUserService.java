@@ -13,21 +13,15 @@ public interface AppUserService {
 
     AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException;
 
-    void saveVerificationTokenForUser(String token, AppUser appUser);
-
-    String validateVerificationToken(String token);
-
-    VerificationToken generateNewVerificationToken(String oldToken);
-
-    void savePasswordTokenForUser(AppUser appUser, String token);
-
-    String validatePasswordResetToken(String token);
-
-    Optional<AppUser> getUserByPasswordResetToken(String token);
-
-    void changePassword(AppUser appUser, String newPassword);
-
-    boolean checkIfOldPassword(AppUser appUser, String oldPassword);
+//    void savePasswordTokenForUser(AppUser appUser, String token);
+//
+//    String validatePasswordResetToken(String token);
+//
+//    Optional<AppUser> getUserByPasswordResetToken(String token);
+//
+//    void changePassword(AppUser appUser, String newPassword);
+//
+//    boolean checkIfOldPassword(AppUser appUser, String oldPassword);
 
     AppUser findUserById(Long id) throws AppUserNotFoundException;
 
