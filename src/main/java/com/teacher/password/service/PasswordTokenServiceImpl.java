@@ -24,8 +24,9 @@ public class PasswordTokenServiceImpl implements PasswordTokenService{
         return Optional.ofNullable(passwordTokenRepository.findByToken(token).getAppUser());
     }
 
+
     @Override
-    public PasswordToken savePasswordTokenForUser(String token, AppUser appUser) {
+    public PasswordToken createPasswordResetTokenForUser(String token, AppUser appUser) {
         PasswordToken passwordToken=new PasswordToken(token, appUser);
         return passwordTokenRepository.save(passwordToken);
     }
@@ -45,9 +46,8 @@ public class PasswordTokenServiceImpl implements PasswordTokenService{
     }
 
     @Override
-    public void changeUserPassword(AppUser appUser, String password) {
-        AppUser appUserUsername=appUserRepository.findUserByUsername(appUser.getUsername());
-        appUserUsername.setPassword(passwordEncoder.encode(password));
+    public void changeUserPassword(AppUser appUser, String newPassword) {
+        appUser.setPassword(passwordEncoder.encode(newPassword));
         appUserRepository.save(appUser);
     }
 

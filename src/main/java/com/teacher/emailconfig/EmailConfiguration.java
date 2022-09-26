@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Getter
 public class EmailConfiguration {
 
-    @Value("${smtp.mailtrap.io}")
+    @Value("${spring.mail.host}")
     private String host;
 
     @Value("${spring.mail.port}")

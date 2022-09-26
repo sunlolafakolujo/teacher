@@ -54,6 +54,6 @@ public class VerificationTokenController {
     }
 
     private String applicationUrl(HttpServletRequest request){
-        return "http://" + request.getServerName()+ request.getServerPort()+ request.getContextPath();
+        return "http://" + request.getServerName()+":"+ request.getServerPort()+ request.getContextPath();
     }
 }

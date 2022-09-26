@@ -85,10 +85,6 @@ public class AppUserSearchRestController {
     }
 
 
-
-
-
-
     private AppUserDto convertAppUserToDto(AppUser appUser){
 
         AppUserDto appUserDto=new AppUserDto();

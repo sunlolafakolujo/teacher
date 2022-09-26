@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,14 +21,15 @@ public class VerificationTokenImpl implements VerificationTokenService{
     @Override
     public VerificationToken findVerificationByToken(String token) throws VerificationTokeNotFoundException {
         VerificationToken verificationToken=verificationTokenRepository.findByToken(token);
+        if (verificationToken==null){
+            throw new VerificationTokeNotFoundException("Token Not Found");
+        }
         return verificationToken;
     }
 
     @Override
-    public VerificationToken findVerificationTokenByUser(AppUser appUser, String username) {
-        AppUser user=appUserRepository.findUserByUsername(username);
-        VerificationToken token=verificationTokenRepository.findByUser(user);
-        return token;
+    public Optional<AppUser> findVerificationTokenByUser(String token) {
+        return Optional.ofNullable(verificationTokenRepository.findByToken(token).getAppUser());
     }
 
     @Override

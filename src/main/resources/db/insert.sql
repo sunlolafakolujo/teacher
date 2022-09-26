@@ -15,8 +15,6 @@ INSERT INTO referee(first_name,last_name,email,phone,reference_letter)
 VALUES ('Toye','Okedara','tokedara@yahoo,com','09087654223','https://resources.workable.com/wp-content/uploads/2016/02/screencapture-resources-workable-employee-reference-letter-2021-04-01-15_38_11.png'),
        ('Tokunbo', 'Akeju','ta@gmail.com','07086545617','https://resumegenius.com/letter-of-recommendation');
 
-
-
 INSERT INTO user_role(role_name)
 VALUES ('TEACHER'),('SCHOOL'),('PARENT'),('ADMIN');
 
