@@ -27,11 +27,7 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Override
     public AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException {
-        if (appUser.getUsername()!=null || appUser.getEmail()!=null || appUser.getPhone()!=null){
-            throw new AppUserNotFoundException("User already exist");
-        }
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
-
         return appUserRepository.save(appUser);
     }
 
@@ -46,11 +42,9 @@ public class AppUserServiceImpl implements AppUserService{
     @Override
     public AppUser findUserByUsername(String username) throws AppUserNotFoundException {
         AppUser appUser= appUserRepository.findUserByUsername(username);
-
         if (appUser==null){
             throw new AppUserNotFoundException("User with username "+username+" Not Found");
         }
-
         return appUser;
     }
 
@@ -66,7 +60,6 @@ public class AppUserServiceImpl implements AppUserService{
     @Override
     public AppUser findUserByPhone(String phone) throws AppUserNotFoundException {
         AppUser  appUser=appUserRepository.findUserByPhone(phone);
-
         if (appUser==null){
             throw new AppUserNotFoundException("User with phone number "+phone+" Not Found");
         }

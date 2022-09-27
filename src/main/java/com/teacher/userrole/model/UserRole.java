@@ -21,6 +21,7 @@ public class UserRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String roleName;
     @JsonIgnore
     @ToString.Exclude

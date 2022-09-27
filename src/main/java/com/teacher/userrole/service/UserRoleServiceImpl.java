@@ -26,10 +26,7 @@ public class UserRoleServiceImpl implements UserRoleService{
     private AppUserRepository appUserRepository;
 
     @Override
-    public UserRole saveUserRole(UserRole userRole) throws UserRoleNotFoundException {
-        if (userRole.getRoleName()!=null){
-            throw new UserRoleNotFoundException("Role Already Exist");
-        }
+    public UserRole saveUserRole(UserRole userRole) {
         return userRoleRepository.save(userRole);
     }
 
