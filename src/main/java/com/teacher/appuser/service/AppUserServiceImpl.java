@@ -25,12 +25,11 @@ public class AppUserServiceImpl implements AppUserService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordTokenRepository passwordResetTokenRepository;
-
     @Override
     public AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException {
-
+        if (appUser.getUsername()!=null || appUser.getEmail()!=null || appUser.getPhone()!=null){
+            throw new AppUserNotFoundException("User already exist");
+        }
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
 
         return appUserRepository.save(appUser);
@@ -58,7 +57,6 @@ public class AppUserServiceImpl implements AppUserService{
     @Override
     public AppUser findUserByEmail(String email) throws AppUserNotFoundException {
         AppUser appUser=appUserRepository.findUserByEmail(email);
-
         if (appUser==null){
             throw new AppUserNotFoundException("User with email "+email+" Not Found");
         }
@@ -77,46 +75,34 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Override
     public List<AppUser> findUserByFirstName(String firstName, Pageable pageable) {
-
         pageable =PageRequest.of(0, 10);
-
         List<AppUser> appUserPage=appUserRepository.findUserByFirstName(firstName, pageable);
-
         return appUserPage;
     }
 
     @Override
     public List<AppUser> findUserByLastName(String lastName, Pageable pageable) {
-
         pageable =PageRequest.of(0, 10);
-
         List<AppUser> appUserPage=appUserRepository.findUserByFirstName(lastName, pageable);
-
         return appUserPage;
     }
 
     @Override
     public List<AppUser> findBySchoolName(String schoolName) {
-
         return appUserRepository.findBySchoolName(schoolName);
     }
 
     @Override
     public List<AppUser> findByUserType(UserType userType, Pageable pageable) {
-
         pageable=PageRequest.of(0, 10);
-
         List<AppUser> appUserPage=appUserRepository.findByUserType(userType, pageable);
-
         return appUserPage;
     }
 
     @Override
     public List<AppUser> findAllUsers(Pageable pageable) {
         pageable=PageRequest.of(0, 10);
-
         Page<AppUser> appUserPage=appUserRepository.findAll(pageable);
-
         return appUserPage.toList();
     }
 
@@ -124,7 +110,6 @@ public class AppUserServiceImpl implements AppUserService{
     public AppUser updateUser(AppUser appUser, Long id) throws AppUserNotFoundException {
         AppUser savedAppUser=appUserRepository.findById(id)
                 .orElseThrow(()->new AppUserNotFoundException("User ID "+id+" Not Found"));
-
         if (Objects.nonNull(appUser.getFirstName()) && !"".equalsIgnoreCase(appUser.getFirstName())){
             savedAppUser.setFirstName(appUser.getFirstName());
         }if (Objects.nonNull(appUser.getLastName()) && !"".equalsIgnoreCase(appUser.getLastName())){
@@ -158,9 +143,7 @@ public class AppUserServiceImpl implements AppUserService{
     @Override
     public void deleteUserById(Long id) throws AppUserNotFoundException {
         appUserRepository.deleteById(id);
-
         Optional<AppUser> optionalAppUser=appUserRepository.findById(id);
-
         if (optionalAppUser.isPresent()){
             throw new AppUserNotFoundException("User ID "+id+" is Not Deleted");
         }

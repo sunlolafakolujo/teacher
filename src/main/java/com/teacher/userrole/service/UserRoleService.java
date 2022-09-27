@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface UserRoleService {
 
-    UserRole saveUserRole(UserRole userRole);
-    UserRole findUserRoleByName(String roleName);
+    UserRole saveUserRole(UserRole userRole) throws UserRoleNotFoundException;
+    UserRole findRoleById(Long id) throws UserRoleNotFoundException;
+    UserRole findUserRoleByName(String roleName) throws UserRoleNotFoundException;
     void addRoleToUser(String username, String roleName);
     List<UserRole> findAllRoles(Pageable pageable);
     UserRole updateRole(UserRole userRole,Long id) throws UserRoleNotFoundException;

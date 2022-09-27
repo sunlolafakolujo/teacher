@@ -1,4 +1,4 @@
-package com.teacher.reference.dao;
+package com.teacher.reference.repository;
 
 import com.teacher.reference.model.Referee;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,6 @@
 package com.teacher.reference.service;
 
-import com.teacher.reference.dao.RefereeRepository;
+import com.teacher.reference.repository.RefereeRepository;
 import com.teacher.reference.exception.ReferenceNotFoundException;
 import com.teacher.reference.model.Referee;
 import org.springframework.beans.factory.annotation.Autowired;

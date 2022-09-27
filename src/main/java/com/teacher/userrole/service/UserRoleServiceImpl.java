@@ -26,13 +26,26 @@ public class UserRoleServiceImpl implements UserRoleService{
     private AppUserRepository appUserRepository;
 
     @Override
-    public UserRole saveUserRole(UserRole userRole) {
+    public UserRole saveUserRole(UserRole userRole) throws UserRoleNotFoundException {
+        if (userRole.getRoleName()!=null){
+            throw new UserRoleNotFoundException("Role Already Exist");
+        }
         return userRoleRepository.save(userRole);
     }
 
     @Override
-    public UserRole findUserRoleByName(String roleName) {
+    public UserRole findRoleById(Long id) throws UserRoleNotFoundException {
+        UserRole userRole=userRoleRepository.findById(id)
+                .orElseThrow(()->new UserRoleNotFoundException("Role Not Found"));
+        return userRole;
+    }
+
+    @Override
+    public UserRole findUserRoleByName(String roleName) throws UserRoleNotFoundException {
         UserRole userRole=userRoleRepository.findUserRoleByName(roleName);
+        if (userRole==null){
+            throw new UserRoleNotFoundException("Role Not Found");
+        }
         return userRole;
     }
 
@@ -72,6 +85,6 @@ public class UserRoleServiceImpl implements UserRoleService{
 
     @Override
     public void deleteAllRoles() {
-
+        userRoleRepository.deleteAll();
     }
 }
