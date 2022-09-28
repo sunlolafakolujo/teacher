@@ -21,11 +21,11 @@ public interface AppUserService {
 
     AppUser findUserByPhone(String phone) throws AppUserNotFoundException;
 
-    List<AppUser> findUserByFirstName(String firstName, Pageable pageable);
+    List<AppUser> findUserByFirstName(String firstName, Pageable pageable) throws AppUserNotFoundException;
 
-    List<AppUser> findUserByLastName(String lastName, Pageable pageable);
+    List<AppUser> findUserByLastName(String lastName, Pageable pageable) throws AppUserNotFoundException;
 
-    List<AppUser> findBySchoolName(String schoolName);
+    List<AppUser> findBySchoolName(String schoolName, Pageable pageable) throws AppUserNotFoundException;
 
     List<AppUser> findByUserType(UserType userType, Pageable pageable);
 

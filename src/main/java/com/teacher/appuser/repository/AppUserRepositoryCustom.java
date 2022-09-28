@@ -26,7 +26,7 @@ public interface AppUserRepositoryCustom {
     List<AppUser> findUserByLastName(String lastName, Pageable pageable);
 
     @Query("From AppUser a Where a.schoolName Like %?1%")
-    List<AppUser> findBySchoolName(String schoolName);
+    List<AppUser> findBySchoolName(String schoolName, Pageable pageable);
 
     @Query("From AppUser a Where a.userType=?1")
     List<AppUser> findByUserType(UserType userType, Pageable pageable);

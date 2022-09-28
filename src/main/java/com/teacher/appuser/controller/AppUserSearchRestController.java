@@ -75,7 +75,8 @@ public class AppUserSearchRestController {
     }
 
     @GetMapping("/findUserByFirstName/{firstName}")
-    public ResponseEntity<List<AppUserDto>> getUserByFirstName(@PathVariable(value = "firstName") String firstName){
+    public ResponseEntity<List<AppUserDto>> getUserByFirstName(@PathVariable(value = "firstName") String firstName)
+                                                                                throws AppUserNotFoundException {
         Pageable pageable=PageRequest.of(0, 10);
         return new ResponseEntity<>(appUserService.findUserByFirstName(firstName, pageable)
                 .stream()
@@ -85,7 +86,8 @@ public class AppUserSearchRestController {
     }
 
     @GetMapping("/findUserByLastName/{lastName}")
-    public ResponseEntity<List<AppUserDto>> getUserByLastName(@PathVariable(value = "lastName") String lastName){
+    public ResponseEntity<List<AppUserDto>> getUserByLastName(@PathVariable(value = "lastName") String lastName)
+                                                                                throws AppUserNotFoundException {
         Pageable pageable=PageRequest.of(0, 10);
         return new ResponseEntity<>(appUserService.findUserByLastName(lastName, pageable)
                 .stream()
@@ -95,8 +97,10 @@ public class AppUserSearchRestController {
     }
 
     @GetMapping("/findUserBySchoolName/{schoolName}")
-    public ResponseEntity<List<AppUserDto>> getUserBySchoolName(@PathVariable(value = "schoolName") String schoolName){
-        return new ResponseEntity<>(appUserService.findBySchoolName(schoolName)
+    public ResponseEntity<List<AppUserDto>> getUserBySchoolName(@PathVariable(value = "schoolName") String schoolName)
+                                                                                    throws AppUserNotFoundException {
+        Pageable pageable=PageRequest.of(0, 10);
+        return new ResponseEntity<>(appUserService.findBySchoolName(schoolName,pageable)
                 .stream()
                 .map(this::convertAppUserToDto)
                 .collect(Collectors.toList()), HttpStatus.OK);

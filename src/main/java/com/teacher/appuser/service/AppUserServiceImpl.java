@@ -63,26 +63,37 @@ public class AppUserServiceImpl implements AppUserService{
         if (appUser==null){
             throw new AppUserNotFoundException("User with phone number "+phone+" Not Found");
         }
-        return null;
+        return appUser;
     }
 
     @Override
-    public List<AppUser> findUserByFirstName(String firstName, Pageable pageable) {
+    public List<AppUser> findUserByFirstName(String firstName, Pageable pageable) throws AppUserNotFoundException {
         pageable =PageRequest.of(0, 10);
         List<AppUser> appUserPage=appUserRepository.findUserByFirstName(firstName, pageable);
+        if (appUserPage.isEmpty()){
+            throw new AppUserNotFoundException("Firstname "+firstName+" Not Found");
+        }
         return appUserPage;
     }
 
     @Override
-    public List<AppUser> findUserByLastName(String lastName, Pageable pageable) {
+    public List<AppUser> findUserByLastName(String lastName, Pageable pageable) throws AppUserNotFoundException {
         pageable =PageRequest.of(0, 10);
-        List<AppUser> appUserPage=appUserRepository.findUserByFirstName(lastName, pageable);
+        List<AppUser> appUserPage=appUserRepository.findUserByLastName(lastName, pageable);
+        if (appUserPage.isEmpty()){
+            throw new AppUserNotFoundException("Lastname "+lastName+" Not Found");
+        }
         return appUserPage;
     }
 
     @Override
-    public List<AppUser> findBySchoolName(String schoolName) {
-        return appUserRepository.findBySchoolName(schoolName);
+    public List<AppUser> findBySchoolName(String schoolName,Pageable pageable) throws AppUserNotFoundException {
+        pageable=PageRequest.of(0, 10);
+        List<AppUser> appUsers=appUserRepository.findBySchoolName(schoolName,pageable);
+        if (appUsers.isEmpty()){
+            throw new AppUserNotFoundException("School name "+schoolName+" Not Found");
+        }
+        return appUsers;
     }
 
     @Override
