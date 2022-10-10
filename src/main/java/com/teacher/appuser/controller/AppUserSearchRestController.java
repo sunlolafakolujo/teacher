@@ -98,6 +98,11 @@ public class AppUserSearchRestController {
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @GetMapping("/countUsers")
+    public ResponseEntity<Long> countNumberOfUsers(){
+        Long numberOfUsers=appUserService.countUsers();
+        return new ResponseEntity<>(numberOfUsers, HttpStatus.OK);
+    }
 
     private AppUserDto convertAppUserToDto(AppUser appUser){
 

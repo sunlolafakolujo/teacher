@@ -118,6 +118,12 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
+    public Long countUsers() {
+        Long numberOfAppUser=appUserRepository.count();
+        return numberOfAppUser;
+    }
+
+    @Override
     public AppUser updateUser(AppUser appUser, Long id) throws AppUserNotFoundException {
         AppUser savedAppUser=appUserRepository.findById(id)
                 .orElseThrow(()->new AppUserNotFoundException("User ID "+id+" Not Found"));

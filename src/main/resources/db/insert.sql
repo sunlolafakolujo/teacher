@@ -30,7 +30,9 @@ VALUES ('MR','Toye','Okedara','tokedara@yahoo,com','09087654223','https://resour
 
 INSERT INTO vacancy(company_name, job_id, job_title,job_location, key_responsibility, skill_requirement, experience_education,
                     benefit, published_date, closing_date)
-VALUES ('','','','','','','','',null,null);
+VALUES ('Xpart Tools','JID102','Physic Teacher','Lagos','xxxxxx','yyyyyyyy','hhhhhhhhhhh','uuuuuuuuu','2022-10-10','2022-10-17'),
+       ('Mind Bulder Schools','JID105','Chemistry Teacher','Lagos','xxxxxxkkkk','yyyyyyyyaaaaaa','bbbbhhhhhhhhhhh','ccccccuuuuuuuuu',
+       '2022-10-10','2022-10-17');
 
 
 

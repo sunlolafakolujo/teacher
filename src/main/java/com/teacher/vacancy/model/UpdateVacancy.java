@@ -13,8 +13,6 @@ public class UpdateVacancy {
 
     private Long id;
 
-    private String jobId;
-
     private String jobTitle;
 
     private String jobGrade;
@@ -26,8 +24,6 @@ public class UpdateVacancy {
     private String skillRequirement;
 
     private String experienceEducation;
-
-    private LocalDate publishedDate;
 
     private LocalDate closingDate;
 }

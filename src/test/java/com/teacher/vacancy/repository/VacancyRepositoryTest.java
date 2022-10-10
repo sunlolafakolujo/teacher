@@ -2,18 +2,26 @@ package com.teacher.vacancy.repository;
 
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
+import com.teacher.vacancy.exception.VacancyNotFoundException;
 import com.teacher.vacancy.model.Vacancy;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
@@ -40,51 +48,78 @@ class VacancyRepositoryTest {
         vacancy.setSkillRequirement("wduidwgduodhhpqpqwhqwo");
         vacancy.setKeyResponsibility("jkqjdgooiogqoigopiwgpig");
         vacancy.setJobLocation("Lagos\n");
-        vacancy.setJobDetails(":\nEducation:\n"+vacancy.getExperienceEducation()+"\n\nSkills:\n"+vacancy.getSkillRequirement()
-        +"\n\nKey Responsibility:\n"+vacancy.getKeyResponsibility()+"\n\nBenefits:\n"+vacancy.getBenefit());
+        vacancy.setJobDetails(":\nCompany:"+vacancy.getCompanyName()+"\n\nJobId:"+vacancy.getJobId()+
+                            "\n\nJob Title:"+vacancy.getJobTitle()+
+                            "\n\nEducation:\n"+vacancy.getExperienceEducation()+
+                            "\n\nSkills:\n"+vacancy.getSkillRequirement() +
+                            "\n\nKey Responsibility:\n"+vacancy.getKeyResponsibility()+
+                            "\n\nBenefits:\n"+vacancy.getBenefit());
         vacancy.setPublishedDate(LocalDate.parse("2022-10-10"));
         vacancy.setClosingDate(LocalDate.parse("2022-10-17"));
 
         assertDoesNotThrow(()->vacancyRepository.save(vacancy));
 
-        log.info("Vacancy repo after saving:{}", vacancy);
-
+        log.info("Vacancy repo after saving {}", vacancy.getJobDetails());
     }
 
     @Test
-    void testThatYouCanFindVacancyById(){
-
+    void testThatYouCanFindVacancyById() throws VacancyNotFoundException {
+        Long id=1L;
+        vacancy=vacancyRepository.findById(id)
+                .orElseThrow(()->new VacancyNotFoundException("Vacancy Not Found"));
+        log.info("Vacancy: {}", vacancy);
     }
 
     @Test
-    void testThatYouCanFindVacancyByJobId(){
-
+    void testThatYouCanFindVacancyByJobId() throws VacancyNotFoundException {
+        String jobId="JID102";
+        vacancy=vacancyRepository.findByJobId(jobId);
+        if (vacancy==null){
+            throw new VacancyNotFoundException("Vacancy Not Found");
+        }
+        log.info("Vacancy: {}", vacancy);
     }
 
     @Test
     void testThatYouCanFindVacancyByJobTitle(){
-
+        String jobTitle="Physic Teacher";
+        Pageable pageable= PageRequest.of(0, 10);
+        List<Vacancy> vacancies=vacancyRepository.findByJobTitle(jobTitle,pageable);
+        vacancies.forEach(System.out::println);
     }
 
     @Test
     void testThatYouCanFindAllVacancies(){
-
+        Pageable pageable=PageRequest.of(0, 10);
+        Page<Vacancy> vacancyPage=vacancyRepository.findAll(pageable);
+        vacancyPage.forEach(System.out::println);
     }
 
     @Test
-    void testThatYouCanUpdateVacancy(){
-
+    void testThatYouCanUpdateVacancy() throws VacancyNotFoundException {
+        Long id=1L;
+        vacancy=vacancyRepository.findById(id)
+                .orElseThrow(()->new VacancyNotFoundException("Vacancy Not found"));
+        vacancy.setCompanyName("Dansol High School");
+        assertDoesNotThrow(()->vacancyRepository.save(vacancy));
+        assertThat(vacancy.getCompanyName()).isEqualTo("Dansol High School");
+        log.info("Update: {}", vacancy.getCompanyName());
     }
 
     @Test
     @Rollback(value = false)
-    void testThatYouCanDeleteVacancyById(){
-
+    void testThatYouCanDeleteVacancyById() throws VacancyNotFoundException {
+        Long id=1L;
+        vacancyRepository.deleteById(id);
+        Optional<Vacancy> optionalVacancy=vacancyRepository.findById(id);
+        if (optionalVacancy.isPresent()){
+            throw new VacancyNotFoundException("Vacancy Not Deleted");
+        }
     }
 
     @Test
     @Rollback(value = false)
     void testThatYouCanDeleteAllVacancy(){
-
+        vacancyRepository.deleteAll();
     }
 }

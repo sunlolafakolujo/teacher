@@ -129,6 +129,14 @@ class AppUserServiceImplTest {
     }
 
     @Test
+    void testThatYouCanMockCountUserMethod(){
+        Long numberOfUsers=3L;
+        when(appUserRepository.count()).thenReturn(numberOfUsers);
+        appUserService.countUsers();
+        verify(appUserRepository, times(1)).count();
+    }
+
+    @Test
     void testThatYouCanMockUpdateUserMethod() throws AppUserNotFoundException {
         Long id=1L;
         when(appUserRepository.findById(id)).thenReturn(Optional.of(appUser));

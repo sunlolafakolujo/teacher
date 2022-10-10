@@ -31,6 +31,8 @@ public interface AppUserService {
 
     List<AppUser> findAllUsers(Pageable pageable);
 
+    Long countUsers();
+
     AppUser updateUser(AppUser appUser, Long id) throws AppUserNotFoundException;
 
     void deleteUserById(Long id) throws AppUserNotFoundException;

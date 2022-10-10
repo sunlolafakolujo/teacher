@@ -14,16 +14,5 @@ public class VacancyDto {
     @JsonIgnore
     private Long id;
 
-    private String publisherName;
-
-    private String jobId;
-
-    private String jobTitle;
-
-    private String jobGrade;
-
-    private String location;
-
     private String jobDetails;
-
 }
