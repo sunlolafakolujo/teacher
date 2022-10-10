@@ -2,6 +2,7 @@ package com.teacher.vacancy.service;
 
 import com.teacher.vacancy.model.Vacancy;
 import com.teacher.vacancy.repository.VacancyRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,6 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
+@Slf4j
 @Sql(scripts = {"classpath:db/insert.sql"})
 class VacancyServiceImplTest {
     @Mock
