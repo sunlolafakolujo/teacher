@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Data
@@ -39,7 +42,7 @@ public class UpdateAppUser {
 
     private String meansOfIdentificationExpiryDate;
 
-    private Contact contact;
+    private Collection<Contact> contacts=new ArrayList<>();
 
-    private List<Referee> referees;
+    private Collection<Referee> referees=new HashSet<>();
 }

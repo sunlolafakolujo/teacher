@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@Transactional
 public class ContactServiceImpl implements ContactService{
 
     @Autowired
@@ -37,17 +40,15 @@ public class ContactServiceImpl implements ContactService{
 
     @Override
     public List<Contact> findAllContact(Integer PageNumber, Integer pageSize) {
-
         Pageable pageable= PageRequest.of(PageNumber, pageSize);
-
         Page<Contact> pageResult= contactRepository.findAll(pageable);
-
         return pageResult.toList();
     }
 
     @Override
     public Contact updateContact(Contact contact, Long id) throws ContactNotFoundException {
-        Contact savedContact=contactRepository.findById(id).orElseThrow(()-> new ContactNotFoundException("Contact "+id+" Not Found"));
+        Contact savedContact=contactRepository.findById(id)
+                .orElseThrow(()-> new ContactNotFoundException("Contact "+id+" Not Found"));
 
         if (Objects.nonNull(contact.getStreetNumber()) && !"".equalsIgnoreCase(contact.getStreetNumber())){
             savedContact.setStreetNumber(contact.getStreetNumber());
@@ -71,13 +72,10 @@ public class ContactServiceImpl implements ContactService{
     @Override
     public void deleteContactById(Long id) throws ContactNotFoundException {
         contactRepository.deleteById(id);
-
         Optional<Contact> optionalContact=contactRepository.findById(id);
-
-        if (optionalContact.isEmpty()){
-            log.info("Contact is deleted");
-        }else throw new ContactNotFoundException("Contact ID "+id+" Not Deleted");
-
+        if (optionalContact.isPresent()){
+            throw new ContactNotFoundException("Contact ID "+id+" Is Not Deleted");
+        }
     }
 
     @Override

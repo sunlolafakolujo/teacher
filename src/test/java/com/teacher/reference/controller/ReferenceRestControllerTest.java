@@ -52,7 +52,7 @@ class ReferenceRestControllerTest {
         referee.setLastName("Akintoye");
         referee.setEmail("aa@yahoo.com");
         referee.setPhone("08076524212");
-        referee.setReferenceLetter("https://www.independent.co.uk/space/photographer-sun-picture-detail-resolution-b1971193.html");
+        referee.setReferenceLetterUrl("https://www.independent.co.uk/space/photographer-sun-picture-detail-resolution-b1971193.html");
 
         this.mockMvc.perform(post("/api/referee/saveReference")
                 .header(AUTHORIZATION, "Bearer ")

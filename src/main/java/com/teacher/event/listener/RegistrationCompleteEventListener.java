@@ -27,35 +27,33 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent event) {
         JavaMailSenderImpl mailSender=new JavaMailSenderImpl();
-
         mailSender.setHost(emailConfiguration.getHost());
         mailSender.setPort(emailConfiguration.getPort());
         mailSender.setUsername(emailConfiguration.getUsername());
         mailSender.setPassword(emailConfiguration.getPassword());
 
         AppUser appUser= event.getAppUser();
-        String token=UUID.randomUUID().toString();
+        String token= UUID.randomUUID().toString();
         verificationTokenService.saveVerificationTokenForUser(token, appUser);
-
-        SimpleMailMessage mailMessage=constructEmailMessage(event, appUser, token);
-        mailSender.send(mailMessage);
+        SimpleMailMessage mail= constructEmailMessage(event, appUser, token);
+        mailSender.send(mail);
     }
 
 
     private SimpleMailMessage constructEmailMessage(RegistrationCompleteEvent event,  AppUser appUser, String token) {
 
-        String recipient = appUser.getEmail();
-        String subject = "Verify Account";
-        String confirmationUrl = event.getApplicationUrl() + "/api/appUser/verifyAccount/" + token;
+        SimpleMailMessage mailMessage=new SimpleMailMessage();
+        String confirmUrl=event.getApplicationUrl() + "/api/teacher/appUser/verifyAccount/"+token;
+        String receiver= appUser.getEmail();
+        String subject="Verify Account";
         String from="fakolujos@gmail.com";
 
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(recipient);
-        email.setFrom(from);
-        email.setSentDate(new Date());
-        email.setSubject(subject);
-        email.setText("Dear "+appUser.getFirstName()+",\r\n"+"Click on the link to verify account "+confirmationUrl);
+        mailMessage.setTo(receiver);
+        mailMessage.setFrom(from);
+        mailMessage.setSentDate(new Date());
+        mailMessage.setSubject(subject);
+        mailMessage.setText("Dear "+appUser.getFirstName()+",\n\n"+"Click the link to verify email "+confirmUrl);
 
-        return email;
+        return mailMessage;
     }
 }

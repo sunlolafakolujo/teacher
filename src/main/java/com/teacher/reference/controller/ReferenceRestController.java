@@ -6,6 +6,7 @@ import com.teacher.reference.model.Referee;
 import com.teacher.reference.model.ReferenceDto;
 import com.teacher.reference.model.UpdateReferee;
 import com.teacher.reference.service.ReferenceService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
@@ -18,8 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "api/referee")
-@RequiredArgsConstructor
+@RequestMapping(path = "api/teacher/referee")
+@AllArgsConstructor
 public class ReferenceRestController {
     private final ReferenceService referenceService;
 
@@ -28,11 +29,8 @@ public class ReferenceRestController {
     @PostMapping("/saveReference")
     public ResponseEntity<NewReference> saveReference(@Valid @RequestBody NewReference newReference){
         Referee referee= modelMapper.map(newReference, Referee.class);
-
         Referee post=referenceService.saveReferee(referee);
-
         NewReference posted=modelMapper.map(post, NewReference.class);
-
         return new ResponseEntity<>(posted, HttpStatus.CREATED);
     }
 
@@ -41,16 +39,13 @@ public class ReferenceRestController {
                                                         throws ReferenceNotFoundException {
 
         Referee referee=referenceService.findRefereeById(id);
-
         ReferenceDto referenceDto=convertReferenceToDto(referee);
-
         return new ResponseEntity<>(referenceDto, HttpStatus.OK);
     }
 
     @GetMapping("/findAllReferences")
     public ResponseEntity<List<ReferenceDto>> getAllReferences(){
         Pageable pageable = PageRequest.of(0, 10);
-
         return new ResponseEntity<>(referenceService.findAllReferees(pageable)
                 .stream()
                 .map(this::convertReferenceToDto)
@@ -63,26 +58,20 @@ public class ReferenceRestController {
                                                             throws ReferenceNotFoundException {
 
         Referee referee=modelMapper.map(updateReferee, Referee.class);
-
         Referee post=referenceService.updateReferee(referee, id);
-
         UpdateReferee posted=modelMapper.map(post, UpdateReferee.class);
-
         return new ResponseEntity<>(posted, HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteReferenceById/{id}")
     public ResponseEntity<?> deleteReferenceById(@PathVariable(value = "id") Long id) throws ReferenceNotFoundException {
-
         referenceService.deleteRefereeById(id);
-
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/deleteAllReferences")
     public ResponseEntity<?> deleteAllReferences(){
         referenceService.deleteAllReferees();
-
         return ResponseEntity.noContent().build();
     }
 
@@ -128,12 +117,7 @@ public class ReferenceRestController {
         referenceDto.setLastName(referee.getLastName());
         referenceDto.setPhone(referee.getPhone());
         referenceDto.setEmail(referee.getEmail());
-        referenceDto.setReferenceLetter(referee.getReferenceLetter());
-        referenceDto.setAppUserFirstName(referee.getAppUser().getFirstName());
-        referenceDto.setAppUserLastName(referee.getAppUser().getLastName());
-        referenceDto.setAppUserEmail(referee.getAppUser().getEmail());
-        referenceDto.setAppUserPhone(referee.getAppUser().getPhone());
-
+        referenceDto.setReferenceLetter(referee.getReferenceLetterUrl());
         return referenceDto;
     }
 

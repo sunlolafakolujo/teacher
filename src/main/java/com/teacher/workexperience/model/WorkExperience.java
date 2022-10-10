@@ -1,6 +1,8 @@
 package com.teacher.workexperience.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.baseaudit.BaseAudit;
 import com.teacher.staticdata.Status;
@@ -13,6 +15,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -44,6 +49,6 @@ public class WorkExperience extends BaseAudit {
 
     @JsonIgnore
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private AppUser appUser;
+    @ManyToMany(mappedBy = "workExperiences")
+    private Collection<AppUser> appUsers=new HashSet<>();
 }

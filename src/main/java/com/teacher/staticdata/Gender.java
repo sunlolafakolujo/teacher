@@ -2,7 +2,8 @@ package com.teacher.staticdata;
 
 public enum Gender {
     MALE("MALE"),
-    FEMALE("FEMALE");
+    FEMALE("FEMALE"),
+    NOT_APPLICABLE("NO APPLICABLE");
 
     private final String gender;
 

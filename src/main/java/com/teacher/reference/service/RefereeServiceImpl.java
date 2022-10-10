@@ -59,8 +59,8 @@ public class RefereeServiceImpl implements ReferenceService{
             savedReferee.setPhone(referee.getPhone());
         }if (Objects.nonNull(referee.getEmail()) && !"".equalsIgnoreCase(referee.getEmail())){
             savedReferee.setEmail(referee.getEmail());
-        }if (Objects.nonNull(referee.getReferenceLetter()) && !"".equalsIgnoreCase(referee.getReferenceLetter())){
-            savedReferee.setReferenceLetter(referee.getReferenceLetter());
+        }if (Objects.nonNull(referee.getReferenceLetterUrl()) && !"".equalsIgnoreCase(referee.getReferenceLetterUrl())){
+            savedReferee.setReferenceLetterUrl(referee.getReferenceLetterUrl());
         }
 
         return refereeRepository.save(savedReferee);

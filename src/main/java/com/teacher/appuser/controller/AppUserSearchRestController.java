@@ -5,8 +5,8 @@ import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.model.AppUserDto;
 import com.teacher.appuser.service.AppUserService;
 import com.teacher.staticdata.UserType;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "api/appUser")
-@RequiredArgsConstructor
+@RequestMapping(path = "api/teacher/appUser")
+@AllArgsConstructor
 public class AppUserSearchRestController {
     private final AppUserService appUserService;
 
@@ -42,20 +42,12 @@ public class AppUserSearchRestController {
     }
 
     @GetMapping("/findUserByType/{userType}")
-    public ResponseEntity<List<AppUserDto>> getUserByType(@PathVariable(value = "userType")UserType userType){
+    public ResponseEntity<List<AppUserDto>> getUserByType(@PathVariable(value = "userType")UserType userType) throws AppUserNotFoundException {
         Pageable pageable= PageRequest.of(0, 10);
         return new ResponseEntity<>(appUserService.findByUserType(userType,pageable)
                 .stream()
                 .map(this::convertAppUserToDto)
                 .collect(Collectors.toList()),HttpStatus.OK);
-    }
-
-    @GetMapping("/findUserByUsername/{username}")
-    public ResponseEntity<AppUserDto> getUserByUsername(@PathVariable(value = "username") String username)
-                                                                        throws AppUserNotFoundException {
-        AppUser appUser=appUserService.findUserByUsername(username);
-        AppUserDto appUserDto=convertAppUserToDto(appUser);
-        return new ResponseEntity<>(appUserDto, HttpStatus.OK);
     }
 
     @GetMapping("/findUserByEmail/{email}")
@@ -116,8 +108,9 @@ public class AppUserSearchRestController {
         appUserDto.setUsername(appUser.getUsername());
         appUserDto.setPassword(appUser.getPassword());
         appUserDto.setEmail(appUser.getEmail());
-        appUserDto.setAge(appUserDto.getAge());
+        appUserDto.setAge(appUser.getAge());
         appUserDto.setMeansOfIdentification(appUser.getMeansOfIdentification());
+        appUserDto.setMeansOfIdentificationRefNumber(appUser.getMeansOfIdentificationRefNumber());
         appUserDto.setMeansOfIdentificationIssueDate(appUser.getMeansOfIdentificationIssueDate());
         appUserDto.setMeansOfIdentificationExpiryDate(appUser.getMeansOfIdentificationExpiryDate());
         appUserDto.setDateOfBirth(appUser.getDateOfBirth());
@@ -130,13 +123,7 @@ public class AppUserSearchRestController {
         appUserDto.setFirstName(appUser.getFirstName());
         appUserDto.setLastName(appUser.getLastName());
         appUserDto.setGender(appUser.getGender());
-        appUserDto.setStreetNumber(appUser.getContact().getStreetNumber());
-        appUserDto.setStreetName(appUser.getContact().getStreetName());
-        appUserDto.setCity(appUser.getContact().getCity());
-        appUserDto.setPostZipCode(appUser.getContact().getPostZipCode());
-        appUserDto.setLandMark(appUser.getContact().getLandMark());
-        appUserDto.setStateProvince(appUser.getContact().getStateProvince());
-        appUserDto.setCountry(appUser.getContact().getCountry());
+        appUserDto.setContacts(appUser.getContacts());
         appUserDto.setQualifications(appUser.getQualifications());
         appUserDto.setWorkExperiences(appUser.getWorkExperiences());
         appUserDto.setReferees(appUser.getReferees());

@@ -27,7 +27,7 @@ public interface AppUserService {
 
     List<AppUser> findBySchoolName(String schoolName, Pageable pageable) throws AppUserNotFoundException;
 
-    List<AppUser> findByUserType(UserType userType, Pageable pageable);
+    List<AppUser> findByUserType(UserType userType, Pageable pageable) throws AppUserNotFoundException;
 
     List<AppUser> findAllUsers(Pageable pageable);
 

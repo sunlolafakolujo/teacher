@@ -1,5 +1,6 @@
 package com.teacher.qualification.model;
 
+import com.teacher.appuser.model.AppUser;
 import com.teacher.contact.model.Contact;
 import com.teacher.staticdata.Status;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class NewQualification {
 
     private String classOfDegree;
 
-    private String schoolName;
+    private String institutionName;
 
     private Status currentQualification;
 
@@ -29,5 +30,7 @@ public class NewQualification {
 
     private LocalDate endDate;
 
-    private Contact contact;
+    private String institutionAddress;
+
+    private AppUser appUser;
 }

@@ -1,4 +1,4 @@
-package com.teacher.verificationtoken.controller;
+package com.teacher.appuser.controller;
 
 import com.teacher.appuser.model.AppUser;
 import com.teacher.event.RegistrationCompleteEvent;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping(path = "api/teacher/appUser/")
 @RequiredArgsConstructor
-public class VerificationTokenController {
+public class AppUserVerificationTokenController {
     private final VerificationTokenService verificationTokenService;
     private final ApplicationEventPublisher publisher;
 

@@ -4,12 +4,16 @@ import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.*;
 import com.teacher.appuser.service.AppUserService;
 import com.teacher.event.RegistrationCompleteEvent;
-import com.teacher.password.model.PasswordModel;
+import com.teacher.qualification.model.NewQualification;
+import com.teacher.qualification.model.Qualification;
+import com.teacher.qualification.service.QualificationService;
+import com.teacher.staticdata.Gender;
+import com.teacher.staticdata.Title;
 import com.teacher.staticdata.UserType;
 import com.teacher.userrole.exception.UserRoleNotFoundException;
 import com.teacher.userrole.model.UserRole;
 import com.teacher.userrole.service.UserRoleService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
@@ -24,14 +28,16 @@ import java.time.Period;
 import java.util.*;
 
 @RestController
-@RequestMapping(path = "api/appUser")
-@RequiredArgsConstructor
+@RequestMapping(path = "api/teacher/appUser")
+@AllArgsConstructor
 @Slf4j
 public class AppUserRestController {
 
     private final AppUserService appUserService;
 
     private final UserRoleService userRoleService;
+
+    private final QualificationService qualificationService;
 
     private final ModelMapper modelMapper;
 
@@ -47,6 +53,9 @@ public class AppUserRestController {
         UserRole userRole=userRoleService.findUserRoleByName("SCHOOL");
         userRoles.add(userRole);
         schoolDto.setUserRoles(userRoles);
+        schoolDto.setTitle(Title.NOT_APPLICABLE);
+        schoolDto.setGender(Gender.NOT_APPLICABLE);
+        schoolDto.setAge(Period.between(schoolDto.getDateOfBirth(),LocalDate.now()).getYears());
         schoolDto.setUserId("SCH-".concat(UUID.randomUUID().toString()));
         AppUser appUser=modelMapper.map(schoolDto, AppUser.class);
         AppUser post=appUserService.userRegistration(appUser);

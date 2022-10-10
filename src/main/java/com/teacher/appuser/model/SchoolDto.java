@@ -2,14 +2,16 @@ package com.teacher.appuser.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teacher.contact.model.Contact;
+import com.teacher.staticdata.Gender;
+import com.teacher.staticdata.Title;
 import com.teacher.staticdata.UserType;
 import com.teacher.userrole.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -19,11 +21,19 @@ public class SchoolDto {
     @JsonIgnore
     private Long id;
 
-    private String userId;
-
     private UserType userType;
 
+    private String userId;
+
+    private Title title;
+
+    private Gender gender;
+
     private String schoolName;
+
+    private LocalDate dateOfBirth;
+
+    private Integer age;
 
     private String username;
 
@@ -39,8 +49,8 @@ public class SchoolDto {
 
     private String webSite;
 
-    private Contact contact;
+    private Collection<Contact> contacts=new ArrayList<>();
 
-    private List<UserRole> userRoles;
+    private Collection<UserRole> userRoles=new HashSet<>();
 
 }

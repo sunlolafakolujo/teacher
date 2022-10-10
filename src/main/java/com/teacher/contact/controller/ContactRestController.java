@@ -6,6 +6,7 @@ import com.teacher.contact.model.ModifyContact;
 import com.teacher.contact.model.NewContact;
 import com.teacher.contact.exception.ContactNotFoundException;
 import com.teacher.contact.service.ContactService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path ="/api/contact")
-@RequiredArgsConstructor
+@RequestMapping(path ="/api/teacher/contact")
+@AllArgsConstructor
 public class ContactRestController {
 
     private final ContactService contactService;
@@ -28,21 +29,15 @@ public class ContactRestController {
     @PostMapping("/saveContact")
     public ResponseEntity<NewContact> createContact(@RequestBody @Valid NewContact newContact){
         Contact contact=modelMapper.map(newContact, Contact.class);
-
         Contact postContact=contactService.saveContact(contact);
-
         NewContact posted=modelMapper.map(postContact, NewContact.class);
-
         return new ResponseEntity<>(posted, HttpStatus.CREATED);
     }
 
     @GetMapping("/findContactById/{id}")
     public ResponseEntity<ContactDto> getContactById(@PathVariable(value = "id") Long id) throws ContactNotFoundException {
-
         Contact contact=contactService.findContactById(id);
-
         ContactDto contactDto=convertContactToDto(contact);
-
         return new ResponseEntity<>(contactDto, HttpStatus.OK);
     }
 
@@ -59,18 +54,14 @@ public class ContactRestController {
     public ResponseEntity<ModifyContact> updateContact(@RequestBody @Valid ModifyContact modifyContact,
                                                        @PathVariable(value = "id") Long id) throws ContactNotFoundException {
         Contact contact=modelMapper.map(modifyContact, Contact.class);
-
         Contact updateContact=contactService.updateContact(contact, id);
-
         ModifyContact updatedContact=modelMapper.map(updateContact, ModifyContact.class);
-
         return new ResponseEntity<>(updatedContact, HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteContactById/{id}")
     public ResponseEntity<?> deleteContactById(@PathVariable(value = "id") Long id) throws ContactNotFoundException {
         contactService.deleteContactById(id);
-
         return ResponseEntity.noContent().build();
     }
 
@@ -123,7 +114,7 @@ public class ContactRestController {
     private ContactDto convertContactToDto(Contact contact){
 
         ContactDto contactDto=new ContactDto();
-
+        contactDto.setId(contact.getId());
         contactDto.setStreetNumber(contact.getStreetNumber());
         contactDto.setStreetName(contact.getStreetName());
         contactDto.setCity(contact.getCity());

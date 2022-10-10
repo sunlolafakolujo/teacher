@@ -1,6 +1,7 @@
 package com.teacher.verificationtoken.model;
 
 import com.teacher.appuser.model.AppUser;
+import com.teacher.baseaudit.BaseAudit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.Date;
 @Entity
 @Data
 @NoArgsConstructor
-public class VerificationToken {
+public class VerificationToken extends BaseAudit {
 
     private static final Integer EXPIRATION_TIME = 10;
 

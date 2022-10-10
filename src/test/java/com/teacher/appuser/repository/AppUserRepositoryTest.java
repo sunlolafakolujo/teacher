@@ -1,25 +1,32 @@
 package com.teacher.appuser.repository;
 
+import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.contact.model.Contact;
 import com.teacher.qualification.model.Qualification;
 import com.teacher.reference.model.Referee;
 import com.teacher.staticdata.*;
 import com.teacher.userrole.model.UserRole;
+import com.teacher.userrole.repository.UserRoleRepository;
 import com.teacher.workexperience.model.WorkExperience;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
+import java.util.*;
 
+import static com.teacher.staticdata.UserType.*;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
@@ -29,6 +36,9 @@ class AppUserRepositoryTest {
 
     @Autowired
     private AppUserRepository appUserRepository;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -65,7 +75,8 @@ class AppUserRepositoryTest {
         qualification.setDegreeTitle("Bachelor of Education");
         qualification.setClassOfDegree("Second Class Upper");
         qualification.setInstitutionAddress("Ijanikin, Lagos-Badagry");
-        qualification.setSchoolName("College of Education");
+        qualification.setInstitutionName("College of Education");
+        qualification.setInstitutionAddress("Ojo");
 
         workExperience.setCompany("Mind Builder School");
         workExperience.setPosition("Teacher");
@@ -76,7 +87,7 @@ class AppUserRepositoryTest {
         referee.setLastName("Akinradewo");
         referee.setEmail("aa@yahoo.com");
         referee.setPhone("08076546845");
-        referee.setReferenceLetter("http://tyuyutuioo.com");
+        referee.setReferenceLetterUrl("http://tyuyutuioo.com");
 
         contact.setStreetNumber("2A");
         contact.setStreetName("Akinpetu Street Alagomeji");
@@ -85,10 +96,13 @@ class AppUserRepositoryTest {
         contact.setPostZipCode("110000");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
+        List<Contact> contacts=new ArrayList<>();
+        contacts.add(contact);
 
-        userRole.setRoleName("TEACHER");
+        userRole=userRoleRepository.findByRoleName("TEACHER");
 
-        appUser.setUserType(UserType.TEACHER);
+        appUser.setUserType(TEACHER);
+        appUser.setUserId("TCH-".concat(UUID.randomUUID().toString()));
         appUser.setFirstName("Kunle");
         appUser.setLastName("Afolayan");
         appUser.setUsername("kafolayan");
@@ -105,7 +119,7 @@ class AppUserRepositoryTest {
         appUser.setGender(Gender.MALE);
         appUser.setTitle(Title.MR);
         appUser.setPicUrl("http://tyuio.com");
-        appUser.setContact(contact);
+        appUser.setContacts(contacts);
         appUser.setQualifications(List.of(qualification));
         appUser.setWorkExperiences(List.of(workExperience));
         appUser.setReferees(List.of(referee));
@@ -118,8 +132,112 @@ class AppUserRepositoryTest {
     }
 
     @Test
-    void testThatYoCanFindUserById(){
-        
-
+    void testThatYouCanFindUserById() throws AppUserNotFoundException {
+        Long id=2L;
+        appUser=appUserRepository.findById(id)
+                .orElseThrow(()->new AppUserNotFoundException("User with ID "+id+" Not Found"));
+        log.info("User: {} ", appUser);
     }
+
+    @Test
+    void testThatYouCanFindByUserType(){
+        UserType userType= TEACHER;
+        Pageable pageable=PageRequest.of(0, 10);
+        List<AppUser> appUsers=appUserRepository.findByUserType(userType, pageable);
+        appUsers.forEach(System.out::println);
+//        log.info("User(s) teachers: {}", appUsers);
+    }
+
+    @Test
+    void testThatYouCanFindUserByFirstName(){
+        String firstName="Adeola";
+        Pageable pageable= PageRequest.of(0, 10);
+        List<AppUser>appUsers=appUserRepository.findUserByFirstName(firstName,pageable);
+        appUsers.forEach(System.out::println);
+//        log.info("User(s) with firstName Adeola: {}", appUsers);
+    }
+
+    @Test
+    void testThatYouCanFindUserByLastName(){
+        String lastName="Adeniyi";
+        Pageable pageable= PageRequest.of(0, 10);
+        List<AppUser>appUsers=appUserRepository.findUserByLastName(lastName,pageable);
+        appUsers.forEach(System.out::println);
+//        log.info("User(s) with firstName Adeniyi: {}", appUsers);
+    }
+
+    @Test
+    void testThatYouCanFindBySchoolName(){
+        String schoolName="Mind Builders School";
+        Pageable pageable=PageRequest.of(0, 10);
+        List<AppUser> appUsers=appUserRepository.findBySchoolName(schoolName, pageable);
+        appUsers.forEach(System.out::println);
+//        log.info("User(s) with school name Mind Builders School: {}", appUsers);
+    }
+
+    @Test
+    void testThatYouCanFindUserByUsername(){
+        String username="kemi_ade";
+        appUser=appUserRepository.findUserByUsername(username);
+        log.info("User with username kemi_ade: {}", appUser);
+    }
+
+    @Test
+    void testThatYouCanFindUserByEmail(){
+        String email="mbs@gmail.com";
+        appUser=appUserRepository.findUserByEmail(email);
+        log.info("User(s) with email: {}", appUser);
+    }
+
+    @Test
+    void testThatYouCanFindUserByPhone(){
+        String phone="mbs@gmail.com";
+        appUser=appUserRepository.findUserByPhone(phone);
+        log.info("User(s) with phone: {}", appUser);
+    }
+
+    @Test
+    void testThatYouCanFindAllUsers(){
+        Pageable pageable=PageRequest.of(0, 10);
+        Page<AppUser> appUsers=appUserRepository.findAll(pageable);
+        appUsers.forEach(System.out::println);
+//        log.info("Users: {}", appUsers.toList());
+    }
+
+    @Test
+    void testThatYouCanFindAllUserById(){
+        List<Long> idList= Arrays.asList(1L,2L,3L);
+        List<AppUser> appUsers=appUserRepository.findAllById(idList);
+        appUsers.forEach(System.out::println);
+//        log.info("All users", appUsers);
+    }
+
+    @Test
+    void testThatYouCanUpdateUser() throws AppUserNotFoundException {
+        Long id=2L;
+        appUser=appUserRepository.findById(id)
+                .orElseThrow(()->new AppUserNotFoundException("User Not Found"));
+        appUser.setPassword("kokoma_123");
+        assertDoesNotThrow(()->appUserRepository.save(appUser));
+        assertEquals("kokoma_123", appUser.getPassword());
+        log.info("New password: {}", appUser.getPassword());
+    }
+
+    @Rollback(value = false)
+    @Test
+    void testThatYouCanDeleteUserById() throws AppUserNotFoundException {
+        Long id=1L;
+        appUserRepository.deleteById(id);
+        Optional<AppUser> optionalAppUser=appUserRepository.findById(id);
+        if (optionalAppUser.isPresent()){
+            throw new AppUserNotFoundException("User ID "+id+" Not Deleted");
+        }
+    }
+
+    @Rollback(value = false)
+    @Test
+    void testThatYouCanDeleteUsers() {
+        appUserRepository.deleteAll();
+    }
+
 }

@@ -3,7 +3,8 @@ package com.teacher.staticdata;
 public enum Title {
 
     MR("MR"),
-    MRS("MRS");
+    MRS("MRS"),
+    NOT_APPLICABLE("NOT APPLICABLE");
 
     private final String title;
 

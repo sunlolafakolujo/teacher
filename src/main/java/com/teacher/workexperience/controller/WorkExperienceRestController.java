@@ -5,6 +5,7 @@ import com.teacher.workexperience.model.NewWorkExperience;
 import com.teacher.workexperience.model.WorkExperience;
 import com.teacher.workexperience.model.WorkExperienceDto;
 import com.teacher.workexperience.service.WorkExperienceService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
@@ -17,8 +18,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "api/workExperience")
-@RequiredArgsConstructor
+@RequestMapping(path = "api/teacher/workExperience")
+@AllArgsConstructor
 public class WorkExperienceRestController {
 
     private final WorkExperienceService workExperienceService;
@@ -109,12 +110,6 @@ public class WorkExperienceRestController {
         workExperienceDto.setCurrentWork(workExperience.getCurrentWork());
         workExperienceDto.setStartDate(workExperience.getStartDate());
         workExperienceDto.setEndDate(workExperience.getEndDate());
-        workExperienceDto.setAppUserFirstName(workExperience.getAppUser().getFirstName());
-        workExperienceDto.setAppUserLastName(workExperience.getAppUser().getLastName());
-        workExperienceDto.setAppUserEmail(workExperience.getAppUser().getEmail());
-        workExperienceDto.setAppUserPhone(workExperience.getAppUser().getPhone());
-
         return workExperienceDto;
     }
-
 }

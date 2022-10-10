@@ -39,7 +39,7 @@ class RefereeRepositoryTest {
         referee.setLastName("Fakolujo");
         referee.setEmail("adebukola@yahoo.com");
         referee.setPhone("08076353671");
-        referee.setReferenceLetter("https://eforms.com/recommendation-letter/personal/");
+        referee.setReferenceLetterUrl("https://eforms.com/recommendation-letter/personal/");
 
         log.info("Referee repo before saving {}", referee);
 

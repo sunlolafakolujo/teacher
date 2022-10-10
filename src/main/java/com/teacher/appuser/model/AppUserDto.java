@@ -15,8 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -60,27 +59,17 @@ public class AppUserDto {
 
     private MeansOfIdentification meansOfIdentification;
 
+    private String meansOfIdentificationRefNumber;
+
     private LocalDate meansOfIdentificationIssueDate;
 
     private LocalDate meansOfIdentificationExpiryDate;
 
-    private String streetNumber;
+    private Collection<Contact> contacts=new ArrayList<>();
 
-    private String streetName;
+    private Collection<Qualification> qualifications=new HashSet<>();
 
-    private String city;
+    private Collection<WorkExperience> workExperiences=new HashSet<>();
 
-    private String landMark;
-
-    private String postZipCode;
-
-    private String stateProvince;
-
-    private String country;
-
-    private List<Qualification> qualifications;
-
-    private List<WorkExperience> workExperiences;
-
-    private List<Referee> referees;
+    private Collection<Referee> referees=new HashSet<>();
 }

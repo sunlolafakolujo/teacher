@@ -24,13 +24,6 @@ public class VacancyDto {
 
     private String location;
 
-    private String keyResponsibility;
+    private String jobDetails;
 
-    private String skillRequirement;
-
-    private String experienceEducation;
-
-    private LocalDate publishedDate;
-
-    private LocalDate closingDate;
 }

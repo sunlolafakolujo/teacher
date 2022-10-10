@@ -5,6 +5,7 @@ import com.teacher.appuser.repository.AppUserRepository;
 import com.teacher.verificationtoken.exception.VerificationTokeNotFoundException;
 import com.teacher.verificationtoken.model.VerificationToken;
 import com.teacher.verificationtoken.repository.VerificationTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,11 @@ import java.util.UUID;
 @Service
 @Transactional
 public class VerificationTokenImpl implements VerificationTokenService{
+
+    @Autowired
     private VerificationTokenRepository verificationTokenRepository;
+
+    @Autowired
     private AppUserRepository appUserRepository;
 
     @Override
@@ -58,7 +63,9 @@ public class VerificationTokenImpl implements VerificationTokenService{
     @Override
     public VerificationToken generateNewVerificationToken(String oldToken) {
         VerificationToken verificationToken=verificationTokenRepository.findByToken(oldToken);
-        verificationToken.setToken(UUID.randomUUID().toString());
+        if (verificationToken!=null) {
+            verificationToken.setToken(UUID.randomUUID().toString());
+        }
        return verificationTokenRepository.save(verificationToken);
     }
 }

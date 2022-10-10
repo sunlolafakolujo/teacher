@@ -1,6 +1,7 @@
 package com.teacher.qualification.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teacher.appuser.model.AppUser;
 import com.teacher.staticdata.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class QualificationDto {
 
     private String classOfDegree;
 
-    private String schoolName;
+    private String institutionName;
 
     private Status currentQualification;
 
@@ -30,21 +31,7 @@ public class QualificationDto {
 
     private LocalDate endDate;
 
-    private String streetNumber;
+    private String institutionAddress;
 
-    private String streetName;
-
-    private String city;
-
-    private String stateProvince;
-
-    private String country;
-
-    private String appUserFirstName;
-
-    private String appUserLastName;
-
-    private String appUserEmail;
-
-    private String appUserPhone;
+    private AppUser appUser;
 }

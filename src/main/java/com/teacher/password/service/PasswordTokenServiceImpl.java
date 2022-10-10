@@ -5,6 +5,7 @@ import com.teacher.appuser.repository.AppUserRepository;
 import com.teacher.password.exception.PasswordNotFoundException;
 import com.teacher.password.model.PasswordToken;
 import com.teacher.password.repository.PasswordTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,15 +16,17 @@ import java.util.Optional;
 @Service
 @Transactional
 public class PasswordTokenServiceImpl implements PasswordTokenService{
+    @Autowired
     private PasswordTokenRepository passwordTokenRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
     private AppUserRepository appUserRepository;
 
     @Override
     public Optional<AppUser> findUserByPasswordToken(String token) {
         return Optional.ofNullable(passwordTokenRepository.findByToken(token).getAppUser());
     }
-
 
     @Override
     public PasswordToken createPasswordResetTokenForUser(String token, AppUser appUser) {

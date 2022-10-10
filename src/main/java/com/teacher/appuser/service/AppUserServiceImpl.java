@@ -3,7 +3,6 @@ package com.teacher.appuser.service;
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
-import com.teacher.password.repository.PasswordTokenRepository;
 import com.teacher.staticdata.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +26,12 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Override
     public AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException {
+        AppUser email=appUserRepository.findUserByEmail(appUser.getEmail());
+        AppUser phone= appUserRepository.findUserByPhone(appUser.getPhone());
+        AppUser username=appUserRepository.findUserByUsername(appUser.getUsername());
+        if (email!=null || phone!=null || username!=null){
+            throw new AppUserNotFoundException("User already exist");
+        }
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         return appUserRepository.save(appUser);
     }
@@ -35,13 +40,12 @@ public class AppUserServiceImpl implements AppUserService{
     public AppUser findUserById(Long id) throws AppUserNotFoundException {
         AppUser appUser=appUserRepository.findById(id)
                 .orElseThrow(()->new AppUserNotFoundException("User ID "+id+" Not Found"));
-
         return appUser;
     }
 
     @Override
     public AppUser findUserByUsername(String username) throws AppUserNotFoundException {
-        AppUser appUser= appUserRepository.findUserByUsername(username);
+        AppUser appUser=appUserRepository.findUserByUsername(username);
         if (appUser==null){
             throw new AppUserNotFoundException("User with username "+username+" Not Found");
         }
@@ -70,7 +74,7 @@ public class AppUserServiceImpl implements AppUserService{
     public List<AppUser> findUserByFirstName(String firstName, Pageable pageable) throws AppUserNotFoundException {
         pageable =PageRequest.of(0, 10);
         List<AppUser> appUserPage=appUserRepository.findUserByFirstName(firstName, pageable);
-        if (appUserPage.isEmpty()){
+        if (appUserPage==null){
             throw new AppUserNotFoundException("Firstname "+firstName+" Not Found");
         }
         return appUserPage;
@@ -80,7 +84,7 @@ public class AppUserServiceImpl implements AppUserService{
     public List<AppUser> findUserByLastName(String lastName, Pageable pageable) throws AppUserNotFoundException {
         pageable =PageRequest.of(0, 10);
         List<AppUser> appUserPage=appUserRepository.findUserByLastName(lastName, pageable);
-        if (appUserPage.isEmpty()){
+        if (appUserPage==null){
             throw new AppUserNotFoundException("Lastname "+lastName+" Not Found");
         }
         return appUserPage;
@@ -90,16 +94,19 @@ public class AppUserServiceImpl implements AppUserService{
     public List<AppUser> findBySchoolName(String schoolName,Pageable pageable) throws AppUserNotFoundException {
         pageable=PageRequest.of(0, 10);
         List<AppUser> appUsers=appUserRepository.findBySchoolName(schoolName,pageable);
-        if (appUsers.isEmpty()){
+        if (appUsers==null){
             throw new AppUserNotFoundException("School name "+schoolName+" Not Found");
         }
         return appUsers;
     }
 
     @Override
-    public List<AppUser> findByUserType(UserType userType, Pageable pageable) {
+    public List<AppUser> findByUserType(UserType userType, Pageable pageable) throws AppUserNotFoundException {
         pageable=PageRequest.of(0, 10);
         List<AppUser> appUserPage=appUserRepository.findByUserType(userType, pageable);
+        if (appUserPage==null){
+            throw new AppUserNotFoundException("User Type "+userType+" Not Found");
+        }
         return appUserPage;
     }
 
@@ -136,8 +143,8 @@ public class AppUserServiceImpl implements AppUserService{
             savedAppUser.setMeansOfIdentificationExpiryDate(appUser.getMeansOfIdentificationExpiryDate());
         }if (Objects.nonNull(appUser.getPassword()) && !"".equalsIgnoreCase(appUser.getPassword())) {
             savedAppUser.setPassword(appUser.getPassword());
-        }if (Objects.nonNull(appUser.getContact())) {
-            savedAppUser.setContact(appUser.getContact());
+        }if (Objects.nonNull(appUser.getContacts())) {
+            savedAppUser.setContacts(appUser.getContacts());
         }if (Objects.nonNull(appUser.getReferees())) {
             savedAppUser.setReferees(appUser.getReferees());
         }
@@ -158,5 +165,10 @@ public class AppUserServiceImpl implements AppUserService{
         appUserRepository.deleteAll();
     }
 
-
+    private Boolean validateEmail(AppUser appUser){
+        if (appUser.getUsername()!=null){
+            return false;
+        }
+        return true;
+    }
 }

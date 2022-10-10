@@ -2,7 +2,7 @@ package com.teacher.staticdata;
 
 public enum UserType {
     TEACHER("TEACHER"),
-    PARENT("PATENT"),
+    PARENT("PARENT"),
     SCHOOL("SCHOOL");
 
     private final String userType;

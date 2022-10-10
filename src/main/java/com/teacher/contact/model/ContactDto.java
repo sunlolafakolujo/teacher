@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ContactDto {
 
-    @JsonIgnore
+//    @JsonIgnore
     private Long id;
 
     private String streetNumber;

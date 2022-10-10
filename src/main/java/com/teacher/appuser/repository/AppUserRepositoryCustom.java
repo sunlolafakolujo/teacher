@@ -7,8 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AppUserRepositoryCustom {
+
+    @Query("From AppUser a Where a.username=?1")
+    Optional<AppUser> findUserByUsernameOptional(String username);
 
     @Query("From AppUser a Where a.username=?1")
     AppUser findUserByUsername(String username);

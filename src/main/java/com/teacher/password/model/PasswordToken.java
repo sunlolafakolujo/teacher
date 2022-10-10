@@ -1,6 +1,7 @@
 package com.teacher.password.model;
 
 import com.teacher.appuser.model.AppUser;
+import com.teacher.baseaudit.BaseAudit;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @NoArgsConstructor
-public class PasswordToken {
+public class PasswordToken extends BaseAudit {
 
     private static final Integer EXPIRATION_TIME = 10;
 

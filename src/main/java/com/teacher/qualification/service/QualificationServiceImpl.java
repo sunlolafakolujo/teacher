@@ -1,5 +1,6 @@
 package com.teacher.qualification.service;
 
+import com.teacher.appuser.model.AppUser;
 import com.teacher.qualification.repository.QualificationRepository;
 import com.teacher.qualification.exception.QualificationNotFoundException;
 import com.teacher.qualification.model.Qualification;

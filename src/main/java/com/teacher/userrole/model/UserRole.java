@@ -2,6 +2,7 @@ package com.teacher.userrole.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teacher.appuser.model.AppUser;
+import com.teacher.baseaudit.BaseAudit;
 import com.teacher.staticdata.RoleName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,7 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRole {
+public class UserRole extends BaseAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

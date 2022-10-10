@@ -12,8 +12,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     public final static String[] WHITE_LIST_URLS={
-        "/api/appUser/verifyRegistration/**",
-        "/api/appUser/resendVerificationToken/**"
+        "/api/appUser/teacher/verifyRegistration/**",
+        "/api/appUser/teacher/resendVerificationToken/**",
+        "/api/appUser/teacher/schoolRegistration/**"
 
     };
 

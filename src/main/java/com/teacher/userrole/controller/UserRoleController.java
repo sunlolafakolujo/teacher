@@ -6,6 +6,7 @@ import com.teacher.userrole.model.UpdateRole;
 import com.teacher.userrole.model.UserRole;
 import com.teacher.userrole.model.UserRoleDto;
 import com.teacher.userrole.service.UserRoleService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "api/userRole")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserRoleController {
     private final UserRoleService userRoleService;
     private final ModelMapper modelMapper;

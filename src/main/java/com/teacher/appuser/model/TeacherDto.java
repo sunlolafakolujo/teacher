@@ -15,7 +15,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Data
@@ -54,17 +56,19 @@ public class TeacherDto {
 
     private MeansOfIdentification meansOfIdentification;
 
-    private String meansOfIdentificationIssueDate;
+    private String meansOfIdentificationRefNumber;
 
-    private String meansOfIdentificationExpiryDate;
+    private LocalDate meansOfIdentificationIssueDate;
 
-    private Contact contact;
+    private LocalDate meansOfIdentificationExpiryDate;
 
-    private List<Qualification> qualifications;
+    private Collection<Contact> contacts=new ArrayList<>();
 
-    private List<WorkExperience> workExperiences;
+    private Collection<Qualification> qualifications=new HashSet<>();
 
-    private List<Referee> referees;
+    private Collection<WorkExperience> workExperiences=new HashSet<>();
 
-    private List<UserRole> userRoles;
+    private Collection<Referee> referees=new HashSet<>();
+
+    private Collection<UserRole> userRoles=new HashSet<>();
 }

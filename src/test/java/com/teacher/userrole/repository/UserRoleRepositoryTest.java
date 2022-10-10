@@ -7,9 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -40,7 +37,7 @@ class UserRoleRepositoryTest {
 
     @Test
     void testThatYouCanFindRoleByName() throws UserRoleNotFoundException {
-        userRole=userRoleRepository.findUserRoleByName("PARENT");
+        userRole=userRoleRepository.findByRoleName("PARENT");
         if (userRole==null){
             throw new UserRoleNotFoundException("Role Not Found");
         }

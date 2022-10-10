@@ -38,7 +38,7 @@ public class PasswordEventListener implements ApplicationListener<PasswordEvent>
 
     private SimpleMailMessage constructPasswordTokenEmail(PasswordEvent event, AppUser appUser, String token) {
 
-        String link=event.getApplicationUrl() +"/api/appUser/savePassword/"+token;
+        String link=event.getApplicationUrl() +"/api/teacher/appUser/savePassword/"+token;
         String to= appUser.getEmail();
         String from="fakolujos@gmail.com";
         String subject="Reset Password";

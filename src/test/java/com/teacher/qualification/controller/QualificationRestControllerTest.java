@@ -61,7 +61,7 @@ class QualificationRestControllerTest {
     @Test
     void testThatWhenYouCallSaveQualificationMethod_thenQualificationIsSaved() throws Exception {
 
-        qualification.setSchoolName("College of Education");
+        qualification.setInstitutionName("College of Education");
         qualification.setSubject("Physics");
         qualification.setDegreeTitle("Bachelor of Education");
         qualification.setClassOfDegree("Upper Credit");

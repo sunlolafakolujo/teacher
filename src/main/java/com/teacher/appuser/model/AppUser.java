@@ -1,5 +1,7 @@
 package com.teacher.appuser.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teacher.contact.model.Contact;
 import com.teacher.qualification.model.Qualification;
 import com.teacher.reference.model.Referee;
@@ -13,6 +15,9 @@ import com.teacher.workexperience.model.WorkExperience;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -21,6 +26,7 @@ import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -54,20 +60,16 @@ public class AppUser {
 
     private String schoolName;
 
-    @NotBlank(message = "Username is required")
     @Column(unique = true)
     private String username;
 
-    @NotBlank(message = "Password is required")
     private String password;
 
     @Email
     @Column(unique = true)
-    @NotBlank(message = "Email is required")
     private String email;
 
     @Column(unique = true)
-    @NotBlank(message = "Phone is required")
     private String phone;
 
     private String picUrl;
@@ -79,27 +81,31 @@ public class AppUser {
     @Enumerated(EnumType.STRING)
     private MeansOfIdentification meansOfIdentification;
 
+    private String meansOfIdentificationRefNumber;
+
     private LocalDate meansOfIdentificationIssueDate;
 
     private LocalDate meansOfIdentificationExpiryDate;
 
     private String rcNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "contact_id",
-            nullable = false,
-            foreignKey = @ForeignKey(name = "FK_CONTACT"))
-    private Contact contact;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @Fetch(value=FetchMode.SELECT)
+    private Collection<Contact> contacts=new HashSet<>();
 
-    @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Qualification> qualifications;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @Fetch(value=FetchMode.SELECT)
+    private Collection<Qualification> qualifications=new HashSet<>();
 
-    @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<WorkExperience> workExperiences;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value=FetchMode.SELECT)
+    private Collection<WorkExperience> workExperiences=new HashSet<>();
 
-    @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Referee> referees;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @Fetch(value=FetchMode.SELECT)
+    private Collection<Referee> referees=new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Collection<UserRole> userRoles=new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value=FetchMode.SELECT)
+    private Collection<UserRole> userRoles=new HashSet<>();
 }

@@ -12,8 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -47,13 +47,15 @@ public class ParentDto {
 
     private MeansOfIdentification meansOfIdentification;
 
-    private String meansOfIdentificationIssueDate;
+    private String meansOfIdentificationRefNumber;
 
-    private String meansOfIdentificationExpiryDate;
+    private LocalDate meansOfIdentificationIssueDate;
 
-    private Contact contact;
+    private LocalDate meansOfIdentificationExpiryDate;
 
-    private List<Referee> referees;
+    private Collection<Contact> contacts=new ArrayList<>();
 
-    private List<UserRole> userRoles;
+    private Collection<Referee> referees=new HashSet<>();
+
+    private Collection<UserRole> userRoles=new HashSet<>();
 }

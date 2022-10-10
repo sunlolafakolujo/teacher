@@ -17,5 +17,5 @@ public class UpdateQualification {
 
     private String classOfDegree;
 
-    private String schoolName;
+    private String institutionName;
 }
