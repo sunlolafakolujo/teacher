@@ -9,7 +9,7 @@ import java.util.List;
 public interface VacancyService {
     Vacancy saveVacancy(Vacancy vacancy) throws VacancyNotFoundException;
     Vacancy findVacancyById(Long id) throws VacancyNotFoundException;
-    Vacancy findVacancyByJobId(String jobId) throws VacancyNotFoundException;
+//    Vacancy findVacancyByJobId(String jobId) throws VacancyNotFoundException;
     List<Vacancy> findVacancyByJobTitle(String jobTitle,Pageable pageable) throws VacancyNotFoundException;
     List<Vacancy> findAllVacancies(Pageable pageable);
     Long countVacancy();

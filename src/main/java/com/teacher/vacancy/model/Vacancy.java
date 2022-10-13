@@ -3,6 +3,7 @@ package com.teacher.vacancy.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.baseaudit.BaseAudit;
+import com.teacher.staticdata.JobType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,39 +26,35 @@ public class Vacancy extends BaseAudit {
     @NotBlank(message = "Publisher name is required")
     private String companyName;
 
-    @NotBlank(message = "Job Id is required")
-    @Column(unique = true)
-    private String jobId;
+    private LocalDate publishedDate;
+
+    private LocalDate closingDate;
 
     private String jobTitle;
 
     private String jobLocation;
 
-    @Column(length = 400000)
-    private String jobDetails;
+    @Column(length = 1000000)
+    private String aboutUs;
 
-    @JsonIgnore
-    @ToString.Exclude
+    @Enumerated(EnumType.STRING)
+    private JobType jobType;
+
+    private String jobSchedule;
+
     @Column(length = 10000)
     @NotBlank(message = "Job Description is required")
     private String keyResponsibility;
 
     @Column(length = 10000)
-    @JsonIgnore
-    @ToString.Exclude
     private String skillRequirement;
 
-    @JsonIgnore
-    @ToString.Exclude
     @Column(length = 10000)
-    private String experienceEducation;
+    private String qualification;
 
-    @JsonIgnore
-    @ToString.Exclude
     @Column(length = 5000)
     private String benefit;
 
-    private LocalDate publishedDate;
-
-    private LocalDate closingDate;
+    @Column(length = 600000)
+    private String jobDetail;
 }

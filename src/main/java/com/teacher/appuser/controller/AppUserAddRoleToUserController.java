@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "api/teacher/appUser")
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class AppUserAddRoleToUserController {
     private final UserRoleService userRoleService;
 
     @PostMapping("/addRoleToUser")
-    public ResponseEntity<?> addRoleToUser(@RequestBody AddRoleToUser addRoleToUser){
+    public ResponseEntity<?> addRoleToUser(@Valid @RequestBody AddRoleToUser addRoleToUser){
         userRoleService.addRoleToUser(addRoleToUser.getUsername(), addRoleToUser.getRoleName());
         return ResponseEntity.ok().build();
     }

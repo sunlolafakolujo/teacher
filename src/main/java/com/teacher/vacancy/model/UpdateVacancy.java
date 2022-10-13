@@ -1,5 +1,7 @@
 package com.teacher.vacancy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teacher.staticdata.JobType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,17 +15,25 @@ public class UpdateVacancy {
 
     private Long id;
 
+    private LocalDate closingDate;
+
     private String jobTitle;
 
-    private String jobGrade;
+    private String jobLocation;
 
-    private String location;
+    private String aboutUs;
+
+    private JobType jobType;
+
+    private String jobSchedule;
 
     private String keyResponsibility;
 
     private String skillRequirement;
 
-    private String experienceEducation;
+    private String qualification;
 
-    private LocalDate closingDate;
+    private String benefit;
+
+
 }

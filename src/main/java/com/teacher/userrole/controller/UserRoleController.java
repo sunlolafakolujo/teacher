@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "api/userRole")
+@RequestMapping(path = "api/teacher/userRole")
 @AllArgsConstructor
 public class UserRoleController {
     private final UserRoleService userRoleService;

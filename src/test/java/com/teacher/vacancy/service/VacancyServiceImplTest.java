@@ -1,18 +1,26 @@
 package com.teacher.vacancy.service;
 
+import com.teacher.vacancy.exception.VacancyNotFoundException;
 import com.teacher.vacancy.model.Vacancy;
 import com.teacher.vacancy.repository.VacancyRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 @SpringBootTest
 @Slf4j
 @Sql(scripts = {"classpath:db/insert.sql"})
@@ -32,38 +40,79 @@ class VacancyServiceImplTest {
     }
 
     @Test
-    void testThatYouCanMockSaveVacancyMethod() {
+    void testThatYouCanMockSaveVacancyMethod() throws VacancyNotFoundException {
+        when(vacancyRepository.save(vacancy)).thenReturn(vacancy);
+        vacancyService.saveVacancy(vacancy);
+        ArgumentCaptor<Vacancy> vacancyArgumentCaptor=ArgumentCaptor.forClass(Vacancy.class);
+        verify(vacancyRepository, times(1)).save(vacancyArgumentCaptor.capture());
+        Vacancy capturedVacancy=vacancyArgumentCaptor.getValue();
+        assertEquals(capturedVacancy,vacancy);
     }
 
     @Test
-    void findVacancyById() {
+    void testThatYouCanMockFindVacancyByIdMethod() throws VacancyNotFoundException {
+        Long id=2L;
+        when(vacancyRepository.findById(id)).thenReturn(Optional.of(vacancy));
+        vacancyService.findVacancyById(id);
+        verify(vacancyRepository, times(1)).findById(id);
+    }
+
+//    @Test
+//    void testThatYouCanMockFindVacancyByJobIdMethod() throws VacancyNotFoundException {
+//        String jobId="G102";
+//        when(vacancyRepository.findByJobId(jobId)).thenReturn(vacancy);
+//        vacancyService.findVacancyByJobId(jobId);
+//        verify(vacancyRepository, times(1)).findByJobId(jobId);
+//    }
+
+    @Test
+    void testThatYouCanMockFindVacancyByJobTitleMethod() throws VacancyNotFoundException {
+        String jobTitle="Head Teacher";
+        Pageable pageable= PageRequest.of(0, 10);
+        List<Vacancy> vacancies=new ArrayList<>();
+        when(vacancyRepository.findByJobTitle(jobTitle, pageable)).thenReturn(vacancies);
+        vacancyService.findVacancyByJobTitle(jobTitle, pageable);
+        verify(vacancyRepository, times(1)).findByJobTitle(jobTitle, pageable);
     }
 
     @Test
-    void findVacancyByJobId() {
+    void testThatYouCanMockFindAllVacanciesMethod() {
+        Pageable pageable=PageRequest.of(0, 10);
+        List<Vacancy> vacancies=new ArrayList<>();
+        Page<Vacancy> vacancyPage=new PageImpl<>(vacancies);
+        when(vacancyRepository.findAll(pageable)).thenReturn(vacancyPage);
+        vacancyService.findAllVacancies(pageable);
+        verify(vacancyRepository, times(1)).findAll(pageable);
     }
 
     @Test
-    void findVacancyByJobTitle() {
+    void testThatYouCanMockCountVacancyMethod() {
+        Long numberOfVacancy=2L;
+        when(vacancyRepository.count()).thenReturn(numberOfVacancy);
+        vacancyService.countVacancy();
+        verify(vacancyRepository, times(1)).count();
     }
 
     @Test
-    void findAllVacancies() {
+    void testThatYouCanMockUpdateVacancyMethod() throws VacancyNotFoundException {
+        Long id=2L;
+        when(vacancyRepository.findById(id)).thenReturn(Optional.of(vacancy));
+        vacancyService.updateVacancy(vacancy, id);
+        verify(vacancyRepository, times(1)).save(vacancy);
     }
 
     @Test
-    void countVacancy() {
+    void testThatYouCanMockDeleteVacancyByIdMethod() throws VacancyNotFoundException {
+        Long id=2L;
+        doNothing().when(vacancyRepository).deleteById(id);
+        vacancyService.deleteVacancyById(id);
+        verify(vacancyRepository, times(1)).deleteById(id);
     }
 
     @Test
-    void updateVacancy() {
-    }
-
-    @Test
-    void deleteVacancyById() {
-    }
-
-    @Test
-    void deleteAllVacancies() {
+    void testThatYouCanMockDeleteAllVacanciesMethod() {
+        doNothing().when(vacancyRepository).deleteAll();
+        vacancyService.deleteAllVacancies();
+        verify(vacancyRepository, times(1)).deleteAll();
     }
 }

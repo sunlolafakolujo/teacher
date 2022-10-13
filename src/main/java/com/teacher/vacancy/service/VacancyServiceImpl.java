@@ -22,18 +22,10 @@ public class VacancyServiceImpl implements VacancyService{
 
     @Override
     public Vacancy saveVacancy(Vacancy vacancy) throws VacancyNotFoundException {
-        Vacancy jobId=vacancyRepository.findByJobId(vacancy.getJobId());
-        if (jobId!=null){
-            throw new VacancyNotFoundException("Vacancy already exist");
-        }
-        vacancy.setJobDetails(":\nCompany:"+vacancy.getCompanyName()+
-                                "\n\nJobId:"+vacancy.getJobId()+
-                                "\n\nJob Title:"+vacancy.getJobTitle()+
-                                "\n\nEducation:\n"+vacancy.getExperienceEducation()+
-                                "\n\nSkills:\n"+vacancy.getSkillRequirement() +
-                                "\n\nKey Responsibility:\n"+vacancy.getKeyResponsibility()+
-                                "\n\nBenefits:\n"+vacancy.getBenefit());
-
+//        Vacancy jobId=vacancyRepository.findByJobId(vacancy.getJobId());
+//        if (jobId!=null){
+//            throw new VacancyNotFoundException("Vacancy already exist");
+//        }
         return vacancyRepository.save(vacancy);
     }
 
@@ -44,20 +36,20 @@ public class VacancyServiceImpl implements VacancyService{
         return vacancy;
     }
 
-    @Override
-    public Vacancy findVacancyByJobId(String jobId) throws VacancyNotFoundException {
-        Vacancy vacancy=vacancyRepository.findByJobId(jobId);
-        if (vacancy==null){
-            throw new VacancyNotFoundException("Vacancy Not Found");
-        }
-        return vacancy;
-    }
+//    @Override
+//    public Vacancy findVacancyByJobId(String jobId) throws VacancyNotFoundException {
+//        Vacancy vacancy=vacancyRepository.findByJobId(jobId);
+//        if (vacancy==null){
+//            throw new VacancyNotFoundException("Vacancy Not Found");
+//        }
+//        return vacancy;
+//    }
 
     @Override
     public List<Vacancy> findVacancyByJobTitle(String jobTitle, Pageable pageable) throws VacancyNotFoundException {
         pageable= PageRequest.of(0, 10);
         List<Vacancy> vacancies=vacancyRepository.findByJobTitle(jobTitle,pageable);
-        if (vacancies.isEmpty()){
+        if (vacancies==null){
             throw new VacancyNotFoundException("Vacancy Not Found");
         }
         return vacancies;
@@ -81,16 +73,24 @@ public class VacancyServiceImpl implements VacancyService{
                 .orElseThrow(()->new VacancyNotFoundException("Vacancy Not found"));
         if (Objects.nonNull(vacancy.getBenefit()) && !"".equalsIgnoreCase(vacancy.getBenefit())){
             savedVacancy.setBenefit(vacancy.getBenefit());
-        }if (Objects.nonNull(vacancy.getExperienceEducation()) && !"".equalsIgnoreCase(vacancy.getExperienceEducation())){
-            savedVacancy.setExperienceEducation(vacancy.getExperienceEducation());
+        }if (Objects.nonNull(vacancy.getQualification()) && !"".equalsIgnoreCase(vacancy.getQualification())){
+            savedVacancy.setQualification(vacancy.getQualification());
         }if (Objects.nonNull(vacancy.getKeyResponsibility()) && !"".equalsIgnoreCase(vacancy.getKeyResponsibility())){
             savedVacancy.setKeyResponsibility(vacancy.getKeyResponsibility());
         }if (Objects.nonNull(vacancy.getSkillRequirement()) && !"".equalsIgnoreCase(vacancy.getSkillRequirement())){
             savedVacancy.setSkillRequirement(vacancy.getSkillRequirement());
         }if (Objects.nonNull(vacancy.getClosingDate())){
             savedVacancy.setClosingDate(vacancy.getClosingDate());
+        }if (Objects.nonNull(vacancy.getAboutUs()) && !"".equalsIgnoreCase(vacancy.getAboutUs())){
+            savedVacancy.setAboutUs(vacancy.getAboutUs());
+        }if (Objects.nonNull(vacancy.getJobType())){
+            savedVacancy.setJobType(vacancy.getJobType());
+        }if (Objects.nonNull(vacancy.getJobSchedule()) && !"".equalsIgnoreCase(vacancy.getJobSchedule())){
+            savedVacancy.setJobSchedule(vacancy.getJobSchedule());
         }if (Objects.nonNull(vacancy.getJobTitle()) && !"".equalsIgnoreCase(vacancy.getJobTitle())){
             savedVacancy.setJobTitle(vacancy.getJobTitle());
+        }if (Objects.nonNull(vacancy.getJobLocation()) && !"".equalsIgnoreCase(vacancy.getJobLocation())){
+            savedVacancy.setJobLocation(vacancy.getJobLocation());
         }
         return vacancyRepository.save(savedVacancy);
     }

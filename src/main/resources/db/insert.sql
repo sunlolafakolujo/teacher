@@ -28,11 +28,12 @@ INSERT INTO referee(title,first_name,last_name,email,phone,reference_letter_url)
 VALUES ('MR','Toye','Okedara','tokedara@yahoo,com','09087654223','https://resources.workable.com/wp-content/uploads/2016/02/screencapture-resources-workable-employee-reference-letter-2021-04-01-15_38_11.png'),
        ('MR','Tokunbo', 'Akeju','ta@gmail.com','07086545617','https://resumegenius.com/letter-of-recommendation');
 
-INSERT INTO vacancy(company_name, job_id, job_title,job_location, key_responsibility, skill_requirement, experience_education,
-                    benefit, published_date, closing_date)
-VALUES ('Xpart Tools','JID102','Physic Teacher','Lagos','xxxxxx','yyyyyyyy','hhhhhhhhhhh','uuuuuuuuu','2022-10-10','2022-10-17'),
-       ('Mind Bulder Schools','JID105','Chemistry Teacher','Lagos','xxxxxxkkkk','yyyyyyyyaaaaaa','bbbbhhhhhhhhhhh','ccccccuuuuuuuuu',
-       '2022-10-10','2022-10-17');
+INSERT INTO vacancy(company_name, published_date, closing_date, job_title, job_location, about_us, job_type, job_schedule,
+                    key_responsibility, skill_requirement, qualification, benefit, job_detail)
+VALUES ('Xpart Tools','2022-10-10','2022-10-17','Physic Teacher','Lagos','gwhsqol','FULL_TIME','Monday-Friday, 7:00AM-4:00PM',
+        'xxxxxx','yyyyyyyy','hhhhhhhhhhh','uuuuuuuuu','qujgdqwsip'),
+       ('Mind Bulder Schools','2022-10-10','2022-10-17','Chemistry Teacher','Lagos','hggghhhj','FULL_TIME',
+       'Monday-Friday, 7:00AM-4:00PM','xxxxxxkkkk','yyyyyyyyaaaaaa','bbbbhhhhhhhhhhh','ccccccuuuuuuuuu','AVWSVWOUWOQGOIW');
 
 
 

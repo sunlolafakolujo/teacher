@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface VacancyRepositoryCustom {
-    @Query("From Vacancy v Where v.jobId=?1")
-    Vacancy findByJobId(String jobId);
+//    @Query("From Vacancy v Where v.jobId=?1")
+//    Vacancy findByJobId(String jobId);
 
     @Query("From Vacancy v Where v.jobTitle=?1")
     List<Vacancy> findByJobTitle(String jobTitle, Pageable pageable);

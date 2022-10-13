@@ -2,6 +2,7 @@ package com.teacher.vacancy.repository;
 
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
+import com.teacher.staticdata.JobType;
 import com.teacher.vacancy.exception.VacancyNotFoundException;
 import com.teacher.vacancy.model.Vacancy;
 import lombok.extern.slf4j.Slf4j;
@@ -42,24 +43,33 @@ class VacancyRepositoryTest {
     void testThatYouCanSaveVacancy(){
         vacancy.setBenefit("1. Pension "+"\n"+"2. Free Medical");
         vacancy.setCompanyName("City Pride School");
-        vacancy.setJobId("JT-120");
+        vacancy.setPublishedDate(LocalDate.parse("2022-10-10"));
+        vacancy.setClosingDate(LocalDate.parse("2022-10-17"));
+        vacancy.setJobType(JobType.FULL_TIME);
+        vacancy.setJobSchedule("Monday-Friday, 07:00am-16:00pm");
+//        vacancy.setJobId("JT-120");
         vacancy.setJobTitle("Head Teacher");
-        vacancy.setExperienceEducation("ghjkiopp[[[pp[[iuyhyh");
+        vacancy.setQualification("ghjkiopp[[[pp[[iuyhyh");
         vacancy.setSkillRequirement("wduidwgduodhhpqpqwhqwo");
         vacancy.setKeyResponsibility("jkqjdgooiogqoigopiwgpig");
         vacancy.setJobLocation("Lagos\n");
-        vacancy.setJobDetails(":\nCompany:"+vacancy.getCompanyName()+"\n\nJobId:"+vacancy.getJobId()+
+        vacancy.setJobDetail(":\nCompany:"+vacancy.getCompanyName()+
+//                            "\n\nJobId:"+vacancy.getJobId()+
+                            "\n\nPublished Date:"+vacancy.getPublishedDate()+
+                            "\n\nClosing Date:"+vacancy.getClosingDate()+
                             "\n\nJob Title:"+vacancy.getJobTitle()+
-                            "\n\nEducation:\n"+vacancy.getExperienceEducation()+
+                            "\n\nJob Type:"+vacancy.getJobType()+
+                            "\n\nJob Location:"+vacancy.getJobLocation()+
+                            "\n\nJob Schedule:"+vacancy.getJobSchedule()+
+                            "\n\nQualification:\n"+vacancy.getQualification()+
                             "\n\nSkills:\n"+vacancy.getSkillRequirement() +
                             "\n\nKey Responsibility:\n"+vacancy.getKeyResponsibility()+
                             "\n\nBenefits:\n"+vacancy.getBenefit());
-        vacancy.setPublishedDate(LocalDate.parse("2022-10-10"));
-        vacancy.setClosingDate(LocalDate.parse("2022-10-17"));
+
 
         assertDoesNotThrow(()->vacancyRepository.save(vacancy));
 
-        log.info("Vacancy repo after saving {}", vacancy.getJobDetails());
+        log.info("Vacancy repo after saving {}", vacancy.getJobDetail());
     }
 
     @Test
@@ -70,15 +80,15 @@ class VacancyRepositoryTest {
         log.info("Vacancy: {}", vacancy);
     }
 
-    @Test
-    void testThatYouCanFindVacancyByJobId() throws VacancyNotFoundException {
-        String jobId="JID102";
-        vacancy=vacancyRepository.findByJobId(jobId);
-        if (vacancy==null){
-            throw new VacancyNotFoundException("Vacancy Not Found");
-        }
-        log.info("Vacancy: {}", vacancy);
-    }
+//    @Test
+//    void testThatYouCanFindVacancyByJobId() throws VacancyNotFoundException {
+//        String jobId="JID102";
+//        vacancy=vacancyRepository.findByJobId(jobId);
+//        if (vacancy==null){
+//            throw new VacancyNotFoundException("Vacancy Not Found");
+//        }
+//        log.info("Vacancy: {}", vacancy);
+//    }
 
     @Test
     void testThatYouCanFindVacancyByJobTitle(){
@@ -93,6 +103,12 @@ class VacancyRepositoryTest {
         Pageable pageable=PageRequest.of(0, 10);
         Page<Vacancy> vacancyPage=vacancyRepository.findAll(pageable);
         vacancyPage.forEach(System.out::println);
+    }
+
+    @Test
+    void testThatYouCanCountNumberOfVacancies(){
+        Long numberOfVacancies= vacancyRepository.count();
+        log.info("Number of vacancies:{}", numberOfVacancies);
     }
 
     @Test

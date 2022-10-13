@@ -1,5 +1,6 @@
 package com.teacher.vacancy.model;
 
+import com.teacher.staticdata.JobType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,21 +12,23 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class NewVacancy {
 
-    private String publisherName;
-
-    private String jobId;
+    private String companyName;
 
     private String jobTitle;
 
-    private String jobGrade;
+    private String aboutUs;
 
-    private String location;
+    private JobType jobType;
+
+    private String jobSchedule;
+
+    private String jobLocation;
 
     private String keyResponsibility;
 
     private String skillRequirement;
 
-    private String experienceEducation;
+    private String qualification;
 
     private LocalDate publishedDate;
 
