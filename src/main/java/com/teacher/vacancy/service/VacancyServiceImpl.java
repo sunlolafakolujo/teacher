@@ -21,11 +21,7 @@ public class VacancyServiceImpl implements VacancyService{
     private VacancyRepository vacancyRepository;
 
     @Override
-    public Vacancy saveVacancy(Vacancy vacancy) throws VacancyNotFoundException {
-//        Vacancy jobId=vacancyRepository.findByJobId(vacancy.getJobId());
-//        if (jobId!=null){
-//            throw new VacancyNotFoundException("Vacancy already exist");
-//        }
+    public Vacancy saveVacancy(Vacancy vacancy) {
         return vacancyRepository.save(vacancy);
     }
 
@@ -35,15 +31,6 @@ public class VacancyServiceImpl implements VacancyService{
                 .orElseThrow(()->new VacancyNotFoundException("Vacancy Not Found"));
         return vacancy;
     }
-
-//    @Override
-//    public Vacancy findVacancyByJobId(String jobId) throws VacancyNotFoundException {
-//        Vacancy vacancy=vacancyRepository.findByJobId(jobId);
-//        if (vacancy==null){
-//            throw new VacancyNotFoundException("Vacancy Not Found");
-//        }
-//        return vacancy;
-//    }
 
     @Override
     public List<Vacancy> findVacancyByJobTitle(String jobTitle, Pageable pageable) throws VacancyNotFoundException {

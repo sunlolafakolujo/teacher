@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface VacancyService {
-    Vacancy saveVacancy(Vacancy vacancy) throws VacancyNotFoundException;
+    Vacancy saveVacancy(Vacancy vacancy);
     Vacancy findVacancyById(Long id) throws VacancyNotFoundException;
 //    Vacancy findVacancyByJobId(String jobId) throws VacancyNotFoundException;
     List<Vacancy> findVacancyByJobTitle(String jobTitle,Pageable pageable) throws VacancyNotFoundException;

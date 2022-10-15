@@ -40,7 +40,7 @@ class VacancyServiceImplTest {
     }
 
     @Test
-    void testThatYouCanMockSaveVacancyMethod() throws VacancyNotFoundException {
+    void testThatYouCanMockSaveVacancyMethod() {
         when(vacancyRepository.save(vacancy)).thenReturn(vacancy);
         vacancyService.saveVacancy(vacancy);
         ArgumentCaptor<Vacancy> vacancyArgumentCaptor=ArgumentCaptor.forClass(Vacancy.class);

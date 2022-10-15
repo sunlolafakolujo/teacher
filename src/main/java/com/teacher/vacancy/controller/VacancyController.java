@@ -1,10 +1,7 @@
 package com.teacher.vacancy.controller;
 
 import com.teacher.vacancy.exception.VacancyNotFoundException;
-import com.teacher.vacancy.model.NewVacancy;
-import com.teacher.vacancy.model.UpdateVacancy;
-import com.teacher.vacancy.model.Vacancy;
-import com.teacher.vacancy.model.VacancyDto;
+import com.teacher.vacancy.model.*;
 import com.teacher.vacancy.service.VacancyService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -26,8 +23,7 @@ public class VacancyController {
     private final ModelMapper modelMapper;
 
     @PostMapping("/saveVacancy")
-    public ResponseEntity<NewVacancy> createVacancy(@Valid @RequestBody NewVacancy newVacancy) throws VacancyNotFoundException {
-
+    public ResponseEntity<NewVacancy> createVacancy(@Valid @RequestBody NewVacancy newVacancy)  {
         Vacancy vacancy=modelMapper.map(newVacancy, Vacancy.class);
         Vacancy post=vacancyService.saveVacancy(vacancy);
         NewVacancy posted=modelMapper.map(post, NewVacancy.class);
@@ -35,23 +31,23 @@ public class VacancyController {
     }
 
     @GetMapping("/findVacancyById/{id}")
-    public ResponseEntity<VacancyDto> getVacancyById(@PathVariable(value = "id") Long id) throws VacancyNotFoundException {
+    public ResponseEntity<VacancyDtos> getVacancyById(@PathVariable(value = "id") Long id) throws VacancyNotFoundException {
         Vacancy vacancy=vacancyService.findVacancyById(id);
-        VacancyDto vacancyDto=convertVacancyToDto(vacancy);
-        return new ResponseEntity<>(vacancyDto, HttpStatus.OK);
+        VacancyDtos vacancyDtos=convertVacancyToDtos(vacancy);
+        return new ResponseEntity<>(vacancyDtos, HttpStatus.OK);
     }
 
     @GetMapping("/findVacancyByJobTitle/{jobTitle}")
-    public ResponseEntity<List<VacancyDto>> getVacancyByJobId(@PathVariable(value = "jobTitle") String jobTitle)
+    public ResponseEntity<List<VacancyDtos>> getVacancyByJobId(@PathVariable(value = "jobTitle") String jobTitle)
                                                                 throws VacancyNotFoundException {
         Pageable pageable=PageRequest.of(0, 10);
         return new ResponseEntity<>(vacancyService.findVacancyByJobTitle(jobTitle, pageable)
                 .stream()
-                .map(this::convertVacancyToDto)
+                .map(this::convertVacancyToDtos)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @GetMapping("/findAllVacancy")
+    @GetMapping("/findAllVacancies")
     public ResponseEntity<List<VacancyDto>> getAllVacancies(){
         Pageable  pageable= PageRequest.of(0, 10);
         return new ResponseEntity<>(vacancyService.findAllVacancies(pageable)
@@ -101,6 +97,23 @@ public class VacancyController {
                 ", "+"Benefits: "+vacancy.getBenefit());
 
         return vacancyDto;
+    }
+
+    private VacancyDtos convertVacancyToDtos(Vacancy vacancy){
+        VacancyDtos vacancyDto=new VacancyDtos();
+        vacancyDto.setCompanyName(vacancy.getCompanyName());
+        vacancyDto.setAboutUs(vacancy.getAboutUs());
+        vacancyDto.setClosingDate(vacancy.getClosingDate());
+        vacancyDto.setPublishedDate(vacancy.getPublishedDate());
+        vacancyDto.setJobLocation(vacancy.getJobLocation());
+        vacancyDto.setJobTitle(vacancy.getJobTitle());
+        vacancyDto.setJobSchedule(vacancy.getJobSchedule());
+        vacancyDto.setJobType(vacancy.getJobType());
+        vacancyDto.setQualification(vacancy.getQualification());
+        vacancyDto.setKeyResponsibility(vacancy.getKeyResponsibility());
+        vacancyDto.setSkillRequirement(vacancy.getSkillRequirement());
+        return vacancyDto;
+
     }
 
 
