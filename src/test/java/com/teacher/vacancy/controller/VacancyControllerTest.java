@@ -1,6 +1,9 @@
 package com.teacher.vacancy.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teacher.appuser.exception.AppUserNotFoundException;
+import com.teacher.appuser.model.AppUser;
+import com.teacher.appuser.service.AppUserService;
 import com.teacher.staticdata.JobType;
 import com.teacher.vacancy.exception.VacancyNotFoundException;
 import com.teacher.vacancy.model.Vacancy;
@@ -15,12 +18,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -35,6 +36,8 @@ class VacancyControllerTest {
     
     @Autowired
     private VacancyService vacancyService;
+    @Autowired
+    private AppUserService appUserService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -43,14 +46,18 @@ class VacancyControllerTest {
     private ObjectMapper objectMapper;
 
     Vacancy vacancy;
+    AppUser appUser;
 
     @BeforeEach
     void setUp() {
         vacancy=new Vacancy();
+        appUser=new AppUser();
     }
 
     @Test
-    void testThatWhenYouCallCreateVacancyMethod_thenVacancyIsCreated() throws Exception {
+    void testThatWhenYouCallCreateVacancyMethod_thenVacancyIsCreated() throws Exception, AppUserNotFoundException {
+        Long id=1L;
+        appUser=appUserService.findUserById(id);
         vacancy.setAboutUs("ggqssqhh");
         vacancy.setJobSchedule("Mon-Fri, 07:00AM-04:00PM");
         vacancy.setJobType(JobType.FULL_TIME);
@@ -60,7 +67,7 @@ class VacancyControllerTest {
         vacancy.setSkillRequirement("ghhhgjhihi");
         vacancy.setKeyResponsibility("hdwhjejhekj");
         vacancy.setBenefit("1. Health Insurance, 2. Leave Allowance, 3. 28 days Vacation");
-        vacancy.setCompanyName("YZX");
+        vacancy.setAppUser(appUser);
         vacancy.setQualification("sqdeqweeeq");
         vacancy.setJobLocation("Ikeja, Lagos");
 

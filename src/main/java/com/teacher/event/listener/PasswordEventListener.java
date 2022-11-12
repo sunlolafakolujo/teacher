@@ -1,9 +1,11 @@
 package com.teacher.event.listener;
 
+import com.teacher.applicationform.model.ApplicationForm;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.emailconfig.EmailConfiguration;
 import com.teacher.event.PasswordEvent;
 import com.teacher.password.service.PasswordTokenService;
+import com.teacher.vacancy.model.Vacancy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.SimpleMailMessage;

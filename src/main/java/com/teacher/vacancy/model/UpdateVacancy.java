@@ -35,5 +35,5 @@ public class UpdateVacancy {
 
     private String benefit;
 
-
+    private String messageToApplicant;
 }

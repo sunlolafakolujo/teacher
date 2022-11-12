@@ -8,6 +8,7 @@ import com.teacher.staticdata.MeansOfIdentification;
 import com.teacher.staticdata.Title;
 import com.teacher.staticdata.UserType;
 import com.teacher.userrole.model.UserRole;
+import com.teacher.validator.email.ValidEmail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,8 @@ public class ParentDto {
     private String username;
 
     private String password;
+
+//    private String matchingPassword;
 
     private String email;
 

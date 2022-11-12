@@ -39,11 +39,8 @@ class ContactRepositoryTest {
         contact.setCountry("Nigeria");
 
         log.info("Contact repo before saving {}", contact);
-
         assertDoesNotThrow(()->contactRepository.save(contact));
-
         assertEquals("2A", contact.getStreetNumber());
-
         log.info("Contact repo before saving {}", contact);
     }
 
@@ -53,7 +50,6 @@ class ContactRepositoryTest {
         contact=contactRepository.findById(id).orElseThrow(()-> new ContactNotFoundException("Contact does not exist"));
 
         assertEquals(id, contact.getId());
-
         log.info("contact ID 1 {}", contact);
     }
 
@@ -62,7 +58,6 @@ class ContactRepositoryTest {
         List<Contact> contacts=contactRepository.findAll();
 
         assertNotNull(contacts);
-
         log.info("All contacts {}", contacts);
     }
 
@@ -74,11 +69,8 @@ class ContactRepositoryTest {
         String stateProvince="Ogun";
 
         contact.setStateProvince(stateProvince);
-
         assertDoesNotThrow(()->contactRepository.save(contact));
-
         assertThat(contact.getStateProvince()).isEqualTo(stateProvince);
-
         log.info("Updated state {}", contact);
     }
 
@@ -88,9 +80,7 @@ class ContactRepositoryTest {
         Long id=1L;
 
         contactRepository.deleteById(id);
-
         Optional<Contact> optionalContact=contactRepository.findById(id);
-
         if (optionalContact.isPresent()){
             throw new ContactNotFoundException("Contact "+id+" is not deleted");
         }

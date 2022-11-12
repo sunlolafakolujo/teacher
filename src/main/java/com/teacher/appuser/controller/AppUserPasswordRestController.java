@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/api/teacher/appUser")
+@RequestMapping(path = "api/teacher/appUser")
 @AllArgsConstructor
 public class AppUserPasswordRestController {
     private final PasswordTokenService passwordTokenService;

@@ -1,5 +1,6 @@
 package com.teacher.vacancy.model;
 
+import com.teacher.appuser.model.AppUser;
 import com.teacher.staticdata.JobType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class NewVacancy {
 
-    private String companyName;
+//    private String recruiterName;
 
     private String jobTitle;
 
@@ -33,4 +34,8 @@ public class NewVacancy {
     private LocalDate publishedDate;
 
     private LocalDate closingDate;
+
+    private String messageToApplicant;
+
+    private AppUser appUser;
 }

@@ -15,7 +15,7 @@ public class VacancyDtos {
     @JsonIgnore
     private Long id;
 
-    private String companyName;
+//    private String recruiterName;
 
     private String jobTitle;
 
@@ -36,4 +36,8 @@ public class VacancyDtos {
     private LocalDate publishedDate;
 
     private LocalDate closingDate;
+
+    private String recruiterName;
+
+    private String messageToApplicant;
 }

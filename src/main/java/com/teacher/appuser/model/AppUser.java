@@ -1,7 +1,6 @@
 package com.teacher.appuser.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teacher.contact.model.Contact;
 import com.teacher.qualification.model.Qualification;
 import com.teacher.reference.model.Referee;
@@ -10,7 +9,9 @@ import com.teacher.staticdata.MeansOfIdentification;
 import com.teacher.staticdata.Title;
 import com.teacher.staticdata.UserType;
 import com.teacher.userrole.model.UserRole;
-import com.teacher.verificationtoken.model.VerificationToken;
+import com.teacher.vacancy.model.Vacancy;
+import com.teacher.validator.email.ValidEmail;
+import com.teacher.validator.password.PasswordMatches;
 import com.teacher.workexperience.model.WorkExperience;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +23,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +32,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//@PasswordMatches
+//@ValidEmail
 public class AppUser {
 
     @Id
@@ -61,15 +62,21 @@ public class AppUser {
     private String schoolName;
 
     @Column(unique = true)
+    @NotBlank(message = "Username is taken")
     private String username;
 
+    @Column(length = 64)
     private String password;
 
+//    private String matchingPassword;
+
     @Email
+    @NotBlank(message = "Email is taken")
     @Column(unique = true)
     private String email;
 
     @Column(unique = true)
+    @NotBlank(message = "Phone is taken")
     private String phone;
 
     private String picUrl;
@@ -108,4 +115,9 @@ public class AppUser {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(value=FetchMode.SELECT)
     private Collection<UserRole> userRoles=new HashSet<>();
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Vacancy> vacancies;
 }

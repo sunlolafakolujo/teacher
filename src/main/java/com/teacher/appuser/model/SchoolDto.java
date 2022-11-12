@@ -39,6 +39,8 @@ public class SchoolDto {
 
     private String password;
 
+//    private String matchingPassword;
+
     private String email;
 
     private String phone;

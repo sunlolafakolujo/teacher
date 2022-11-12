@@ -12,16 +12,16 @@ import java.util.Optional;
 public interface AppUserRepositoryCustom {
 
     @Query("From AppUser a Where a.username=?1")
-    Optional<AppUser> findUserByUsernameOptional(String username);
+    Optional<AppUser> findUserByUsername(String username);
 
     @Query("From AppUser a Where a.username=?1")
-    AppUser findUserByUsername(String username);
+    AppUser findByUsername(String username);
 
     @Query("From AppUser a Where a.email=?1")
-    AppUser findUserByEmail(String email);
+    Optional<AppUser> findUserByEmail(String email);
 
     @Query("From AppUser a Where a.phone=?1")
-    AppUser findUserByPhone(String phone);
+    Optional<AppUser> findUserByPhone(String phone);
 
     @Query("From AppUser a Where a.firstName Like %?1%")
     List<AppUser> findUserByFirstName(String firstName, Pageable pageable);

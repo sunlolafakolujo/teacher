@@ -65,15 +65,23 @@ class AppUserServiceImplTest {
     @Test
     void testThatYouCanMockFindUserByEmailMethod() throws AppUserNotFoundException {
         String email="ao@gmail.com";
-        when(appUserRepository.findUserByEmail(email)).thenReturn(appUser);
+        when(appUserRepository.findUserByEmail(email)).thenReturn(Optional.of(appUser));
         appUserService.findUserByEmail(email);
         verify(appUserRepository, times(1)).findUserByEmail(email);
     }
 
     @Test
+    void testThatYouCanMockFindUserByUsername() throws AppUserNotFoundException {
+        String username="kokonsari";
+        when(appUserRepository.findUserByUsername(username)).thenReturn(Optional.of(appUser));
+        appUserService.findUserByUsername(username);
+        verify(appUserRepository, times(1)).findUserByUsername(username);
+    }
+
+    @Test
     void testThatYouCanMockFindUserByPhoneMethod() throws AppUserNotFoundException {
         String phone="09087456211";
-        when(appUserRepository.findUserByPhone(phone)).thenReturn(appUser);
+        when(appUserRepository.findUserByPhone(phone)).thenReturn(Optional.of(appUser));
         appUserService.findUserByPhone(phone);
         verify(appUserRepository, times(1)).findUserByPhone(phone);
     }

@@ -1,6 +1,7 @@
 package com.teacher.vacancy.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teacher.applicationform.model.ApplicationForm;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.baseaudit.BaseAudit;
 import com.teacher.staticdata.JobType;
@@ -12,6 +13,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,8 +26,8 @@ public class Vacancy extends BaseAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Publisher name is required")
-    private String companyName;
+//    @NotBlank(message = "Recruiter name is required")
+//    private String recruiterName;
 
     private LocalDate publishedDate;
 
@@ -55,6 +58,18 @@ public class Vacancy extends BaseAudit {
     @Column(length = 5000)
     private String benefit;
 
+    @Column(length = 10000)
+    private String messageToApplicant;
+
     @Column(length = 600000)
     private String jobDetail;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(nullable = false)
+    private AppUser appUser;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "vacancy",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    List<ApplicationForm> applicationForms=new ArrayList<>();
 }

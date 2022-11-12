@@ -25,13 +25,7 @@ public class AppUserServiceImpl implements AppUserService{
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException {
-        AppUser email=appUserRepository.findUserByEmail(appUser.getEmail());
-        AppUser phone= appUserRepository.findUserByPhone(appUser.getPhone());
-        AppUser username=appUserRepository.findUserByUsername(appUser.getUsername());
-        if (email!=null || phone!=null || username!=null){
-            throw new AppUserNotFoundException("User already exist");
-        }
+    public AppUser userRegistration(AppUser appUser) {
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         return appUserRepository.save(appUser);
     }
@@ -45,28 +39,25 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Override
     public AppUser findUserByUsername(String username) throws AppUserNotFoundException {
-        AppUser appUser=appUserRepository.findUserByUsername(username);
-        if (appUser==null){
-            throw new AppUserNotFoundException("User with username "+username+" Not Found");
-        }
+        AppUser appUser=appUserRepository.findUserByUsername(username)
+                .orElseThrow(()->new AppUserNotFoundException("User "+username+" Not Found"));
+
         return appUser;
     }
 
     @Override
     public AppUser findUserByEmail(String email) throws AppUserNotFoundException {
-        AppUser appUser=appUserRepository.findUserByEmail(email);
-        if (appUser==null){
-            throw new AppUserNotFoundException("User with email "+email+" Not Found");
-        }
+        AppUser appUser=appUserRepository.findUserByEmail(email)
+                .orElseThrow(()-> new AppUserNotFoundException("User email "+email+" Not Found"));
+
         return appUser;
     }
 
     @Override
     public AppUser findUserByPhone(String phone) throws AppUserNotFoundException {
-        AppUser  appUser=appUserRepository.findUserByPhone(phone);
-        if (appUser==null){
-            throw new AppUserNotFoundException("User with phone number "+phone+" Not Found");
-        }
+        AppUser  appUser=appUserRepository.findUserByPhone(phone)
+                .orElseThrow(()-> new AppUserNotFoundException("User phone "+phone+" Not Found"));
+
         return appUser;
     }
 
@@ -131,8 +122,6 @@ public class AppUserServiceImpl implements AppUserService{
             savedAppUser.setFirstName(appUser.getFirstName());
         }if (Objects.nonNull(appUser.getLastName()) && !"".equalsIgnoreCase(appUser.getLastName())){
             savedAppUser.setLastName(appUser.getLastName());
-        }if (Objects.nonNull(appUser.getPassword()) && !"".equalsIgnoreCase(appUser.getPassword())) {
-            savedAppUser.setPassword(appUser.getPassword());
         }if (Objects.nonNull(appUser.getEmail()) && !"".equalsIgnoreCase(appUser.getEmail())) {
             savedAppUser.setEmail(appUser.getEmail());
         }if (Objects.nonNull(appUser.getPicUrl()) && !"".equalsIgnoreCase(appUser.getPicUrl())) {

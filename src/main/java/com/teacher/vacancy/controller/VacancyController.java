@@ -1,5 +1,8 @@
 package com.teacher.vacancy.controller;
 
+import com.teacher.appuser.exception.AppUserNotFoundException;
+import com.teacher.appuser.model.AppUser;
+import com.teacher.appuser.service.AppUserService;
 import com.teacher.vacancy.exception.VacancyNotFoundException;
 import com.teacher.vacancy.model.*;
 import com.teacher.vacancy.service.VacancyService;
@@ -21,9 +24,15 @@ import java.util.stream.Collectors;
 public class VacancyController {
     private final VacancyService vacancyService;
     private final ModelMapper modelMapper;
+    private final AppUserService appUserService;
 
-    @PostMapping("/saveVacancy")
-    public ResponseEntity<NewVacancy> createVacancy(@Valid @RequestBody NewVacancy newVacancy)  {
+    @PostMapping("/saveVacancyByUsername/{username}")
+    public ResponseEntity<NewVacancy> createVacancy(@Valid @RequestBody NewVacancy newVacancy,
+                                                    @PathVariable(value = "username") String username)
+                                                    throws AppUserNotFoundException {
+
+        AppUser appUser=appUserService.findUserByUsername(username);
+        newVacancy.setAppUser(appUser);
         Vacancy vacancy=modelMapper.map(newVacancy, Vacancy.class);
         Vacancy post=vacancyService.saveVacancy(vacancy);
         NewVacancy posted=modelMapper.map(post, NewVacancy.class);
@@ -82,7 +91,7 @@ public class VacancyController {
     private VacancyDto convertVacancyToDto(Vacancy vacancy){
         VacancyDto vacancyDto=new VacancyDto();
 
-        vacancyDto.setJobDetail("Company: "+vacancy.getCompanyName()+
+        vacancyDto.setJobDetail("Recruiter: "+vacancy.getAppUser().getUsername()+
                 ", "+"Published Date: "+vacancy.getPublishedDate()+
                 ", "+"Closing Date: "+vacancy.getClosingDate()+
 //                ", "+"JobId:"+vacancy.getJobId()+
@@ -101,7 +110,7 @@ public class VacancyController {
 
     private VacancyDtos convertVacancyToDtos(Vacancy vacancy){
         VacancyDtos vacancyDto=new VacancyDtos();
-        vacancyDto.setCompanyName(vacancy.getCompanyName());
+        vacancyDto.setRecruiterName(vacancy.getAppUser().getUsername());
         vacancyDto.setAboutUs(vacancy.getAboutUs());
         vacancyDto.setClosingDate(vacancy.getClosingDate());
         vacancyDto.setPublishedDate(vacancy.getPublishedDate());

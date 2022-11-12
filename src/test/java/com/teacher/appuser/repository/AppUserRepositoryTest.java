@@ -176,23 +176,26 @@ class AppUserRepositoryTest {
     }
 
     @Test
-    void testThatYouCanFindUserByUsername(){
+    void testThatYouCanFindUserByUsername() throws AppUserNotFoundException {
         String username="kemi_ade";
-        appUser=appUserRepository.findUserByUsername(username);
+        appUser=appUserRepository.findUserByUsername(username)
+                .orElseThrow(()-> new AppUserNotFoundException("Username  "+username+" Not Found"));
         log.info("User with username kemi_ade: {}", appUser);
     }
 
     @Test
-    void testThatYouCanFindUserByEmail(){
+    void testThatYouCanFindUserByEmail() throws AppUserNotFoundException {
         String email="mbs@gmail.com";
-        appUser=appUserRepository.findUserByEmail(email);
+        appUser=appUserRepository.findUserByEmail(email)
+                .orElseThrow(()-> new AppUserNotFoundException("User email "+email+" Not Found"));
         log.info("User(s) with email: {}", appUser);
     }
 
     @Test
-    void testThatYouCanFindUserByPhone(){
+    void testThatYouCanFindUserByPhone() throws AppUserNotFoundException {
         String phone="mbs@gmail.com";
-        appUser=appUserRepository.findUserByPhone(phone);
+        appUser=appUserRepository.findUserByPhone(phone)
+                .orElseThrow(()-> new AppUserNotFoundException("User phone "+phone+" Not Found"));
         log.info("User(s) with phone: {}", appUser);
     }
 

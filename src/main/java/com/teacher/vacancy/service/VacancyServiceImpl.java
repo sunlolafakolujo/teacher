@@ -1,5 +1,8 @@
 package com.teacher.vacancy.service;
 
+import com.teacher.appuser.exception.AppUserNotFoundException;
+import com.teacher.appuser.model.AppUser;
+import com.teacher.appuser.repository.AppUserRepository;
 import com.teacher.vacancy.exception.VacancyNotFoundException;
 import com.teacher.vacancy.model.Vacancy;
 import com.teacher.vacancy.repository.VacancyRepository;
@@ -19,6 +22,9 @@ import java.util.Optional;
 public class VacancyServiceImpl implements VacancyService{
     @Autowired
     private VacancyRepository vacancyRepository;
+
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @Override
     public Vacancy saveVacancy(Vacancy vacancy) {
@@ -55,6 +61,13 @@ public class VacancyServiceImpl implements VacancyService{
     }
 
     @Override
+    public List<Vacancy> findVacancyByUser(AppUser appUser, String username) throws AppUserNotFoundException {
+        appUser=appUserRepository.findUserByUsername(username)
+                .orElseThrow(()-> new AppUserNotFoundException("Username "+username+" Not Found"));
+        return vacancyRepository.findVacancyByUser(appUser);
+    }
+
+    @Override
     public Vacancy updateVacancy(Vacancy vacancy, Long id) throws VacancyNotFoundException {
         Vacancy savedVacancy=vacancyRepository.findById(id)
                 .orElseThrow(()->new VacancyNotFoundException("Vacancy Not found"));
@@ -78,6 +91,8 @@ public class VacancyServiceImpl implements VacancyService{
             savedVacancy.setJobTitle(vacancy.getJobTitle());
         }if (Objects.nonNull(vacancy.getJobLocation()) && !"".equalsIgnoreCase(vacancy.getJobLocation())){
             savedVacancy.setJobLocation(vacancy.getJobLocation());
+        }if (Objects.nonNull(vacancy.getMessageToApplicant()) && !"".equalsIgnoreCase(vacancy.getMessageToApplicant())){
+            savedVacancy.setMessageToApplicant(vacancy.getMessageToApplicant());
         }
         return vacancyRepository.save(savedVacancy);
     }

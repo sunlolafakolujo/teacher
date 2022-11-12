@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ public class AppUserSearchRestController {
     }
 
     @GetMapping("/findAllUsers")
+    @PreAuthorize("hasRole('SCHOOL')")
     public ResponseEntity<List<AppUserDto>> getAllUsers(){
         Pageable pageable= PageRequest.of(0, 10);
         return new ResponseEntity<>(appUserService.findAllUsers(pageable)
@@ -111,7 +113,6 @@ public class AppUserSearchRestController {
         appUserDto.setUserId(appUser.getUserId());
         appUserDto.setUserType(appUser.getUserType());
         appUserDto.setUsername(appUser.getUsername());
-        appUserDto.setPassword(appUser.getPassword());
         appUserDto.setEmail(appUser.getEmail());
         appUserDto.setAge(appUser.getAge());
         appUserDto.setMeansOfIdentification(appUser.getMeansOfIdentification());
@@ -132,6 +133,7 @@ public class AppUserSearchRestController {
         appUserDto.setQualifications(appUser.getQualifications());
         appUserDto.setWorkExperiences(appUser.getWorkExperiences());
         appUserDto.setReferees(appUser.getReferees());
+        appUserDto.setUserRoles(appUserDto.getUserRoles());
 
         return appUserDto;
     }

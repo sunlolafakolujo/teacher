@@ -45,8 +45,6 @@ public class AppUserDto {
 
     private String username;
 
-    private String password;
-
     private String email;
 
     private String phone;
@@ -72,4 +70,6 @@ public class AppUserDto {
     private Collection<WorkExperience> workExperiences=new HashSet<>();
 
     private Collection<Referee> referees=new HashSet<>();
+
+    private Collection<UserRole> userRoles;
 }

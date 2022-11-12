@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping(path = "api/teacher/appUser/")
+@RequestMapping(path = "api/teacher/appUser")
 @RequiredArgsConstructor
 public class AppUserVerificationTokenController {
     private final VerificationTokenService verificationTokenService;

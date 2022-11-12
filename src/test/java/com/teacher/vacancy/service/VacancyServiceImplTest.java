@@ -1,5 +1,8 @@
 package com.teacher.vacancy.service;
 
+import com.teacher.appuser.exception.AppUserNotFoundException;
+import com.teacher.appuser.model.AppUser;
+import com.teacher.appuser.repository.AppUserRepository;
 import com.teacher.vacancy.exception.VacancyNotFoundException;
 import com.teacher.vacancy.model.Vacancy;
 import com.teacher.vacancy.repository.VacancyRepository;
@@ -28,15 +31,20 @@ class VacancyServiceImplTest {
     @Mock
     private VacancyRepository vacancyRepository;
 
+    @Mock
+    private AppUserRepository appUserRepository;
+
     @InjectMocks
     private VacancyService vacancyService=new VacancyServiceImpl();
 
     Vacancy vacancy;
+    AppUser appUser;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         vacancy=new Vacancy();
+        appUser=new AppUser();
     }
 
     @Test
@@ -91,6 +99,17 @@ class VacancyServiceImplTest {
         when(vacancyRepository.count()).thenReturn(numberOfVacancy);
         vacancyService.countVacancy();
         verify(vacancyRepository, times(1)).count();
+    }
+
+    @Test
+    void testThatYouCanMockFindVacancyByUser() throws AppUserNotFoundException {
+        String username="Fako";
+        appUser=appUserRepository.findUserByUsername(username)
+                .orElseThrow(()->new AppUserNotFoundException("Username "+username+" Not Found"));
+        List<Vacancy> vacancies=new ArrayList<>();
+        when(vacancyRepository.findVacancyByUser(appUser)).thenReturn(vacancies);
+        vacancyService.findVacancyByUser(appUser, username);
+        verify(vacancyRepository,times(1)).findVacancyByUser(appUser);
     }
 
     @Test

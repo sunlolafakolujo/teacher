@@ -1,5 +1,6 @@
 package com.teacher.userrole.service;
 
+import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
 import com.teacher.userrole.exception.UserRoleNotFoundException;
@@ -46,8 +47,9 @@ public class UserRoleServiceImpl implements UserRoleService{
     }
 
     @Override
-    public void addRoleToUser(String username, String roleName) {
-        AppUser appUser= appUserRepository.findUserByUsername(username);
+    public void addRoleToUser(String username, String roleName) throws AppUserNotFoundException {
+        AppUser appUser= appUserRepository.findUserByUsername(username)
+                .orElseThrow(()-> new AppUserNotFoundException("Username "+username+" Not Found"));
         UserRole userRole=userRoleRepository.findByRoleName(roleName);
         appUser.getUserRoles().add(userRole);
         appUserRepository.save(appUser);

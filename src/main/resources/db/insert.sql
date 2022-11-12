@@ -28,12 +28,16 @@ INSERT INTO referee(title,first_name,last_name,email,phone,reference_letter_url)
 VALUES ('MR','Toye','Okedara','tokedara@yahoo,com','09087654223','https://resources.workable.com/wp-content/uploads/2016/02/screencapture-resources-workable-employee-reference-letter-2021-04-01-15_38_11.png'),
        ('MR','Tokunbo', 'Akeju','ta@gmail.com','07086545617','https://resumegenius.com/letter-of-recommendation');
 
-INSERT INTO vacancy(company_name, published_date, closing_date, job_title, job_location, about_us, job_type, job_schedule,
-                    key_responsibility, skill_requirement, qualification, benefit, job_detail)
-VALUES ('Xpart Tools','2022-10-10','2022-10-17','Physic Teacher','Lagos','gwhsqol','FULL_TIME','Monday-Friday, 7:00AM-4:00PM',
-        'xxxxxx','yyyyyyyy','hhhhhhhhhhh','uuuuuuuuu','qujgdqwsip'),
-       ('Mind Bulder Schools','2022-10-10','2022-10-17','Chemistry Teacher','Lagos','hggghhhj','FULL_TIME',
-       'Monday-Friday, 7:00AM-4:00PM','xxxxxxkkkk','yyyyyyyyaaaaaa','bbbbhhhhhhhhhhh','ccccccuuuuuuuuu','AVWSVWOUWOQGOIW');
+INSERT INTO vacancy(published_date, closing_date, job_title, job_location, about_us, job_type, job_schedule,
+                    key_responsibility, skill_requirement, qualification, benefit, job_detail,message_to_applicant,app_user_id)
+VALUES ('2022-10-10','2022-10-17','Physic Teacher','Lagos','gwhsqol','FULL_TIME','Monday-Friday, 7:00AM-4:00PM',
+        'xxxxxx','yyyyyyyy','hhhhhhhhhhh','uuuuuuuuu','qujgdqwsip','We received you resume and our resource department will contact you.',1),
+       ('2022-10-10','2022-10-17','Chemistry Teacher','Lagos','hggghhhj','FULL_TIME',
+       'Monday-Friday, 7:00AM-4:00PM','xxxxxxkkkk','yyyyyyyyaaaaaa','bbbbhhhhhhhhhhh','ccccccuuuuuuuuu','AVWSVWOUWOQGOIW',
+       'We received you resume and our resource department will contact you.',2);
 
-
-
+INSERT INTO application_form(first_name,last_name,phone,email,location,resume_Url,cover_letter_url,vacancy_id)
+VALUES ('Lowo','Efunkoya','09087545664','lowoefun@yahoo.com','Lagos, Nigeria','https://www.coolfreecv.com/',
+        'https://venngage.com/blog/cover-letter-template/',1),
+        ('Laolu','Akins','09187545664','lakins@yahoo.com','Lagos, Nigeria','https://www.coolfreecv.com/',
+        'https://venngage.com/blog/cover-letter-template/',2);
