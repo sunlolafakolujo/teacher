@@ -47,9 +47,9 @@ public class UserRoleServiceImpl implements UserRoleService{
     }
 
     @Override
-    public void addRoleToUser(String username, String roleName) throws AppUserNotFoundException {
-        AppUser appUser= appUserRepository.findUserByUsername(username)
-                .orElseThrow(()-> new AppUserNotFoundException("Username "+username+" Not Found"));
+    public void addRoleToUser(String searchKey, String roleName) throws AppUserNotFoundException {
+        AppUser appUser= appUserRepository.findByUsernameOrEmailOrMobile(searchKey,searchKey,searchKey,searchKey)
+                .orElseThrow(()-> new AppUserNotFoundException("Username "+searchKey+" Not Found"));
         UserRole userRole=userRoleRepository.findByRoleName(roleName);
         appUser.getUserRoles().add(userRole);
         appUserRepository.save(appUser);

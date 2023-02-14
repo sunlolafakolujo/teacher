@@ -11,6 +11,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 @RestControllerAdvice
 public class PasswordNotFoundRestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -19,12 +22,12 @@ public class PasswordNotFoundRestExceptionHandler extends ResponseEntityExceptio
     public ResponseEntity<ValidateErrorMessage> passwordNotFoundException(PasswordNotFoundException passwordNotFoundException,
                                                                           WebRequest wr){
 
-        ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND,
+        ValidateErrorMessage vem=new ValidateErrorMessage(NOT_FOUND,
                 passwordNotFoundException.getMessage(),
                 wr.getDescription(false),
                 new Date());
 
-        return new ResponseEntity<>(vem, HttpStatus.OK);
+        return new ResponseEntity<>(vem, BAD_REQUEST);
 
     }
 }

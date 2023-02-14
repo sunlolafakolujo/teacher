@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class NewVacancy {
 
-//    private String recruiterName;
+    private String recruiterName;
 
     private String jobTitle;
 

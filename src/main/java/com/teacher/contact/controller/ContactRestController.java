@@ -115,10 +115,9 @@ public class ContactRestController {
 
         ContactDto contactDto=new ContactDto();
         contactDto.setId(contact.getId());
-        contactDto.setStreetNumber(contact.getStreetNumber());
+        contactDto.setStreetNumber(contact.getHouseNumber());
         contactDto.setStreetName(contact.getStreetName());
         contactDto.setCity(contact.getCity());
-        contactDto.setPostZipCode(contact.getPostZipCode());
         contactDto.setLandMark(contact.getLandMark());
         contactDto.setStateProvince(contact.getStateProvince());
         contactDto.setCountry(contact.getCountry());

@@ -11,19 +11,21 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+import static org.springframework.http.HttpStatus.*;
+
 @RestControllerAdvice
 public class WorkExperienceRestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(WorkExperienceNotFoundException.class)
     public ResponseEntity<ValidateErrorMessage> workExperienceNotFoundException(
             WorkExperienceNotFoundException workExperienceNotFoundException, WebRequest wr){
 
-        ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND,
+        ValidateErrorMessage vem=new ValidateErrorMessage(NOT_FOUND,
                 workExperienceNotFoundException.getMessage(),
                 wr.getDescription(false),
                 new Date());
 
-        return ResponseEntity.ok().body(vem);
+        return new ResponseEntity<>(vem, BAD_REQUEST);
     }
 }

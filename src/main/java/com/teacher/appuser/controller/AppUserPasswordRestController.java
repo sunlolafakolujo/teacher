@@ -30,7 +30,7 @@ public class AppUserPasswordRestController {
     public String resetUserPassword(@RequestBody PasswordModel passwordModel,
                                     HttpServletRequest request) throws AppUserNotFoundException {
 
-        AppUser appUser= appUserService.findUserByUsername(passwordModel.getUsername());
+        AppUser appUser= appUserService.findByUsernameOrEmailOrMobileOrUserId(passwordModel.getUsernameOrEmailOrMobileOrUserId());
 
         if (appUser!=null){
             publisher.publishEvent(new PasswordEvent(applicationUrl(request), appUser));
@@ -55,7 +55,7 @@ public class AppUserPasswordRestController {
     public String changeUserPassword(@RequestBody PasswordModel passwordModel) throws PasswordNotFoundException,
                                                                                     AppUserNotFoundException {
 
-        AppUser appUser=appUserService.findUserByUsername(passwordModel.getUsername());
+        AppUser appUser=appUserService.findByUsernameOrEmailOrMobileOrUserId(passwordModel.getUsernameOrEmailOrMobileOrUserId());
         if (appUser==null){
             throw new AppUserNotFoundException("User Not Found");
         }

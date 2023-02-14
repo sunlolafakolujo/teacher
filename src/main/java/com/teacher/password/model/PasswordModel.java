@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class  PasswordModel {
-    private String username;
-    private String email;
-    private String phone;
+    private String usernameOrEmailOrMobileOrUserId;
     private String token;
     private String oldPassword;
     private String newPassword;

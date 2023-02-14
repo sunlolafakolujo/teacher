@@ -1,4 +1,4 @@
-package com.teacher.security.authentication;
+package com.teacher.configuration.authentication;
 import lombok.*;
 
 @Setter

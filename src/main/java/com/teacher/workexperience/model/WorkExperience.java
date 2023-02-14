@@ -46,9 +46,4 @@ public class WorkExperience extends BaseAudit {
 
     @Column(updatable = false)
     private LocalDate endDate;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "workExperiences")
-    private Collection<AppUser> appUsers=new HashSet<>();
 }

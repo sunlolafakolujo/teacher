@@ -34,7 +34,6 @@ public class AppUserSearchRestController {
     }
 
     @GetMapping("/findAllUsers")
-    @PreAuthorize("hasRole('SCHOOL')")
     public ResponseEntity<List<AppUserDto>> getAllUsers(){
         Pageable pageable= PageRequest.of(0, 10);
         return new ResponseEntity<>(appUserService.findAllUsers(pageable)
@@ -53,51 +52,11 @@ public class AppUserSearchRestController {
     }
 
     @GetMapping("/findUserByEmail/{email}")
-    public ResponseEntity<AppUserDto> getUserByEmail(@PathVariable(value = "email") String email)
-            throws AppUserNotFoundException {
-        AppUser appUser=appUserService.findUserByEmail(email);
-        AppUserDto appUserDto=convertAppUserToDto(appUser);
-        return new ResponseEntity<>(appUserDto, HttpStatus.OK);
-    }
-
-    @GetMapping("/findUserByPhone/{phone}")
-    public ResponseEntity<AppUserDto> getUserByPhone(@PathVariable(value = "phone") String phone)
-            throws AppUserNotFoundException {
-        AppUser appUser=appUserService.findUserByPhone(phone);
-        AppUserDto appUserDto=convertAppUserToDto(appUser);
-        return new ResponseEntity<>(appUserDto, HttpStatus.OK);
-    }
-
-    @GetMapping("/findUserByFirstName/{firstName}")
-    public ResponseEntity<List<AppUserDto>> getUserByFirstName(@PathVariable(value = "firstName") String firstName)
-                                                                                throws AppUserNotFoundException {
-        Pageable pageable=PageRequest.of(0, 10);
-        return new ResponseEntity<>(appUserService.findUserByFirstName(firstName, pageable)
-                .stream()
-                .map(this::convertAppUserToDto)
-                .collect(Collectors.toList()),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/findUserByLastName/{lastName}")
-    public ResponseEntity<List<AppUserDto>> getUserByLastName(@PathVariable(value = "lastName") String lastName)
-                                                                                throws AppUserNotFoundException {
-        Pageable pageable=PageRequest.of(0, 10);
-        return new ResponseEntity<>(appUserService.findUserByLastName(lastName, pageable)
-                .stream()
-                .map(this::convertAppUserToDto)
-                .collect(Collectors.toList()),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/findUserBySchoolName/{schoolName}")
-    public ResponseEntity<List<AppUserDto>> getUserBySchoolName(@PathVariable(value = "schoolName") String schoolName)
+    public ResponseEntity<AppUserDto> getUserByEmail(@PathVariable(value = "searchKey") String searchKey)
                                                                                     throws AppUserNotFoundException {
-        Pageable pageable=PageRequest.of(0, 10);
-        return new ResponseEntity<>(appUserService.findBySchoolName(schoolName,pageable)
-                .stream()
-                .map(this::convertAppUserToDto)
-                .collect(Collectors.toList()), HttpStatus.OK);
+        AppUser appUser=appUserService.findByUsernameOrEmailOrMobileOrUserId(searchKey);
+        AppUserDto appUserDto=convertAppUserToDto(appUser);
+        return new ResponseEntity<>(appUserDto, HttpStatus.OK);
     }
 
     @GetMapping("/countUsers")
@@ -105,6 +64,7 @@ public class AppUserSearchRestController {
         Long numberOfUsers=appUserService.countUsers();
         return new ResponseEntity<>(numberOfUsers, HttpStatus.OK);
     }
+
 
     private AppUserDto convertAppUserToDto(AppUser appUser){
 
@@ -114,26 +74,8 @@ public class AppUserSearchRestController {
         appUserDto.setUserType(appUser.getUserType());
         appUserDto.setUsername(appUser.getUsername());
         appUserDto.setEmail(appUser.getEmail());
-        appUserDto.setAge(appUser.getAge());
-        appUserDto.setMeansOfIdentification(appUser.getMeansOfIdentification());
-        appUserDto.setMeansOfIdentificationRefNumber(appUser.getMeansOfIdentificationRefNumber());
-        appUserDto.setMeansOfIdentificationIssueDate(appUser.getMeansOfIdentificationIssueDate());
-        appUserDto.setMeansOfIdentificationExpiryDate(appUser.getMeansOfIdentificationExpiryDate());
-        appUserDto.setDateOfBirth(appUser.getDateOfBirth());
-        appUserDto.setTitle(appUser.getTitle());
-        appUserDto.setWebSite(appUser.getWebSite());
-        appUserDto.setRcNumber(appUser.getRcNumber());
-        appUserDto.setPicUrl(appUser.getPicUrl());
-        appUserDto.setPhone(appUser.getPhone());
-        appUserDto.setSchoolName(appUser.getSchoolName());
-        appUserDto.setFirstName(appUser.getFirstName());
-        appUserDto.setLastName(appUser.getLastName());
-        appUserDto.setGender(appUser.getGender());
-        appUserDto.setContacts(appUser.getContacts());
-        appUserDto.setQualifications(appUser.getQualifications());
-        appUserDto.setWorkExperiences(appUser.getWorkExperiences());
-        appUserDto.setReferees(appUser.getReferees());
-        appUserDto.setUserRoles(appUserDto.getUserRoles());
+        appUserDto.setMobile(appUser.getMobile());
+        appUserDto.setUserRoles(appUser.getUserRoles());
 
         return appUserDto;
     }

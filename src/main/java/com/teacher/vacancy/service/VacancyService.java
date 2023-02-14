@@ -15,7 +15,7 @@ public interface VacancyService {
     List<Vacancy> findVacancyByJobTitle(String jobTitle,Pageable pageable) throws VacancyNotFoundException;
     List<Vacancy> findAllVacancies(Pageable pageable);
     Long countVacancy();
-    List<Vacancy> findVacancyByUser(AppUser appUser, String username) throws AppUserNotFoundException;
+//    List<Vacancy> findVacancyByUser(AppUser appUser, String username) throws AppUserNotFoundException;
     Vacancy updateVacancy(Vacancy vacancy, Long id) throws VacancyNotFoundException;
     void deleteVacancyById(Long id) throws VacancyNotFoundException;
     void deleteAllVacancies();

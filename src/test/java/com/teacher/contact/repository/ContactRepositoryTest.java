@@ -32,7 +32,7 @@ class ContactRepositoryTest {
 
     @Test
     void testThatYouCanSaveContact(){
-        contact.setStreetNumber("2A");
+        contact.setHouseNumber("2A");
         contact.setStreetName("Animashaun Street Ijesha Tedo Surulere");
         contact.setCity("Surulere");
         contact.setStateProvince("Lagos");
@@ -40,7 +40,7 @@ class ContactRepositoryTest {
 
         log.info("Contact repo before saving {}", contact);
         assertDoesNotThrow(()->contactRepository.save(contact));
-        assertEquals("2A", contact.getStreetNumber());
+        assertEquals("2A", contact.getHouseNumber());
         log.info("Contact repo before saving {}", contact);
     }
 

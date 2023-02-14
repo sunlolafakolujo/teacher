@@ -55,9 +55,4 @@ public class Qualification extends BaseAudit {
     private LocalDate endDate;
 
     private String institutionAddress;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "qualifications")
-    private Collection<AppUser> appUsers=new HashSet<>();
 }

@@ -50,14 +50,12 @@ public class ContactServiceImpl implements ContactService{
         Contact savedContact=contactRepository.findById(id)
                 .orElseThrow(()-> new ContactNotFoundException("Contact "+id+" Not Found"));
 
-        if (Objects.nonNull(contact.getStreetNumber()) && !"".equalsIgnoreCase(contact.getStreetNumber())){
-            savedContact.setStreetNumber(contact.getStreetNumber());
+        if (Objects.nonNull(contact.getHouseNumber()) && !"".equalsIgnoreCase(contact.getHouseNumber())){
+            savedContact.setHouseNumber(contact.getHouseNumber());
         }if (Objects.nonNull(contact.getStreetName()) && !"".equalsIgnoreCase(contact.getStreetName())){
             savedContact.setStreetName(contact.getStreetName());
         }if (Objects.nonNull(contact.getCity()) && !"".equalsIgnoreCase(contact.getCity())){
             savedContact.setCity(contact.getCity());
-        }if (Objects.nonNull(contact.getPostZipCode()) && !"".equalsIgnoreCase(contact.getPostZipCode())){
-            savedContact.setPostZipCode(contact.getPostZipCode());
         }if (Objects.nonNull(contact.getLandMark()) && !"".equalsIgnoreCase(contact.getLandMark())){
             savedContact.setLandMark(contact.getLandMark());
         }if (Objects.nonNull(contact.getStateProvince()) && !"".equalsIgnoreCase(contact.getStateProvince())){

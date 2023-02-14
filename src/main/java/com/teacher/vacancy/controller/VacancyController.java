@@ -28,10 +28,10 @@ public class VacancyController {
 
     @PostMapping("/saveVacancyByUsername/{username}")
     public ResponseEntity<NewVacancy> createVacancy(@Valid @RequestBody NewVacancy newVacancy,
-                                                    @PathVariable(value = "username") String username)
+                                                    @PathVariable(value = "searchKey") String searchKey)
                                                     throws AppUserNotFoundException {
 
-        AppUser appUser=appUserService.findUserByUsername(username);
+        AppUser appUser=appUserService.findByUsernameOrEmailOrMobileOrUserId(searchKey);
         newVacancy.setAppUser(appUser);
         Vacancy vacancy=modelMapper.map(newVacancy, Vacancy.class);
         Vacancy post=vacancyService.saveVacancy(vacancy);

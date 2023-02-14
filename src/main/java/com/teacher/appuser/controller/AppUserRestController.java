@@ -20,6 +20,7 @@ import org.springframework.context.ApplicationEventPublisher;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,13 +35,8 @@ import java.util.*;
 public class AppUserRestController {
 
     private final AppUserService appUserService;
-
     private final UserRoleService userRoleService;
-
-    private final QualificationService qualificationService;
-
     private final ModelMapper modelMapper;
-
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @PostMapping("/schoolRegistration")
@@ -48,13 +44,15 @@ public class AppUserRestController {
                                                     final HttpServletRequest httpServletRequest)
             throws AppUserNotFoundException, UserRoleNotFoundException {
 
+
+        if (!schoolDto.getPassword().equals(schoolDto.getConfirmPassword())){
+            throw new AppUserNotFoundException("Inconsistent password");
+        }
         schoolDto.setUserType(UserType.SCHOOL);
         List<UserRole> userRoles=new ArrayList<>();
         UserRole userRole=userRoleService.findUserRoleByName("SCHOOL");
         userRoles.add(userRole);
         schoolDto.setUserRoles(userRoles);
-        schoolDto.setTitle(Title.NOT_APPLICABLE);
-        schoolDto.setGender(Gender.NOT_APPLICABLE);
         schoolDto.setAge(Period.between(schoolDto.getDateOfBirth(),LocalDate.now()).getYears());
         schoolDto.setUserId("SCH-".concat(UUID.randomUUID().toString()));
         AppUser appUser=modelMapper.map(schoolDto, AppUser.class);
@@ -68,6 +66,9 @@ public class AppUserRestController {
     public  ResponseEntity<TeacherDto> teacherRegistration(@Valid @RequestBody TeacherDto teacherDto,
                                                            final HttpServletRequest httpServletRequest)
                                                            throws AppUserNotFoundException, UserRoleNotFoundException {
+        if (!teacherDto.getPassword().equals(teacherDto.getConfirmPassword())){
+            throw new AppUserNotFoundException("Inconsistent password");
+        }
 
         teacherDto.setUserType(UserType.TEACHER);
         List<UserRole> userRoles =new ArrayList<>();
@@ -83,23 +84,26 @@ public class AppUserRestController {
         return new ResponseEntity<>(posted, HttpStatus.CREATED);
     }
 
-    @PostMapping("/parentRegistration")
-    public ResponseEntity<ParentDto> parentRegistration(@Valid @RequestBody ParentDto parentDto,
-                                                        final HttpServletRequest httpServletRequest)
-                                                        throws AppUserNotFoundException, UserRoleNotFoundException {
-
-        parentDto.setUserType(UserType.PARENT);
-        List<UserRole> userRoles=new ArrayList<>();
-        UserRole userRole=userRoleService.findUserRoleByName("PARENT");
-        userRoles.add(userRole);
-        parentDto.setUserRoles(userRoles);
-        parentDto.setUserId("PAR-".concat(UUID.randomUUID().toString()));
-        AppUser appUser=modelMapper.map(parentDto, AppUser.class);
-        AppUser post= appUserService.userRegistration(appUser);
-        ParentDto posted=modelMapper.map(post, ParentDto.class);
-        applicationEventPublisher.publishEvent(new RegistrationCompleteEvent(post, applicationUrl(httpServletRequest)));
-        return new ResponseEntity<>(posted, HttpStatus.CREATED);
-    }
+//    @PostMapping("/parentRegistration")
+//    public ResponseEntity<ParentDto> parentRegistration(@Valid @RequestBody ParentDto parentDto,
+//                                                        final HttpServletRequest httpServletRequest)
+//                                                        throws AppUserNotFoundException, UserRoleNotFoundException {
+//        if (!parentDto.getPassword().equals(parentDto.getConfirmPassword())){
+//            throw new AppUserNotFoundException("Inconsistent password");
+//        }
+//
+//        parentDto.setUserType(UserType.PARENT);
+//        List<UserRole> userRoles=new ArrayList<>();
+//        UserRole userRole=userRoleService.findUserRoleByName("PARENT");
+//        userRoles.add(userRole);
+//        parentDto.setUserRoles(userRoles);
+//        parentDto.setUserId("PAR-".concat(UUID.randomUUID().toString()));
+//        AppUser appUser=modelMapper.map(parentDto, AppUser.class);
+//        AppUser post= appUserService.userRegistration(appUser);
+//        ParentDto posted=modelMapper.map(post, ParentDto.class);
+//        applicationEventPublisher.publishEvent(new RegistrationCompleteEvent(post, applicationUrl(httpServletRequest)));
+//        return new ResponseEntity<>(posted, HttpStatus.CREATED);
+//    }
 
     @PutMapping("/updateUser/{id}")
     public ResponseEntity<UpdateAppUser> updateUser(@RequestBody UpdateAppUser updateAppUser,

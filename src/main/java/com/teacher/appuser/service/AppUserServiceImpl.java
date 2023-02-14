@@ -25,7 +25,7 @@ public class AppUserServiceImpl implements AppUserService{
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public AppUser userRegistration(AppUser appUser) {
+    public AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException {
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         return appUserRepository.save(appUser);
     }
@@ -38,57 +38,11 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
-    public AppUser findUserByUsername(String username) throws AppUserNotFoundException {
-        AppUser appUser=appUserRepository.findUserByUsername(username)
-                .orElseThrow(()->new AppUserNotFoundException("User "+username+" Not Found"));
+    public AppUser findByUsernameOrEmailOrMobileOrUserId(String searchKey) throws AppUserNotFoundException {
+        AppUser appUser=appUserRepository.findByUsernameOrEmailOrMobile(searchKey,searchKey,searchKey,searchKey)
+                .orElseThrow(()->new AppUserNotFoundException("User "+searchKey+" Not Found"));
 
         return appUser;
-    }
-
-    @Override
-    public AppUser findUserByEmail(String email) throws AppUserNotFoundException {
-        AppUser appUser=appUserRepository.findUserByEmail(email)
-                .orElseThrow(()-> new AppUserNotFoundException("User email "+email+" Not Found"));
-
-        return appUser;
-    }
-
-    @Override
-    public AppUser findUserByPhone(String phone) throws AppUserNotFoundException {
-        AppUser  appUser=appUserRepository.findUserByPhone(phone)
-                .orElseThrow(()-> new AppUserNotFoundException("User phone "+phone+" Not Found"));
-
-        return appUser;
-    }
-
-    @Override
-    public List<AppUser> findUserByFirstName(String firstName, Pageable pageable) throws AppUserNotFoundException {
-        pageable =PageRequest.of(0, 10);
-        List<AppUser> appUserPage=appUserRepository.findUserByFirstName(firstName, pageable);
-        if (appUserPage==null){
-            throw new AppUserNotFoundException("Firstname "+firstName+" Not Found");
-        }
-        return appUserPage;
-    }
-
-    @Override
-    public List<AppUser> findUserByLastName(String lastName, Pageable pageable) throws AppUserNotFoundException {
-        pageable =PageRequest.of(0, 10);
-        List<AppUser> appUserPage=appUserRepository.findUserByLastName(lastName, pageable);
-        if (appUserPage==null){
-            throw new AppUserNotFoundException("Lastname "+lastName+" Not Found");
-        }
-        return appUserPage;
-    }
-
-    @Override
-    public List<AppUser> findBySchoolName(String schoolName,Pageable pageable) throws AppUserNotFoundException {
-        pageable=PageRequest.of(0, 10);
-        List<AppUser> appUsers=appUserRepository.findBySchoolName(schoolName,pageable);
-        if (appUsers==null){
-            throw new AppUserNotFoundException("School name "+schoolName+" Not Found");
-        }
-        return appUsers;
     }
 
     @Override
@@ -118,30 +72,10 @@ public class AppUserServiceImpl implements AppUserService{
     public AppUser updateUser(AppUser appUser, Long id) throws AppUserNotFoundException {
         AppUser savedAppUser=appUserRepository.findById(id)
                 .orElseThrow(()->new AppUserNotFoundException("User ID "+id+" Not Found"));
-        if (Objects.nonNull(appUser.getFirstName()) && !"".equalsIgnoreCase(appUser.getFirstName())){
-            savedAppUser.setFirstName(appUser.getFirstName());
-        }if (Objects.nonNull(appUser.getLastName()) && !"".equalsIgnoreCase(appUser.getLastName())){
-            savedAppUser.setLastName(appUser.getLastName());
-        }if (Objects.nonNull(appUser.getEmail()) && !"".equalsIgnoreCase(appUser.getEmail())) {
-            savedAppUser.setEmail(appUser.getEmail());
-        }if (Objects.nonNull(appUser.getPicUrl()) && !"".equalsIgnoreCase(appUser.getPicUrl())) {
-            savedAppUser.setPicUrl(appUser.getPicUrl());
-        }if (Objects.nonNull(appUser.getSchoolName()) && !"".equalsIgnoreCase(appUser.getSchoolName())) {
-            savedAppUser.setSchoolName(appUser.getSchoolName());
-        }if (Objects.nonNull(appUser.getWebSite()) && !"".equalsIgnoreCase(appUser.getWebSite())) {
-            savedAppUser.setWebSite(appUser.getWebSite());
-        }if (Objects.nonNull(appUser.getMeansOfIdentification())) {
-            savedAppUser.setMeansOfIdentification(appUser.getMeansOfIdentification());
-        }if (Objects.nonNull(appUser.getMeansOfIdentificationIssueDate())) {
-            savedAppUser.setMeansOfIdentificationIssueDate(appUser.getMeansOfIdentificationExpiryDate());
-        }if (Objects.nonNull(appUser.getMeansOfIdentificationExpiryDate())) {
-            savedAppUser.setMeansOfIdentificationExpiryDate(appUser.getMeansOfIdentificationExpiryDate());
-        }if (Objects.nonNull(appUser.getPassword()) && !"".equalsIgnoreCase(appUser.getPassword())) {
+        if (Objects.nonNull(appUser.getPassword()) && !"".equalsIgnoreCase(appUser.getPassword())) {
             savedAppUser.setPassword(appUser.getPassword());
-        }if (Objects.nonNull(appUser.getContacts())) {
-            savedAppUser.setContacts(appUser.getContacts());
-        }if (Objects.nonNull(appUser.getReferees())) {
-            savedAppUser.setReferees(appUser.getReferees());
+        }if (Objects.nonNull(appUser.getContact())) {
+            savedAppUser.setContact(appUser.getContact());
         }
         return appUserRepository.save(savedAppUser);
     }

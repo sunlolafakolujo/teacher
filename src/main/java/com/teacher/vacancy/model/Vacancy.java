@@ -26,8 +26,8 @@ public class Vacancy extends BaseAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotBlank(message = "Recruiter name is required")
-//    private String recruiterName;
+    @NotBlank(message = "Recruiter name is required")
+    private String recruiterName;
 
     private LocalDate publishedDate;
 

@@ -1,4 +1,4 @@
-package com.teacher.security.passwordencoderconfig;
+package com.teacher.configuration.securityconfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

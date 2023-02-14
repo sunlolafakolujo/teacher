@@ -25,10 +25,6 @@ public class SchoolDto {
 
     private String userId;
 
-    private Title title;
-
-    private Gender gender;
-
     private String schoolName;
 
     private LocalDate dateOfBirth;
@@ -39,7 +35,7 @@ public class SchoolDto {
 
     private String password;
 
-//    private String matchingPassword;
+    private String confirmPassword;
 
     private String email;
 

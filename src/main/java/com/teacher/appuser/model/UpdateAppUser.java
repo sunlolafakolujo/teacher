@@ -42,5 +42,5 @@ public class UpdateAppUser {
 
     private Collection<Contact> contacts=new ArrayList<>();
 
-    private Collection<Referee> referees=new HashSet<>();
+    private Collection<Referee> referees=new ArrayList<>();
 }

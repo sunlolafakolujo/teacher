@@ -101,16 +101,16 @@ class VacancyServiceImplTest {
         verify(vacancyRepository, times(1)).count();
     }
 
-    @Test
-    void testThatYouCanMockFindVacancyByUser() throws AppUserNotFoundException {
-        String username="Fako";
-        appUser=appUserRepository.findUserByUsername(username)
-                .orElseThrow(()->new AppUserNotFoundException("Username "+username+" Not Found"));
-        List<Vacancy> vacancies=new ArrayList<>();
-        when(vacancyRepository.findVacancyByUser(appUser)).thenReturn(vacancies);
-        vacancyService.findVacancyByUser(appUser, username);
-        verify(vacancyRepository,times(1)).findVacancyByUser(appUser);
-    }
+//    @Test
+//    void testThatYouCanMockFindVacancyByUser() throws AppUserNotFoundException {
+//        String username="Fako";
+//        appUser=appUserRepository.findUserByUsername(username)
+//                .orElseThrow(()->new AppUserNotFoundException("Username "+username+" Not Found"));
+//        List<Vacancy> vacancies=new ArrayList<>();
+//        when(vacancyRepository.findVacancyByUser(appUser)).thenReturn(vacancies);
+//        vacancyService.findVacancyByUser(appUser, username);
+//        verify(vacancyRepository,times(1)).findVacancyByUser(appUser);
+//    }
 
     @Test
     void testThatYouCanMockUpdateVacancyMethod() throws VacancyNotFoundException {

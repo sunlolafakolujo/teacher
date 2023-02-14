@@ -4,14 +4,17 @@ VALUES ('1', 'Osanyin Street Alagomeji, Yaba', 'Lagos Island', '100111', 'Lagos'
        ('202', 'Amuwo Odofin Housing Estate, Mile 2','Amuwo Odofin', '100111', 'Lagos', 'Nigeria');
 
 INSERT INTO app_User(user_id,user_type,title, first_name,last_name,gender,date_of_birth, age, school_name,username,password,
-                    email, phone, pic_url, is_enabled, web_site, means_of_identification,means_of_identification_ref_number,
+                    email, phone, pic_url, is_enabled,profession,employer,employer_address,web_site, means_of_identification,means_of_identification_ref_number,
                     means_of_identification_issue_date, means_of_identification_expiry_date, rc_number)
-VALUES('SCH-xxxx1','SCHOOL','NOT_APPLICABLE','','','NOT_APPLICABLE',null,null,'Mind Builders School','mindbuild','$2a$12$M/RlIBtWPXniWg/SAsEdBuh/EXlUHvcda2rALWn5KtHvTFHElW85y',
-        'mbs@gmail.com','09087537751','xxxxx',TRUE,'www.xxxxx.com','NIN','145567','2019-04-21','2023-04-20','xc-1234'),
-        ('PAR-xxx1','PARENT','MRS','Kemi','Adebiyi','FEMALE',null,null,'','kemi_ade','$2a$12$M/RlIBtWPXniWg/SAsEdBuh/EXlUHvcda2rALWn5KtHvTFHElW85y',
-        'kemiadebiyi@yahoo.com','08097643551','xcghkop',TRUE,'','PASSPORT','A0567881','2019-04-21','2023-04-20',''),
-        ('TCH-xxx1','TEACHER','MRS','Adeola','Adeniyi','FEMALE','1988-02-10',34,'','adeOla_ade','$2a$12$M/RlIBtWPXniWg/SAsEdBuh/EXlUHvcda2rALWn5KtHvTFHElW85y',
-        'aa@yahoo.com','08097643451','xcghkop',TRUE,'','PASSPORT','B0567892','2019-04-21','2023-04-20','');
+VALUES('SCH-xxxx1','SCHOOL','NOT_APPLICABLE','','','NOT_APPLICABLE',null,null,'Mind Builders School','mindbuild',
+        '$2a$12$M/RlIBtWPXniWg/SAsEdBuh/EXlUHvcda2rALWn5KtHvTFHElW85y','mbs@gmail.com','09087537751','xxxxx',TRUE,'','',
+        '','www.xxxxx.com','NIN','145567','2019-04-21','2023-04-20','xc-1234'),
+        ('PAR-xxx1','PARENT','MRS','Kemi','Adebiyi','FEMALE',null,null,'','kemi_ade',
+        '$2a$12$M/RlIBtWPXniWg/SAsEdBuh/EXlUHvcda2rALWn5KtHvTFHElW85y','kemiadebiyi@yahoo.com','08097643551','xcghkop',TRUE,
+        'Accountant','Price Water House','KM100 Ikorodu Road','','PASSPORT','A0567881','2019-04-21','2023-04-20',''),
+        ('TCH-xxx1','TEACHER','MRS','Adeola','Adeniyi','FEMALE','1988-02-10',34,'','adeOla_ade',
+        '$2a$12$M/RlIBtWPXniWg/SAsEdBuh/EXlUHvcda2rALWn5KtHvTFHElW85y','aa@yahoo.com','08097643451','xcghkop',TRUE,'',
+        '','','','PASSPORT','B0567892','2019-04-21','2023-04-20','');
 
 INSERT INTO user_role(role_name)
 VALUES ('TEACHER'),('SCHOOL'),('PARENT'),('ADMIN');

@@ -48,7 +48,7 @@ class QualificationRepositoryTest {
         contact.setStateProvince("Ogun");
         contact.setCity("Abeokuta");
         contact.setStreetName("Adeaga Street Okemosun");
-        contact.setStreetNumber("24");
+        contact.setHouseNumber("24");
 
         qualification.setInstitutionAddress("Ijanikin, Lagos Badagry Expressway");
         qualification.setSubject("Mechanical Engineering");

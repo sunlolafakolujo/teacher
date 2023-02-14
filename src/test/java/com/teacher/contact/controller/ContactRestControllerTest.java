@@ -44,10 +44,9 @@ class ContactRestControllerTest {
 
     @Test
     void testThatWhenYouCallCreateContactMethod_thenContactIsCreated() throws Exception {
-        contact.setStreetNumber("17");
+        contact.setHouseNumber("17");
         contact.setStreetName("Wakeman Street, Alagomeji");
         contact.setCity("Lagos Island");
-        contact.setPostZipCode("110001");
         contact.setLandMark("AP Club");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
@@ -91,7 +90,7 @@ class ContactRestControllerTest {
     void testThatWhenYouCallUpdateContactMethod_thenContactIsUpdated() throws Exception {
         Long id=2L;
         contact=contactService.findContactById(id);
-        contact.setStreetNumber("9");
+        contact.setHouseNumber("9");
         contact.setStreetName("Ganiat Street, Alahun Osumba, Maza Maza");
         contact.setCity("Amuwo Odofin");
         contact.setLandMark("Monkey Village");

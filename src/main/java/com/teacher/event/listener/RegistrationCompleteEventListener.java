@@ -1,6 +1,7 @@
 package com.teacher.event.listener;
 
 import com.teacher.appuser.model.AppUser;
+import com.teacher.appuser.repository.AppUserRepository;
 import com.teacher.appuser.service.AppUserService;
 import com.teacher.emailconfig.EmailConfiguration;
 import com.teacher.event.RegistrationCompleteEvent;
@@ -20,7 +21,6 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
 
     @Autowired
     private VerificationTokenService verificationTokenService;
-
     @Autowired
     private EmailConfiguration emailConfiguration;
 
@@ -41,7 +41,6 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
 
 
     private SimpleMailMessage constructEmailMessage(RegistrationCompleteEvent event,  AppUser appUser, String token) {
-
         SimpleMailMessage mailMessage=new SimpleMailMessage();
         String confirmUrl=event.getApplicationUrl() + "/api/teacher/appUser/verifyAccount/"+token;
         String receiver= appUser.getEmail();
@@ -52,7 +51,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         mailMessage.setFrom(from);
         mailMessage.setSentDate(new Date());
         mailMessage.setSubject(subject);
-        mailMessage.setText("Dear "+appUser.getFirstName()+",\n\n"+"Click the link to verify email "+confirmUrl);
+        mailMessage.setText("Dear "+appUser.getUsername()+",\n\n"+"Click the link to verify email "+confirmUrl);
 
         return mailMessage;
     }

@@ -60,12 +60,12 @@ public class VacancyServiceImpl implements VacancyService{
         return vacancyRepository.count();
     }
 
-    @Override
-    public List<Vacancy> findVacancyByUser(AppUser appUser, String username) throws AppUserNotFoundException {
-        appUser=appUserRepository.findUserByUsername(username)
-                .orElseThrow(()-> new AppUserNotFoundException("Username "+username+" Not Found"));
-        return vacancyRepository.findVacancyByUser(appUser);
-    }
+//    @Override
+//    public List<Vacancy> findVacancyByUser(AppUser appUser, String username) throws AppUserNotFoundException {
+//        appUser=appUserRepository.findUserByUsername(username)
+//                .orElseThrow(()-> new AppUserNotFoundException("Username "+username+" Not Found"));
+//        return vacancyRepository.findVacancyByUser(appUser);
+//    }
 
     @Override
     public Vacancy updateVacancy(Vacancy vacancy, Long id) throws VacancyNotFoundException {

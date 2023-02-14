@@ -12,6 +12,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 @RestControllerAdvice
 public class AppUserRestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -19,12 +22,12 @@ public class AppUserRestExceptionHandler extends ResponseEntityExceptionHandler 
     @ExceptionHandler(AppUserNotFoundException.class)
     public ResponseEntity<ValidateErrorMessage> appUserExceptionHandler(AppUserNotFoundException appUserException, WebRequest wr ){
 
-        ValidateErrorMessage vem= new ValidateErrorMessage(HttpStatus.NOT_FOUND,
+        ValidateErrorMessage vem= new ValidateErrorMessage(NOT_FOUND,
                 appUserException.getMessage(),
                 wr.getDescription(false),
                 new Date());
 
-        return ResponseEntity.ok(vem);
+        return new ResponseEntity<>(vem, BAD_REQUEST);
 
     }
 }

@@ -11,6 +11,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+import static org.springframework.http.HttpStatus.*;
+
 @RestControllerAdvice
 public class VerificationTokenNotFoundRestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -18,12 +20,12 @@ public class VerificationTokenNotFoundRestExceptionHandler extends ResponseEntit
     @ExceptionHandler(VerificationTokeNotFoundException.class)
     public ResponseEntity<ValidateErrorMessage> verificationTokenException(VerificationTokeNotFoundException exception, WebRequest request){
 
-        ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND,
+        ValidateErrorMessage vem=new ValidateErrorMessage(NOT_FOUND,
                 exception.getMessage(),
                 request.getDescription(false),
                 new Date());
 
-        return new ResponseEntity<>(vem, HttpStatus.OK);
+        return new ResponseEntity<>(vem, BAD_REQUEST);
 
     }
 }

@@ -87,13 +87,10 @@ class AppUserRepositoryTest {
         referee.setLastName("Akinradewo");
         referee.setEmail("aa@yahoo.com");
         referee.setPhone("08076546845");
-        referee.setReferenceLetterUrl("http://tyuyutuioo.com");
-
-        contact.setStreetNumber("2A");
+        contact.setHouseNumber("2A");
         contact.setStreetName("Akinpetu Street Alagomeji");
         contact.setCity("Lagos Island");
         contact.setLandMark("Algomeji Bus stop");
-        contact.setPostZipCode("110000");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
         List<Contact> contacts=new ArrayList<>();
@@ -102,27 +99,13 @@ class AppUserRepositoryTest {
         userRole=userRoleRepository.findByRoleName("TEACHER");
 
         appUser.setUserType(TEACHER);
-        appUser.setUserId("TCH-".concat(UUID.randomUUID().toString()));
-        appUser.setFirstName("Kunle");
-        appUser.setLastName("Afolayan");
-        appUser.setUsername("kafolayan");
+        appUser.setUserId("TCH-".concat(String.valueOf(new Random().nextInt(100000000))));
         appUser.setPassword(passwordEncoder.encode("1234"));
-        appUser.setDateOfBirth(LocalDate.parse("1980-02-10"));
-        appUser.setAge(Period.between(LocalDate.now(), appUser.getDateOfBirth()).getYears());
         appUser.setEmail("kafolayan@gmail.com");
-        appUser.setPhone("08097654579");
+        appUser.setMobile("08097654579");
         appUser.setIsEnabled(true);
         appUser.setUserRoles(List.of(userRole));
-        appUser.setMeansOfIdentification(MeansOfIdentification.NIN);
-        appUser.setMeansOfIdentificationIssueDate(LocalDate.parse("2020-07-04"));
-        appUser.setMeansOfIdentificationExpiryDate(LocalDate.parse("2024-07-04"));
-        appUser.setGender(Gender.MALE);
-        appUser.setTitle(Title.MR);
-        appUser.setPicUrl("http://tyuio.com");
-        appUser.setContacts(contacts);
-        appUser.setQualifications(List.of(qualification));
-        appUser.setWorkExperiences(List.of(workExperience));
-        appUser.setReferees(List.of(referee));
+        appUser.setContact(contact);
 
         log.info("AppUser repo before saving: {}", appUser);
 
@@ -148,55 +131,15 @@ class AppUserRepositoryTest {
 //        log.info("User(s) teachers: {}", appUsers);
     }
 
-    @Test
-    void testThatYouCanFindUserByFirstName(){
-        String firstName="Adeola";
-        Pageable pageable= PageRequest.of(0, 10);
-        List<AppUser>appUsers=appUserRepository.findUserByFirstName(firstName,pageable);
-        appUsers.forEach(System.out::println);
-//        log.info("User(s) with firstName Adeola: {}", appUsers);
-    }
 
-    @Test
-    void testThatYouCanFindUserByLastName(){
-        String lastName="Adeniyi";
-        Pageable pageable= PageRequest.of(0, 10);
-        List<AppUser>appUsers=appUserRepository.findUserByLastName(lastName,pageable);
-        appUsers.forEach(System.out::println);
-//        log.info("User(s) with firstName Adeniyi: {}", appUsers);
-    }
 
-    @Test
-    void testThatYouCanFindBySchoolName(){
-        String schoolName="Mind Builders School";
-        Pageable pageable=PageRequest.of(0, 10);
-        List<AppUser> appUsers=appUserRepository.findBySchoolName(schoolName, pageable);
-        appUsers.forEach(System.out::println);
-//        log.info("User(s) with school name Mind Builders School: {}", appUsers);
-    }
-
-    @Test
-    void testThatYouCanFindUserByUsername() throws AppUserNotFoundException {
-        String username="kemi_ade";
-        appUser=appUserRepository.findUserByUsername(username)
-                .orElseThrow(()-> new AppUserNotFoundException("Username  "+username+" Not Found"));
-        log.info("User with username kemi_ade: {}", appUser);
-    }
 
     @Test
     void testThatYouCanFindUserByEmail() throws AppUserNotFoundException {
-        String email="mbs@gmail.com";
-        appUser=appUserRepository.findUserByEmail(email)
-                .orElseThrow(()-> new AppUserNotFoundException("User email "+email+" Not Found"));
+        String searchKey="mbs@gmail.com";
+        appUser=appUserRepository.findByUsernameOrEmailOrMobile(searchKey,searchKey,searchKey,searchKey)
+                .orElseThrow(()-> new AppUserNotFoundException("User email "+searchKey+" Not Found"));
         log.info("User(s) with email: {}", appUser);
-    }
-
-    @Test
-    void testThatYouCanFindUserByPhone() throws AppUserNotFoundException {
-        String phone="mbs@gmail.com";
-        appUser=appUserRepository.findUserByPhone(phone)
-                .orElseThrow(()-> new AppUserNotFoundException("User phone "+phone+" Not Found"));
-        log.info("User(s) with phone: {}", appUser);
     }
 
     @Test

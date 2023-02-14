@@ -1,8 +1,10 @@
-package com.teacher.security.appuserdetails;
+package com.teacher.configuration.appuserdetails;
 
+import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,9 +22,11 @@ import java.util.Set;
 public class AppUserDetailService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
 
+    @SneakyThrows
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        AppUser appUser=appUserRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String searchKey) {
+        AppUser appUser=appUserRepository.findByUsernameOrEmailOrMobile(searchKey,searchKey,searchKey,searchKey)
+                .orElseThrow(()->new AppUserNotFoundException("User "+searchKey+" Not Found"));
         if (appUser==null){
             log.info("User does not exist in the database");
         }

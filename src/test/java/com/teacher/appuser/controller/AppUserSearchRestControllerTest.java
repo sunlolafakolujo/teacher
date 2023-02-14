@@ -87,26 +87,18 @@ class AppUserSearchRestControllerTest {
 
     @Test
     void testThatWhenYouCallSchoolRegistrationMethod_thenSchoolIsRegistered() throws Exception {
-        contact.setStreetNumber("23");
+        contact.setHouseNumber("23");
         contact.setStreetName("Coast Street Ebute Metta");
         contact.setCity("Lagos Mainland");
         contact.setLandMark("Oyingbo");
-        contact.setPostZipCode("110001");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
-        List<Contact> contacts=new ArrayList<>();
-        contacts.add(contact);
 
         appUser.setPassword("1234");
-        appUser.setRcNumber("ssdddrff");
-        appUser.setDateOfBirth(LocalDate.parse("1980-01-20"));
-        appUser.setSchoolName("Oke Odo High School");
         appUser.setUsername("okeOdo");
         appUser.setEmail("okeodo@gmail.com");
-        appUser.setPhone("09087554562");
-        appUser.setPicUrl("https://resumegenius.com/letter-of-recommendation");
-        appUser.setWebSite("www.okeodohighschool.ng");
-        appUser.setContacts(contacts);
+        appUser.setMobile("09087554562");
+        appUser.setContact(contact);
 
         this.mockMvc.perform(post("/api/teacher/appUser/schoolRegistration")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer ")
@@ -120,10 +112,9 @@ class AppUserSearchRestControllerTest {
     }
     @Test
     void testThatWhenYouCallTeacherRegistrationMethod_thenTeacherIsSaved() throws Exception {
-        contact.setStreetNumber("40");
+        contact.setHouseNumber("40");
         contact.setStreetName("Oko Awo Street");
         contact.setCity("Lagos Island");
-        contact.setPostZipCode("110000");
         contact.setLandMark("Gorodom");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
@@ -153,36 +144,21 @@ class AppUserSearchRestControllerTest {
         referee.setLastName("Oyenusi");
         referee.setPhone("08145678885");
         referee.setEmail("ao@gmail.com");
-        referee.setReferenceLetterUrl("https://www.vertex42.com/WordTemplates/letter-of-reference.html");
         Referee referee1=new Referee();
         referee1.setTitle(Title.MRS);
         referee1.setFirstName("Olubunmi");
         referee1.setLastName("Danmola");
         referee1.setPhone("08075412398");
         referee1.setEmail("odanmola@yahoo.com");
-        referee1.setReferenceLetterUrl("https://templates.office.com/en-us/reference-letter-for-professional-employee-tm03464938");
         Set<Referee> referees=new HashSet<>();
         referees.add(referee);
         referees.add(referee1);
 
-        appUser.setTitle(Title.MRS);
-        appUser.setLastName("Oluwasina");
-        appUser.setFirstName("Ayankunle");
-        appUser.setDateOfBirth(LocalDate.parse("1978-09-10"));
-        appUser.setGender(Gender.MALE);
+
         appUser.setUsername("olusinaayankunle");
         appUser.setPassword("1234");
         appUser.setEmail("olusinaayankunle@gmail.com");
-        appUser.setPhone("09065346791");
-        appUser.setPicUrl("https://www.istockphoto.com/photo/smiling-mixed-race-mature-man-on-grey-background-gm1319763895-406531079");
-        appUser.setMeansOfIdentification(MeansOfIdentification.DRIVERS_LICENSE);
-        appUser.setMeansOfIdentificationRefNumber("FG97579J589K");
-        appUser.setMeansOfIdentificationIssueDate(LocalDate.parse("2022-01-20"));
-        appUser.setMeansOfIdentificationExpiryDate(LocalDate.parse("2026-01-20"));
-        appUser.setContacts(contacts);
-        appUser.setQualifications(qualifications);
-        appUser.setWorkExperiences(workExperiences);
-        appUser.setReferees(referees);
+        appUser.setMobile("09065346791");
 
         this.mockMvc.perform(post("/api/teacher/appUser/teacherRegistration")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer ")
@@ -197,10 +173,9 @@ class AppUserSearchRestControllerTest {
 
     @Test
     void testThatWhenYouCallParentRegistrationMethod_thenParentIsRegistered() throws Exception {
-        contact.setStreetNumber("6");
+        contact.setHouseNumber("6");
         contact.setStreetName("Osanyin Street Alagomeji");
         contact.setCity("Lagos Island");
-        contact.setPostZipCode("100011");
         contact.setLandMark("Rowpark");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
@@ -212,25 +187,15 @@ class AppUserSearchRestControllerTest {
         referee.setLastName("Adelani");
         referee.setPhone("09056898543");
         referee.setEmail("aadelani@yahoo.com");
-        referee.setReferenceLetterUrl("https://templates.office.com/en-us/reference-letter-for-professional-employee-tm03464938");
         Set<Referee>referees=new HashSet<>();
         referees.add(referee);
 
-        appUser.setTitle(Title.MRS);
-        appUser.setFirstName("Olajumoke");
-        appUser.setLastName("Adejumo");
-        appUser.setGender(Gender.FEMALE);
+
         appUser.setUsername("oadejumo");
         appUser.setPassword("1234");
         appUser.setEmail("oadejumo@gmail.com");
-        appUser.setPhone("07086456781");
-        appUser.setPicUrl("https://www.freepik.com/free-photo/chill-everything-perfect-portrait-happy-delighted-female-african-american-customer-recommending-good-quality-product-showing-ok-gesture-smiling-satisfied-white-wall_17613025.htm#query=woman&position=0&from_view=keyword");
-        appUser.setMeansOfIdentification(MeansOfIdentification.PASSPORT);
-        appUser.setMeansOfIdentificationRefNumber("A0457899");
-        appUser.setMeansOfIdentificationIssueDate(LocalDate.parse("2022-01-20"));
-        appUser.setMeansOfIdentificationExpiryDate(LocalDate.parse("2026-01-20"));
-        appUser.setContacts(contacts);
-        appUser.setReferees(referees);
+        appUser.setMobile("07086456781");
+        appUser.setContact(contact);
 
         this.mockMvc.perform(post("/api/teacher/appUser/parentRegistration")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer ")

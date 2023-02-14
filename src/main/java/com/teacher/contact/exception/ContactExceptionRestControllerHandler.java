@@ -11,20 +11,23 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @RestControllerAdvice
 public class ContactExceptionRestControllerHandler extends ResponseEntityExceptionHandler {
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(ContactNotFoundException.class)
     public ResponseEntity<ValidateErrorMessage> contactExceptionRestController(
             WebRequest wr,ContactNotFoundException contactException){
 
-        ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND,
+        ValidateErrorMessage vem=new ValidateErrorMessage(NOT_FOUND,
                 contactException.getMessage(),
                 wr.getDescription(false),
                 new Date());
 
-        return ResponseEntity.ok().body(vem);
+        return new ResponseEntity<>(vem, BAD_REQUEST);
     }
 
 

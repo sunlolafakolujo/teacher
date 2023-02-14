@@ -117,7 +117,6 @@ public class ReferenceRestController {
         referenceDto.setLastName(referee.getLastName());
         referenceDto.setPhone(referee.getPhone());
         referenceDto.setEmail(referee.getEmail());
-        referenceDto.setReferenceLetter(referee.getReferenceLetterUrl());
         return referenceDto;
     }
 

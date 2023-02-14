@@ -46,7 +46,7 @@ public class TeacherDto {
 
     private String password;
 
-//    private String matchingPassword;
+    private String confirmPassword;
 
     private String email;
 

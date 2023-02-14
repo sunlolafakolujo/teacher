@@ -11,6 +11,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+import static org.springframework.http.HttpStatus.*;
+
 @RestControllerAdvice
 public class ReferenceRestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -18,11 +20,11 @@ public class ReferenceRestExceptionHandler extends ResponseEntityExceptionHandle
     @ExceptionHandler(ReferenceNotFoundException.class)
     public ResponseEntity<ValidateErrorMessage> referenceNotFound(ReferenceNotFoundException referenceNotFoundException, WebRequest wr){
 
-        ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND,
+        ValidateErrorMessage vem=new ValidateErrorMessage(NOT_FOUND,
                 referenceNotFoundException.getMessage(),
                 wr.getDescription(false),
                 new Date());
 
-        return new ResponseEntity<>(vem, HttpStatus.OK);
+        return new ResponseEntity<>(vem, BAD_REQUEST);
     }
 }

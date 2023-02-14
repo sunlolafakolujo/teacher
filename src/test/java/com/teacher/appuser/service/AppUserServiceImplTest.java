@@ -64,58 +64,13 @@ class AppUserServiceImplTest {
 
     @Test
     void testThatYouCanMockFindUserByEmailMethod() throws AppUserNotFoundException {
-        String email="ao@gmail.com";
-        when(appUserRepository.findUserByEmail(email)).thenReturn(Optional.of(appUser));
-        appUserService.findUserByEmail(email);
-        verify(appUserRepository, times(1)).findUserByEmail(email);
+        String searchKey="ao@gmail.com";
+        when(appUserRepository.findByUsernameOrEmailOrMobile(searchKey,searchKey,searchKey,searchKey))
+                .thenReturn(Optional.of(appUser));
+        appUserService.findByUsernameOrEmailOrMobileOrUserId(searchKey);
+        verify(appUserRepository, times(1)).findByUsernameOrEmailOrMobile(searchKey,searchKey,
+                searchKey,searchKey);
     }
-
-    @Test
-    void testThatYouCanMockFindUserByUsername() throws AppUserNotFoundException {
-        String username="kokonsari";
-        when(appUserRepository.findUserByUsername(username)).thenReturn(Optional.of(appUser));
-        appUserService.findUserByUsername(username);
-        verify(appUserRepository, times(1)).findUserByUsername(username);
-    }
-
-    @Test
-    void testThatYouCanMockFindUserByPhoneMethod() throws AppUserNotFoundException {
-        String phone="09087456211";
-        when(appUserRepository.findUserByPhone(phone)).thenReturn(Optional.of(appUser));
-        appUserService.findUserByPhone(phone);
-        verify(appUserRepository, times(1)).findUserByPhone(phone);
-    }
-
-    @Test
-    void testThatYouCanMockFindUserByFirstNameMethod() throws AppUserNotFoundException {
-        String firstName="Kokosari";
-        List<AppUser> appUsers=new ArrayList<>();
-        Pageable pageable= PageRequest.of(0, 10);
-        when(appUserRepository.findUserByFirstName(firstName,pageable)).thenReturn(appUsers);
-        appUserService.findUserByFirstName(firstName, pageable);
-        verify(appUserRepository, times(1)).findUserByFirstName(firstName, pageable);
-    }
-
-    @Test
-    void testThatYouCanMockFindUserByLastName() throws AppUserNotFoundException {
-        String lastName="Kokosari";
-        List<AppUser> appUsers=new ArrayList<>();
-        Pageable pageable= PageRequest.of(0, 10);
-        when(appUserRepository.findUserByLastName(lastName,pageable)).thenReturn(appUsers);
-        appUserService.findUserByLastName(lastName, pageable);
-        verify(appUserRepository, times(1)).findUserByLastName(lastName, pageable);
-    }
-
-    @Test
-    void testThatYouCanMockFindBySchoolNameMethod() throws AppUserNotFoundException {
-        String schoolName="Mind Builders";
-        List<AppUser> appUsers=new ArrayList<>();
-        Pageable pageable= PageRequest.of(0, 10);
-        when(appUserRepository.findBySchoolName(schoolName,pageable)).thenReturn(appUsers);
-        appUserService.findBySchoolName(schoolName, pageable);
-        verify(appUserRepository, times(1)).findBySchoolName(schoolName, pageable);
-    }
-
     @Test
     void testThatYouCanMockFindByUserTypeMethod() throws AppUserNotFoundException {
         UserType userType=UserType.TEACHER;

@@ -11,6 +11,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 @Data
@@ -24,9 +25,7 @@ public class UserRole extends BaseAudit {
 
     @Column(unique = true)
     private String roleName;
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "userRoles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Collection<AppUser> appUsers;
 
+    @ManyToMany(mappedBy = "userRoles")
+    private Collection<AppUser> appUsers= new HashSet<>();
 }

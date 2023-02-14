@@ -12,30 +12,12 @@ import java.util.Optional;
 public interface AppUserService {
 
     AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException;
-
     AppUser findUserById(Long id) throws AppUserNotFoundException;
-
-    AppUser findUserByUsername(String username) throws AppUserNotFoundException;
-
-    AppUser findUserByEmail(String email) throws AppUserNotFoundException;
-
-    AppUser findUserByPhone(String phone) throws AppUserNotFoundException;
-
-    List<AppUser> findUserByFirstName(String firstName, Pageable pageable) throws AppUserNotFoundException;
-
-    List<AppUser> findUserByLastName(String lastName, Pageable pageable) throws AppUserNotFoundException;
-
-    List<AppUser> findBySchoolName(String schoolName, Pageable pageable) throws AppUserNotFoundException;
-
+    AppUser findByUsernameOrEmailOrMobileOrUserId(String searchKey) throws AppUserNotFoundException;
     List<AppUser> findByUserType(UserType userType, Pageable pageable) throws AppUserNotFoundException;
-
     List<AppUser> findAllUsers(Pageable pageable);
-
     Long countUsers();
-
     AppUser updateUser(AppUser appUser, Long id) throws AppUserNotFoundException;
-
     void deleteUserById(Long id) throws AppUserNotFoundException;
-
     void deleteAllUsers();
 }

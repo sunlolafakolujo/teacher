@@ -45,12 +45,4 @@ public class Referee extends BaseAudit {
 
     @NotBlank(message = "Phone is required")
     private String phone;
-
-    @NotBlank(message = "Attach reference letter")
-    private String referenceLetterUrl;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "referees")
-    private Collection<AppUser> appUsers=new HashSet<>();
 }

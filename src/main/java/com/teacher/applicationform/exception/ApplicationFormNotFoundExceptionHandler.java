@@ -12,18 +12,21 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @RestControllerAdvice
 public class ApplicationFormNotFoundExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus
     @ExceptionHandler
     public ResponseEntity<ValidateErrorMessage> applicationFormExceptionHandler(ApplicationFormNotFoundException anf,
                                                                                 WebRequest request){
-        ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND,
+        ValidateErrorMessage vem=new ValidateErrorMessage(NOT_FOUND,
                 anf.getMessage(),
                 request.getDescription(false),
                 new Date());
 
-        return new ResponseEntity<>(vem, HttpStatus.OK);
+        return new ResponseEntity<>(vem, BAD_REQUEST);
 
     }
 }

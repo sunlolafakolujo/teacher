@@ -11,6 +11,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+import static org.springframework.http.HttpStatus.*;
+
 @RestControllerAdvice
 public class VacancyNotFoundRestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -19,12 +21,12 @@ public class VacancyNotFoundRestExceptionHandler extends ResponseEntityException
     public ResponseEntity<ValidateErrorMessage> vacancyNotFoundException(VacancyNotFoundException vacancyNotFoundException,
                                                                          WebRequest webRequest){
 
-        ValidateErrorMessage vem=new ValidateErrorMessage(HttpStatus.NOT_FOUND,
+        ValidateErrorMessage vem=new ValidateErrorMessage(NOT_FOUND,
                 vacancyNotFoundException.getMessage(),
                 webRequest.getDescription(false),
                 new Date());
 
-        return new ResponseEntity<>(vem, HttpStatus.OK);
+        return new ResponseEntity<>(vem, BAD_REQUEST);
 
     }
 }

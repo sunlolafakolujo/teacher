@@ -1,4 +1,4 @@
-package com.teacher.security.jwtutil;
+package com.teacher.configuration.jwt;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,15 +7,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Service
-//@Component
-public class JwtUtil {
+
+@Component
+public class JwtUtil implements Serializable {
 
     @Value("${jwt.token.validity}")
     public long TOKEN_VALIDITY;
@@ -47,11 +48,6 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-//    public String generateToken(UserDetails userDetails){
-//        Map<String, Object> claims=new HashMap<>();
-//        return createToken(claims, userDetails.getUsername());
-//
-//    }
     public String generateToken(Authentication authentication){
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -60,6 +56,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
+                .setIssuer("LogicGate")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY*1000))
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
@@ -67,15 +64,10 @@ public class JwtUtil {
 
     }
 
-//    private String createToken(Map<String, Object> claims, String subject){
-//        return Jwts.builder()
-//                .setClaims(claims)
-//                .setSubject(subject)
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-//                .signWith(SignatureAlgorithm.HS256,key).compact();
-//    }
-
+    public Boolean validateToken(String token, UserDetails userDetails){
+        final String username=extractUsername(token);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
 
     UsernamePasswordAuthenticationToken getAuthenticationToken(final String token,
                                                                final Authentication existingAuth,
@@ -93,10 +85,5 @@ public class JwtUtil {
                         .collect(Collectors.toList());
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
-    }
-
-    public Boolean validateToken(String token, UserDetails userDetails){
-        final String username=extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 }

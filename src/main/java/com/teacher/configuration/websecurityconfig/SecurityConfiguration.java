@@ -1,10 +1,9 @@
-package com.teacher.security.securityconfig;
+package com.teacher.configuration.websecurityconfig;
 
-import com.teacher.security.appuserdetails.AppUserDetailService;
-import com.teacher.security.jwtutil.JwtFilterToken;
+import com.teacher.configuration.appuserdetails.AppUserDetailService;
+import com.teacher.configuration.jwt.JwtRequestFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
@@ -24,8 +22,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     private final PasswordEncoder passwordEncoder;
 
-    private final JwtFilterToken jwtFilterToken;
-
     public final static String[] WHITE_LIST_URLS={
         "/api/teacher/appUser/verifyAccount/**",
         "/api/signIn/**",
@@ -33,7 +29,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         "/api/teacher/appUser/schoolRegistration/**",
         "/api/teacher/appUser/teacherRegistration/**",
         "/api/teacher/appUser/parentRegistration/**",
-//        "/api/teacher/appUser/findAllUsers/**"
     };
 
     @Override
@@ -51,12 +46,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(jwtFilterToken, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtFilterToken(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public JwtRequestFilter jwtFilterToken() throws Exception {
+        return new JwtRequestFilter();
     }
 }
