@@ -30,6 +30,6 @@ public class Image {
 
     @JsonIgnore
     @ToString.Exclude
-    @OneToOne(mappedBy = "meansOfIdentification")
+    @OneToOne(mappedBy = "image")
     private MeanOfIdentification meanOfIdentification;
 }

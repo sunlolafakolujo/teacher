@@ -32,15 +32,12 @@ public class Qualification extends BaseAudit {
     private Long id;
 
     @Column(updatable = false)
-    @NotBlank(message = "Subject is required")
     private String subject;
 
     @Column(updatable = false)
-    @NotBlank(message = "Degree title is required")
     private String degreeTitle;
 
     @Column(updatable = false)
-    @NotBlank(message = "Class of degree is required")
     private String classOfDegree;
 
     @Column(updatable = false)

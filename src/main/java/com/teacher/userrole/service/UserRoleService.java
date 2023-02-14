@@ -13,7 +13,7 @@ public interface UserRoleService {
     UserRole saveUserRole(UserRole userRole) throws UserRoleNotFoundException;
     UserRole findRoleById(Long id) throws UserRoleNotFoundException;
     UserRole findUserRoleByName(String roleName) throws UserRoleNotFoundException;
-    void addRoleToUser(String username, String roleName) throws AppUserNotFoundException;
+    void addRoleToUser(String username, String roleName) throws AppUserNotFoundException, UserRoleNotFoundException;
     List<UserRole> findAllRoles(Pageable pageable);
     UserRole updateRole(UserRole userRole,Long id) throws UserRoleNotFoundException;
     void deleteRoleById(Long id) throws UserRoleNotFoundException;

@@ -14,6 +14,7 @@ import com.teacher.userrole.model.UserRole;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -47,5 +48,5 @@ public class Parent extends BaseAudit {
     private Image image;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Collection<Referee> referees=new HashSet<>();
+    private Collection<Referee> referees=new ArrayList<>();
 }

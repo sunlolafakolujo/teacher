@@ -6,6 +6,7 @@ import com.teacher.contact.model.Contact;
 import com.teacher.qualification.model.Qualification;
 import com.teacher.reference.model.Referee;
 import com.teacher.staticdata.*;
+import com.teacher.userrole.exception.UserRoleNotFoundException;
 import com.teacher.userrole.model.UserRole;
 import com.teacher.userrole.repository.UserRoleRepository;
 import com.teacher.workexperience.model.WorkExperience;
@@ -66,7 +67,7 @@ class AppUserRepositoryTest {
     }
 
     @Test
-    void testThatYouCanSaveUser(){
+    void testThatYouCanSaveUser() throws UserRoleNotFoundException {
 
         qualification.setCurrentQualification(Status.NO);
         qualification.setEndDate(LocalDate.parse("2001-03-30"));
@@ -96,7 +97,8 @@ class AppUserRepositoryTest {
         List<Contact> contacts=new ArrayList<>();
         contacts.add(contact);
 
-        userRole=userRoleRepository.findByRoleName("TEACHER");
+        userRole=userRoleRepository.findByRoleName("TEACHER")
+                .orElseThrow(()->new UserRoleNotFoundException("Role Not Found"));
 
         appUser.setUserType(TEACHER);
         appUser.setUserId("TCH-".concat(String.valueOf(new Random().nextInt(100000000))));

@@ -26,7 +26,11 @@ public class UserRoleServiceImpl implements UserRoleService{
     private AppUserRepository appUserRepository;
 
     @Override
-    public UserRole saveUserRole(UserRole userRole) {
+    public UserRole saveUserRole(UserRole userRole) throws UserRoleNotFoundException {
+        Optional<UserRole> savedRole=userRoleRepository.findByRoleName(userRole.getRoleName());
+        if (savedRole.isPresent()){
+            throw new UserRoleNotFoundException("Role already exist");
+        }
         return userRoleRepository.save(userRole);
     }
 
@@ -39,18 +43,17 @@ public class UserRoleServiceImpl implements UserRoleService{
 
     @Override
     public UserRole findUserRoleByName(String roleName) throws UserRoleNotFoundException {
-        UserRole userRole=userRoleRepository.findByRoleName(roleName);
-        if (userRole==null){
-            throw new UserRoleNotFoundException("Role Not Found");
-        }
+        UserRole userRole=userRoleRepository.findByRoleName(roleName)
+                .orElseThrow(()->new UserRoleNotFoundException("Role "+roleName+" Not Found"));
         return userRole;
     }
 
     @Override
-    public void addRoleToUser(String searchKey, String roleName) throws AppUserNotFoundException {
+    public void addRoleToUser(String searchKey, String roleName) throws AppUserNotFoundException, UserRoleNotFoundException {
         AppUser appUser= appUserRepository.findByUsernameOrEmailOrMobile(searchKey,searchKey,searchKey,searchKey)
                 .orElseThrow(()-> new AppUserNotFoundException("Username "+searchKey+" Not Found"));
-        UserRole userRole=userRoleRepository.findByRoleName(roleName);
+        UserRole userRole=userRoleRepository.findByRoleName(roleName)
+                .orElseThrow(()->new UserRoleNotFoundException("Role "+roleName+" Not Found"));
         appUser.getUserRoles().add(userRole);
         appUserRepository.save(appUser);
     }

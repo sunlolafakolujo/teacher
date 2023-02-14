@@ -32,17 +32,10 @@ public class Referee extends BaseAudit {
 
     @Enumerated(EnumType.STRING)
     private Title title;
-
-    @NotBlank(message = "First name is required")
     private String firstName;
-
-    @NotBlank(message = "Last name is required")
     private String lastName;
 
     @Email(message = "input correct email")
-    @NotBlank(message = "Email is required")
     private String email;
-
-    @NotBlank(message = "Phone is required")
     private String phone;
 }

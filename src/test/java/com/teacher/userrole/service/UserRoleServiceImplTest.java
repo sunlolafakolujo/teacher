@@ -63,7 +63,7 @@ class UserRoleServiceImplTest {
     @Test
     void testThatYouCanMockFindUserRoleByNameMethod() throws UserRoleNotFoundException {
         String role="TEACHER";
-        when(userRoleRepository.findByRoleName(role)).thenReturn(userRole);
+        when(userRoleRepository.findByRoleName(role)).thenReturn(Optional.of(userRole));
         userRoleService.findUserRoleByName(role);
         verify(userRoleRepository, times(1)).findByRoleName(role);
     }

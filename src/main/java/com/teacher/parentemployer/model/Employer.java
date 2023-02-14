@@ -18,6 +18,8 @@ public class Employer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String employerName;
+    private String employerEmail;
+    private String employerMobile;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Contact employerAddress;

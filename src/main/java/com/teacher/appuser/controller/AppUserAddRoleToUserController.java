@@ -1,6 +1,7 @@
 package com.teacher.appuser.controller;
 
 import com.teacher.appuser.exception.AppUserNotFoundException;
+import com.teacher.userrole.exception.UserRoleNotFoundException;
 import com.teacher.userrole.model.AddRoleToUser;
 import com.teacher.userrole.service.UserRoleService;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,8 @@ public class AppUserAddRoleToUserController {
     private final UserRoleService userRoleService;
 
     @PostMapping("/addRoleToUser")
-    public ResponseEntity<?> addRoleToUser(@Valid @RequestBody AddRoleToUser addRoleToUser) throws AppUserNotFoundException {
+    public ResponseEntity<?> addRoleToUser(@Valid @RequestBody AddRoleToUser addRoleToUser)
+                                                              throws AppUserNotFoundException, UserRoleNotFoundException {
         userRoleService.addRoleToUser(addRoleToUser.getUsername(), addRoleToUser.getRoleName());
         return ResponseEntity.ok().build();
     }

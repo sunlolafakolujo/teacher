@@ -6,7 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +18,8 @@ public class MeanOfIdentification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
     private MeansOfIdentification meansOfIdentification;
     private String meansOfIdentificationRefNumber;
     private LocalDate meansOfIdentificationIssueDate;

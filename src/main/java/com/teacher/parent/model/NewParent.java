@@ -9,6 +9,7 @@ import com.teacher.staticdata.Gender;
 import com.teacher.staticdata.Title;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -28,5 +29,5 @@ public class NewParent {
     private Employer employer;
     private Image image;
     private AppUser appUser;
-    private Collection<Referee> referees=new HashSet<>();
+    private Collection<Referee> referees=new ArrayList<>();
 }

@@ -37,10 +37,8 @@ class UserRoleRepositoryTest {
 
     @Test
     void testThatYouCanFindRoleByName() throws UserRoleNotFoundException {
-        userRole=userRoleRepository.findByRoleName("PARENT");
-        if (userRole==null){
-            throw new UserRoleNotFoundException("Role Not Found");
-        }
+        userRole=userRoleRepository.findByRoleName("PARENT")
+                .orElseThrow(()->new UserRoleNotFoundException("Role Not Found"));
         log.info("User role: {}", userRole);
     }
 

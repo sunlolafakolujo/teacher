@@ -28,20 +28,16 @@ public class WorkExperience extends BaseAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Company required")
     @Column(updatable = false)
     private String company;
 
-    @NotNull(message = "Company required")
     @Column(updatable = false)
     private String position;
 
-    @NotNull(message = "Status is required")
     @Enumerated(EnumType.STRING)
     private Status currentWork;
 
-    @NotNull(message = "Start Date is required")
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false)
     private LocalDate startDate;
 
     @Column(updatable = false)
