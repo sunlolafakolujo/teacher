@@ -1,7 +1,9 @@
 package com.teacher.image.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teacher.appparent.model.Parent;
 import com.teacher.meansofidentification.model.MeanOfIdentification;
+import com.teacher.school.model.School;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,4 +34,15 @@ public class Image {
     @ToString.Exclude
     @OneToOne(mappedBy = "image")
     private MeanOfIdentification meanOfIdentification;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(mappedBy = "cacCertificate")
+    private School school;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(mappedBy = "image")
+    private Parent parent;
+
 }

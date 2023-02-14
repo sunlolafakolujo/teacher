@@ -39,28 +39,28 @@ public class AppUserRestController {
     private final ModelMapper modelMapper;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @PostMapping("/schoolRegistration")
-    public ResponseEntity<SchoolDto> schoolRegister(@RequestBody @Valid SchoolDto schoolDto,
-                                                    final HttpServletRequest httpServletRequest)
-            throws AppUserNotFoundException, UserRoleNotFoundException {
-
-
-        if (!schoolDto.getPassword().equals(schoolDto.getConfirmPassword())){
-            throw new AppUserNotFoundException("Inconsistent password");
-        }
-        schoolDto.setUserType(UserType.SCHOOL);
-        List<UserRole> userRoles=new ArrayList<>();
-        UserRole userRole=userRoleService.findUserRoleByName("SCHOOL");
-        userRoles.add(userRole);
-        schoolDto.setUserRoles(userRoles);
-        schoolDto.setAge(Period.between(schoolDto.getDateOfBirth(),LocalDate.now()).getYears());
-        schoolDto.setUserId("SCH-".concat(UUID.randomUUID().toString()));
-        AppUser appUser=modelMapper.map(schoolDto, AppUser.class);
-        AppUser post=appUserService.userRegistration(appUser);
-        SchoolDto posted=modelMapper.map(post, SchoolDto.class);
-        applicationEventPublisher.publishEvent(new RegistrationCompleteEvent(post, applicationUrl(httpServletRequest)));
-        return new ResponseEntity<>(posted, HttpStatus.CREATED);
-    }
+//    @PostMapping("/schoolRegistration")
+//    public ResponseEntity<SchoolDto> schoolRegister(@RequestBody @Valid SchoolDto schoolDto,
+//                                                    final HttpServletRequest httpServletRequest)
+//            throws AppUserNotFoundException, UserRoleNotFoundException {
+//
+//
+//        if (!schoolDto.getPassword().equals(schoolDto.getConfirmPassword())){
+//            throw new AppUserNotFoundException("Inconsistent password");
+//        }
+//        schoolDto.setUserType(UserType.SCHOOL);
+//        List<UserRole> userRoles=new ArrayList<>();
+//        UserRole userRole=userRoleService.findUserRoleByName("SCHOOL");
+//        userRoles.add(userRole);
+//        schoolDto.setUserRoles(userRoles);
+//        schoolDto.setAge(Period.between(schoolDto.getDateOfBirth(),LocalDate.now()).getYears());
+//        schoolDto.setUserId("SCH-".concat(UUID.randomUUID().toString()));
+//        AppUser appUser=modelMapper.map(schoolDto, AppUser.class);
+//        AppUser post=appUserService.userRegistration(appUser);
+//        SchoolDto posted=modelMapper.map(post, SchoolDto.class);
+//        applicationEventPublisher.publishEvent(new RegistrationCompleteEvent(post, applicationUrl(httpServletRequest)));
+//        return new ResponseEntity<>(posted, HttpStatus.CREATED);
+//    }
 
     @PostMapping("/teacherRegistration")
     public  ResponseEntity<TeacherDto> teacherRegistration(@Valid @RequestBody TeacherDto teacherDto,
