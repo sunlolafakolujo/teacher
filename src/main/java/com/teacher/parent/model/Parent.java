@@ -1,6 +1,7 @@
 package com.teacher.parent.model;
 
 import com.teacher.appuser.model.AppUser;
+import com.teacher.baseaudit.BaseAudit;
 import com.teacher.contact.model.Contact;
 import com.teacher.image.model.Image;
 import com.teacher.meansofidentification.model.MeanOfIdentification;
@@ -13,8 +14,6 @@ import com.teacher.userrole.model.UserRole;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -24,7 +23,7 @@ import java.util.HashSet;
 @Setter
 @ToString
 @Entity
-public class Parent {
+public class Parent extends BaseAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

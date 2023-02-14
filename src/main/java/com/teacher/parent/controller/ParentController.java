@@ -44,8 +44,9 @@ public class ParentController {
         newParent.setImage(image);
         Parent parent=modelMapper.map(newParent,Parent.class);
         Parent post=parentService.addParent(parent);
-        publisher.publishEvent(new RegistrationCompleteEvent(post.getAppUser(),applicationUrl(request)));
+//        publisher.publishEvent(new RegistrationCompleteEvent(post.getAppUser(),applicationUrl(request)));
         NewParent posted=modelMapper.map(post,NewParent.class);
+        publisher.publishEvent(new RegistrationCompleteEvent(posted.getAppUser(),applicationUrl(request)));
         return new ResponseEntity<>(posted, HttpStatus.CREATED);
     }
 

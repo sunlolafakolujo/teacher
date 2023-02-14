@@ -1,5 +1,6 @@
 package com.teacher.parent.model;
 
+import com.teacher.appuser.model.AppUser;
 import com.teacher.image.model.Image;
 import com.teacher.meansofidentification.model.MeanOfIdentification;
 import com.teacher.parentemployer.model.Employer;
@@ -26,5 +27,6 @@ public class NewParent {
     private MeanOfIdentification meanOfIdentification;
     private Employer employer;
     private Image image;
+    private AppUser appUser;
     private Collection<Referee> referees=new HashSet<>();
 }
