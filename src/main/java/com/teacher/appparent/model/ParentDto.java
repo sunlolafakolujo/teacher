@@ -1,8 +1,6 @@
-package com.teacher.parent.model;
+package com.teacher.appparent.model;
 
 import com.teacher.image.model.Image;
-import com.teacher.meansofidentification.model.MeanOfIdentification;
-import com.teacher.parentemployer.model.Employer;
 import com.teacher.reference.model.Referee;
 import com.teacher.staticdata.Gender;
 import com.teacher.staticdata.MeansOfIdentification;
@@ -10,10 +8,7 @@ import com.teacher.staticdata.Title;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor

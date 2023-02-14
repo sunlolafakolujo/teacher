@@ -1,4 +1,4 @@
-package com.teacher.parent.model;
+package com.teacher.appparent.model;
 
 import com.teacher.appuser.model.AppUser;
 import com.teacher.image.model.Image;
@@ -11,7 +11,6 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 @AllArgsConstructor
 @NoArgsConstructor

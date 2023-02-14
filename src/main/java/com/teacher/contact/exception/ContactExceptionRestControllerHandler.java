@@ -1,7 +1,6 @@
 package com.teacher.contact.exception;
 
-import com.teacher.message.ValidateErrorMessage;
-import org.springframework.http.HttpStatus;
+import com.teacher.errormessage.ValidateErrorMessage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

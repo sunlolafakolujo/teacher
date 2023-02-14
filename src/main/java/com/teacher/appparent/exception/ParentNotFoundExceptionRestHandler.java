@@ -1,6 +1,6 @@
-package com.teacher.parent.exception;
+package com.teacher.appparent.exception;
 
-import com.teacher.message.ValidateErrorMessage;
+import com.teacher.errormessage.ValidateErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

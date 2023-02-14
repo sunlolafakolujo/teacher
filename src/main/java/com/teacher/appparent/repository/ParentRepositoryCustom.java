@@ -1,7 +1,7 @@
-package com.teacher.parent.repository;
+package com.teacher.appparent.repository;
 
 import com.teacher.appuser.model.AppUser;
-import com.teacher.parent.model.Parent;
+import com.teacher.appparent.model.Parent;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,4 +1,4 @@
-package com.teacher.message;
+package com.teacher.errormessage;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

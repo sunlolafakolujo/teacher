@@ -1,12 +1,11 @@
-package com.teacher.parent.service;
+package com.teacher.appparent.service;
 
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
-import com.teacher.configuration.jwt.JwtRequestFilter;
-import com.teacher.parent.exception.ParentNotFoundException;
-import com.teacher.parent.model.Parent;
-import com.teacher.parent.repository.ParentRepository;
+import com.teacher.appparent.exception.ParentNotFoundException;
+import com.teacher.appparent.model.Parent;
+import com.teacher.appparent.repository.ParentRepository;
 import com.teacher.staticdata.UserType;
 import com.teacher.userrole.exception.UserRoleNotFoundException;
 import com.teacher.userrole.model.UserRole;
@@ -86,18 +85,13 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public Parent fetchParentByAppUser(String searchKey) throws AppUserNotFoundException {
-        AppUser appUser=appUserRepository.findByUsernameOrEmailOrMobile(searchKey,searchKey,searchKey,searchKey)
-                .orElseThrow(()->new AppUserNotFoundException("User "+searchKey+" Not Found"));
-        return parentRepository.findByAppUser(appUser);
-    }
-
-    @Override
     public Parent updateParent(Parent parent, Long id) throws ParentNotFoundException {
         Parent savedParent=parentRepository.findById(id)
                 .orElseThrow(()->new ParentNotFoundException("Parent "+id+" Not Found"));
         if (Objects.nonNull(parent.getProfession()) && !"".equals(parent.getProfession())){
             savedParent.setProfession(parent.getProfession());
+        }if (Objects.nonNull(parent.getAppUser().getContact()) && !"".equals(parent.getAppUser().getContact())){
+            savedParent.getAppUser().setContact(parent.getAppUser().getContact());
         }
         return parentRepository.save(savedParent);
     }

@@ -2,32 +2,18 @@ package com.teacher.appuser.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teacher.contact.model.Contact;
-import com.teacher.parent.model.Parent;
-import com.teacher.qualification.model.Qualification;
-import com.teacher.reference.model.Referee;
-import com.teacher.staticdata.Gender;
-import com.teacher.staticdata.MeansOfIdentification;
-import com.teacher.staticdata.Title;
+import com.teacher.appparent.model.Parent;
 import com.teacher.staticdata.UserType;
 import com.teacher.userrole.model.UserRole;
-import com.teacher.vacancy.model.Vacancy;
-import com.teacher.workexperience.model.WorkExperience;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 
 @Entity
 @Data

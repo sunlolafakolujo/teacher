@@ -2,7 +2,7 @@ package com.teacher.parentemployer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teacher.contact.model.Contact;
-import com.teacher.parent.model.Parent;
+import com.teacher.appparent.model.Parent;
 import lombok.*;
 
 import javax.persistence.*;

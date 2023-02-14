@@ -1,29 +1,30 @@
-package com.teacher.parent.controller;
+package com.teacher.appparent.controller;
 
+import com.teacher.appparent.model.UpdateParent;
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.event.RegistrationCompleteEvent;
 import com.teacher.image.model.Image;
-import com.teacher.parent.model.NewParent;
-import com.teacher.parent.model.Parent;
-import com.teacher.parent.model.ParentDto;
-import com.teacher.parent.service.ParentService;
+import com.teacher.appparent.exception.ParentNotFoundException;
+import com.teacher.appparent.model.NewParent;
+import com.teacher.appparent.model.Parent;
+import com.teacher.appparent.model.ParentDto;
+import com.teacher.appparent.service.ParentService;
 import com.teacher.reference.model.Referee;
 import com.teacher.userrole.exception.UserRoleNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping(path = "api/teacher")
@@ -50,7 +51,56 @@ public class ParentController {
 //        publisher.publishEvent(new RegistrationCompleteEvent(post.getAppUser(),applicationUrl(request)));
         NewParent posted=modelMapper.map(post,NewParent.class);
         publisher.publishEvent(new RegistrationCompleteEvent(posted.getAppUser(),applicationUrl(request)));
-        return new ResponseEntity<>(posted, HttpStatus.CREATED);
+        return new ResponseEntity<>(posted, CREATED);
+    }
+
+    @GetMapping("/findParentById")
+    public ResponseEntity<ParentDto> getParentById(@RequestParam("id") Long id) throws ParentNotFoundException {
+        Parent parent=parentService.fetchParentById(id);
+        return new ResponseEntity<>(convertParentToDto(parent), OK);
+    }
+
+    @GetMapping("/findParentByCode")
+    public ResponseEntity<ParentDto> getParentByCode(@RequestParam("parentId")String parentId) throws ParentNotFoundException {
+        Parent parent=parentService.fetchByParentId(parentId);
+        return new ResponseEntity<>(convertParentToDto(parent),OK);
+    }
+
+    @GetMapping("/findParentByEmailOrUsernameOrMobile")
+    public ResponseEntity<ParentDto> getParentByEmailOrUsernameOrMobile(@RequestParam("searchKey") String searchKey)
+                                                                                   throws AppUserNotFoundException {
+        Parent parent=parentService.fetchParentByUsernameOrEmailOrMobileOrUserId(searchKey);
+        return new ResponseEntity<>(convertParentToDto(parent),OK);
+    }
+
+    @GetMapping("/findAllParentOrByFirstOrLastName")
+    public ResponseEntity<List<ParentDto>> getAllParentByFirstOrLastName(@RequestParam(defaultValue = "0")Integer pageNumber,
+                                                                         @RequestParam(defaultValue = "")String searchKey){
+        return new ResponseEntity<>(parentService.fetchAllParentOrByFirstOrLastName(searchKey,pageNumber)
+                .stream()
+                .map(this::convertParentToDto)
+                .collect(Collectors.toList()), OK);
+    }
+
+    @PutMapping("/updateParentRecord")
+    public ResponseEntity<UpdateParent> edit(@RequestBody UpdateParent updateParent,@RequestParam("id") Long id)
+                                                                                    throws ParentNotFoundException {
+        Parent parent=modelMapper.map(updateParent,Parent.class);
+        Parent post=parentService.updateParent(parent,id);
+        UpdateParent posted=modelMapper.map(post,UpdateParent.class);
+        return new ResponseEntity<>(posted,OK);
+    }
+
+    @DeleteMapping("/deleteParent")
+    public ResponseEntity<?> deleteParentById(@RequestParam("id")Long id) throws ParentNotFoundException {
+        parentService.deleteParentById(id);
+        return ResponseEntity.ok().body("Parent with ID "+id+" has being deleted from the database");
+    }
+
+    @DeleteMapping("/deleteAllParent")
+    public ResponseEntity<?> deleteAllParents(){
+        parentService.deleteAllParent();
+        return ResponseEntity.ok().body("All parent has being deleted from the database");
     }
 
 

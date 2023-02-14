@@ -1,22 +1,18 @@
-package com.teacher.parent.model;
+package com.teacher.appparent.model;
 
 import com.teacher.appuser.model.AppUser;
 import com.teacher.baseaudit.BaseAudit;
-import com.teacher.contact.model.Contact;
 import com.teacher.image.model.Image;
 import com.teacher.meansofidentification.model.MeanOfIdentification;
 import com.teacher.parentemployer.model.Employer;
 import com.teacher.reference.model.Referee;
 import com.teacher.staticdata.Gender;
-import com.teacher.staticdata.MeansOfIdentification;
 import com.teacher.staticdata.Title;
-import com.teacher.userrole.model.UserRole;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 @AllArgsConstructor
 @NoArgsConstructor

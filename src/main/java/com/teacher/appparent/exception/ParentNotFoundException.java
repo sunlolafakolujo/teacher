@@ -1,4 +1,4 @@
-package com.teacher.parent.exception;
+package com.teacher.appparent.exception;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;

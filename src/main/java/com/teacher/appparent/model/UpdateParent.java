@@ -1,4 +1,4 @@
-package com.teacher.parent.model;
+package com.teacher.appparent.model;
 
 import lombok.*;
 
