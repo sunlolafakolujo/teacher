@@ -2,6 +2,7 @@ package com.teacher.image.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teacher.appparent.model.Parent;
+import com.teacher.appteacher.model.Teacher;
 import com.teacher.meansofidentification.model.MeanOfIdentification;
 import com.teacher.school.model.School;
 import lombok.*;
@@ -44,5 +45,10 @@ public class Image {
     @ToString.Exclude
     @OneToOne(mappedBy = "image")
     private Parent parent;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(mappedBy = "image")
+    private Teacher teacher;
 
 }

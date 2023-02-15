@@ -38,7 +38,7 @@ public class ParentController {
     public ResponseEntity<NewParent> addParent(@RequestPart("parent") NewParent newParent,
                                                @RequestPart("image")MultipartFile multipartFile,
                                                HttpServletRequest request) throws UserRoleNotFoundException,
-                                                                                        AppUserNotFoundException {
+                                               AppUserNotFoundException {
         Image image=new Image();
         try {
             image=uploadPicture(multipartFile);

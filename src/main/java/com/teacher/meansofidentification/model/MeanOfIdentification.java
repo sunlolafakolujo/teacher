@@ -1,5 +1,7 @@
 package com.teacher.meansofidentification.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teacher.appteacher.model.Teacher;
 import com.teacher.image.model.Image;
 import com.teacher.staticdata.MeansOfIdentification;
 import lombok.*;
@@ -27,4 +29,9 @@ public class MeanOfIdentification {
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Image image;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(mappedBy = "meanOfIdentification")
+    private Teacher teacher;
 }

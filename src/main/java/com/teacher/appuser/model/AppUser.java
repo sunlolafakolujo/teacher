@@ -1,6 +1,7 @@
 package com.teacher.appuser.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teacher.appteacher.model.Teacher;
 import com.teacher.contact.model.Contact;
 import com.teacher.appparent.model.Parent;
 import com.teacher.staticdata.UserType;
@@ -59,4 +60,9 @@ public class AppUser {
     @ToString.Exclude
     @OneToOne(mappedBy = "appUser")
     private Parent parent;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(mappedBy = "appUser")
+    private Teacher teacher;
 }

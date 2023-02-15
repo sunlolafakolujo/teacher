@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 @Transactional
@@ -47,6 +49,7 @@ public class SchoolServiceImpl implements SchoolService{
         school.getAppUser().setUserId("USER".concat(String.valueOf(new Random().nextInt(100000))));
         school.getAppUser().setPassword(passwordEncoder.encode(school.getAppUser().getPassword()));
         school.getAppUser().setUserType(UserType.SCHOOL);
+        school.setAge(Period.between(school.getYearFounded(), LocalDate.now()).getYears());
         UserRole userRole=userRoleRepository.findByRoleName("SCHOOL").orElseThrow(()->new UserRoleNotFoundException("Role Not Found"));
         List<UserRole> userRoles=new ArrayList<>();
         userRoles.add(userRole);

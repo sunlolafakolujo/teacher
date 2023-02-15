@@ -26,5 +26,5 @@ public class SchoolDto {
     private String landmark;
     private String stateProvince;
     private String country;
-    private Image image;
+    private Image cacCertificate;
 }
