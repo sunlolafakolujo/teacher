@@ -41,7 +41,7 @@ public class SchoolServiceImpl implements SchoolService{
         if (appUser.isPresent()){
             throw new SchoolNotFoundException("School already exist");
         }if (!school.getAppUser().getPassword().equals(school.getAppUser().getConfirmPassword())){
-            throw new AppUserNotFoundException("Password does not match");
+            throw new AppUserNotFoundException("Password do not match");
         }if (!validatePhoneNumber(school)){
             throw new AppUserNotFoundException("Mobile phone must be in one of these formats: " +
                     "10 or 11 digit, 0000 000 0000, 000 000 0000, 000-000-0000, 000-000-0000 ext0000");

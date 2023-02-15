@@ -39,7 +39,7 @@ public class ParentServiceImpl implements ParentService {
             throw new AppUserNotFoundException("Mobile phone must be in one of these formats: " +
                     "10 or 11 digit, 0000 000 0000, 000 000 0000, 000-000-0000, 000-000-0000 ext0000");
         }if (!parent.getAppUser().getPassword().equals(parent.getAppUser().getConfirmPassword())){
-            throw new AppUserNotFoundException("Password does not match");
+            throw new AppUserNotFoundException("Password do not match");
         }if (appUser.isPresent()){
             throw new AppUserNotFoundException("Username or Email or Mobile already exist");
         }

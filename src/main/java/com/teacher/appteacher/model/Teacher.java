@@ -31,6 +31,7 @@ public class Teacher extends BaseAudit {
     private Title title;
     private String firstName;
     private String lastName;
+    private String otherName;
     private Gender gender;
     private LocalDate dateOfBirth;
     private Integer age;
