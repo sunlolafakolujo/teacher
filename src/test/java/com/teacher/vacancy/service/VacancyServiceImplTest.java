@@ -48,7 +48,7 @@ class VacancyServiceImplTest {
     }
 
     @Test
-    void testThatYouCanMockSaveVacancyMethod() {
+    void testThatYouCanMockSaveVacancyMethod() throws AppUserNotFoundException {
         when(vacancyRepository.save(vacancy)).thenReturn(vacancy);
         vacancyService.saveVacancy(vacancy);
         ArgumentCaptor<Vacancy> vacancyArgumentCaptor=ArgumentCaptor.forClass(Vacancy.class);
@@ -76,20 +76,23 @@ class VacancyServiceImplTest {
     @Test
     void testThatYouCanMockFindVacancyByJobTitleMethod() throws VacancyNotFoundException {
         String jobTitle="Head Teacher";
+        Integer pageNumber=0;
         Pageable pageable= PageRequest.of(0, 10);
         List<Vacancy> vacancies=new ArrayList<>();
         when(vacancyRepository.findByJobTitle(jobTitle, pageable)).thenReturn(vacancies);
-        vacancyService.findVacancyByJobTitle(jobTitle, pageable);
+        vacancyService.findVacancyByJobTitle(jobTitle, pageNumber);
         verify(vacancyRepository, times(1)).findByJobTitle(jobTitle, pageable);
     }
 
     @Test
-    void testThatYouCanMockFindAllVacanciesMethod() {
+    void testThatYouCanMockFindAllVacanciesMethod() throws AppUserNotFoundException {
+        Integer pageNumber=0;
         Pageable pageable=PageRequest.of(0, 10);
+        String searchKey="email";
         List<Vacancy> vacancies=new ArrayList<>();
         Page<Vacancy> vacancyPage=new PageImpl<>(vacancies);
         when(vacancyRepository.findAll(pageable)).thenReturn(vacancyPage);
-        vacancyService.findAllVacancies(pageable);
+        vacancyService.findAllVacanciesOrByEmailOrMobileOrUsernameOrUserId(searchKey,pageNumber);
         verify(vacancyRepository, times(1)).findAll(pageable);
     }
 

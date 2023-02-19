@@ -8,20 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ModifyContact {
-
     private Long id;
-
     private String streetNumber;
-
     private String streetName;
-
     private String city;
-
-    private String postZipCode;
-
-    private String landMark;
-
+    private String landmark;
     private String stateProvince;
-
     private String country;
 }

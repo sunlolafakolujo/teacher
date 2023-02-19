@@ -20,6 +20,7 @@ public class Employer {
     private String employerName;
     private String employerEmail;
     private String employerMobile;
+    private String employerWebsite;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Contact employerAddress;

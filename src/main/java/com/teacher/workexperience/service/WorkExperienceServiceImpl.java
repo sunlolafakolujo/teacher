@@ -33,29 +33,22 @@ public class WorkExperienceServiceImpl implements WorkExperienceService{
     }
 
     @Override
-    public List<WorkExperience> findAllWorkExperience(Pageable pageable) {
-        pageable=PageRequest.of(0,10);
-
-        Page<WorkExperience> workExperiences= workExperienceRepository.findAll(pageable);
-
-        return workExperiences.toList();
+    public List<WorkExperience> findAllWorkExperience(Integer pageNumber) {
+        Pageable pageable=PageRequest.of(0,10);
+        return workExperienceRepository.findAll(pageable).toList();
     }
 
     @Override
     public void deleteWorkExperienceById(Long id) throws WorkExperienceNotFoundException {
-
-        workExperienceRepository.deleteById(id);
-
-        Optional<WorkExperience> optionalWorkExperience=workExperienceRepository.findById(id);
-
-        if (optionalWorkExperience.isPresent()){
-            throw new WorkExperienceNotFoundException("Work Experience "+id+" is not deleted");
+        if (workExperienceRepository.existsById(id)) {
+            workExperienceRepository.deleteById(id);
+        }else {
+            throw new WorkExperienceNotFoundException("Work Experience "+id+" Not Found");
         }
     }
 
     @Override
     public void deleteAllWorkExperience() {
-
         workExperienceRepository.deleteAll();
     }
 }

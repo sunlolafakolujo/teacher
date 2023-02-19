@@ -35,27 +35,24 @@ public class ReferenceRestController {
     }
 
     @GetMapping("/findReferenceById/{id}")
-    public ResponseEntity<ReferenceDto> getReferenceById(@PathVariable(value = "id") Long id)
+    public ResponseEntity<ReferenceDto> getReferenceById(@RequestParam("id") Long id)
                                                         throws ReferenceNotFoundException {
-
         Referee referee=referenceService.findRefereeById(id);
         ReferenceDto referenceDto=convertReferenceToDto(referee);
         return new ResponseEntity<>(referenceDto, HttpStatus.OK);
     }
 
     @GetMapping("/findAllReferences")
-    public ResponseEntity<List<ReferenceDto>> getAllReferences(){
-        Pageable pageable = PageRequest.of(0, 10);
-        return new ResponseEntity<>(referenceService.findAllReferees(pageable)
+    public ResponseEntity<List<ReferenceDto>> getAllReferences(@RequestParam(defaultValue = "0")Integer pageNumber){
+        return new ResponseEntity<>(referenceService.findAllReferees(pageNumber)
                 .stream()
                 .map(this::convertReferenceToDto)
                 .collect(Collectors.toList()),HttpStatus.OK);
     }
 
-    @PutMapping("/updateReference/{id}")
+    @PutMapping("/updateReference")
     public ResponseEntity<UpdateReferee> updateReference(@RequestBody @Valid UpdateReferee updateReferee,
-                                                         @PathVariable(value = "id") Long id)
-                                                            throws ReferenceNotFoundException {
+                                                         @RequestParam("id") Long id) throws ReferenceNotFoundException {
 
         Referee referee=modelMapper.map(updateReferee, Referee.class);
         Referee post=referenceService.updateReferee(referee, id);
@@ -64,7 +61,7 @@ public class ReferenceRestController {
     }
 
     @DeleteMapping("/deleteReferenceById/{id}")
-    public ResponseEntity<?> deleteReferenceById(@PathVariable(value = "id") Long id) throws ReferenceNotFoundException {
+    public ResponseEntity<?> deleteReferenceById(@RequestParam("id") Long id) throws ReferenceNotFoundException {
         referenceService.deleteRefereeById(id);
         return ResponseEntity.noContent().build();
     }
@@ -74,40 +71,7 @@ public class ReferenceRestController {
         referenceService.deleteAllReferees();
         return ResponseEntity.noContent().build();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
     private ReferenceDto convertReferenceToDto(Referee referee){
 

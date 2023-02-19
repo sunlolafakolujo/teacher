@@ -17,30 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateAppUser {
-
     private Long id;
-
-    private String firstName;
-
-    private String lastName;
-
-    private String schoolName;
-
-    private String email;
-
-    private String phone;
-
-    private String picUrl;
-
-    private String webSite;
-
-    private MeansOfIdentification meansOfIdentification;
-
-    private String meansOfIdentificationIssueDate;
-
-    private String meansOfIdentificationExpiryDate;
-
-    private Collection<Contact> contacts=new ArrayList<>();
-
-    private Collection<Referee> referees=new ArrayList<>();
+    private Contact contact;
 }

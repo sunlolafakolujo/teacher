@@ -45,21 +45,24 @@ public class AppUserServiceImpl implements AppUserService{
         return appUser;
     }
 
-    @Override
-    public List<AppUser> findByUserType(UserType userType, Pageable pageable) throws AppUserNotFoundException {
-        pageable=PageRequest.of(0, 10);
-        List<AppUser> appUserPage=appUserRepository.findByUserType(userType, pageable);
-        if (appUserPage==null){
-            throw new AppUserNotFoundException("User Type "+userType+" Not Found");
-        }
-        return appUserPage;
-    }
+//    @Override
+//    public List<AppUser> findByUserType(UserType userType, Pageable pageable) throws AppUserNotFoundException {
+//        pageable=PageRequest.of(0, 10);
+//        List<AppUser> appUserPage=appUserRepository.findByUserType(userType, pageable);
+//        if (appUserPage==null){
+//            throw new AppUserNotFoundException("User Type "+userType+" Not Found");
+//        }
+//        return appUserPage;
+//    }
 
     @Override
-    public List<AppUser> findAllUsers(Pageable pageable) {
-        pageable=PageRequest.of(0, 10);
-        Page<AppUser> appUserPage=appUserRepository.findAll(pageable);
-        return appUserPage.toList();
+    public List<AppUser> findAllUsers(UserType userType, Integer pageNumber) {
+        Pageable pageable=PageRequest.of(pageNumber, 10);
+        if (userType.equals("")){
+            return appUserRepository.findAll(pageable).toList();
+        }else {
+            return appUserRepository.findByUserType(userType,pageable);
+        }
     }
 
     @Override

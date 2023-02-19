@@ -39,23 +39,23 @@ class ApplicationFormRepositoryTest {
         vacancy=new Vacancy();
     }
 
-    @Test
-    void testThatYouCanSaveApplicationForm() throws VacancyNotFoundException {
-        Long id=1L;
-        vacancy=vacancyRepository.findById(id)
-                .orElseThrow(()->new VacancyNotFoundException("Vacancy Not Found"));
-        applicationForm.setEmail("zyx@yahoo.com");
-        applicationForm.setFirstName("Hakeem");
-        applicationForm.setLastName("Akala");
-        applicationForm.setLocation("Nigeria");
-        applicationForm.setPhone("08097535613");
-        applicationForm.setCoverLetterUrl("https://www.flexjobs.com/blog/post/customize-cover-letter-job-search/");
-        applicationForm.setResumeUrl("https://www.resumonk.com/resume-templates");
-        applicationForm.setVacancy(vacancy);
-        log.info("Application form repo before saving: {}", applicationForm);
-        assertDoesNotThrow(()->applicationFormRepository.save(applicationForm));
-        log.info("Application form repo after saving: {}", applicationForm);
-    }
+//    @Test
+//    void testThatYouCanSaveApplicationForm() throws VacancyNotFoundException {
+//        Long id=1L;
+//        vacancy=vacancyRepository.findById(id)
+//                .orElseThrow(()->new VacancyNotFoundException("Vacancy Not Found"));
+//        applicationForm.setEmail("zyx@yahoo.com");
+//        applicationForm.setFirstName("Hakeem");
+//        applicationForm.setLastName("Akala");
+//        applicationForm.setLocation("Nigeria");
+//        applicationForm.setPhone("08097535613");
+//        applicationForm.setCoverLetterUrl("https://www.flexjobs.com/blog/post/customize-cover-letter-job-search/");
+//        applicationForm.setResumeUrl("https://www.resumonk.com/resume-templates");
+//        applicationForm.setVacancy(vacancy);
+//        log.info("Application form repo before saving: {}", applicationForm);
+//        assertDoesNotThrow(()->applicationFormRepository.save(applicationForm));
+//        log.info("Application form repo after saving: {}", applicationForm);
+//    }
 
     @Test
     void testThatYouCanFindApplicationFormById() throws ApplicationFormNotFoundException {

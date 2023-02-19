@@ -42,17 +42,16 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
 
     private SimpleMailMessage constructEmailMessage(RegistrationCompleteEvent event,  AppUser appUser, String token) {
         SimpleMailMessage mailMessage=new SimpleMailMessage();
-        String confirmUrl=event.getApplicationUrl() + "/api/teacher/appUser/verifyAccount/"+token;
-        String receiver= appUser.getEmail();
+        String confirmUrl=event.getApplicationUrl() + "/api/teacher/verifyAccount?token="+token;
+        String to= appUser.getEmail();
         String subject="Verify Account";
         String from="fakolujos@gmail.com";
 
-        mailMessage.setTo(receiver);
+        mailMessage.setTo(to);
         mailMessage.setFrom(from);
-        mailMessage.setSentDate(new Date());
         mailMessage.setSubject(subject);
-        mailMessage.setText("Dear "+appUser.getUsername()+",\n\n"+"Click the link to verify email "+confirmUrl);
-
+        mailMessage.setText("Dear "+appUser.getUsername()+",\n\n"+"Click the link to confirm registration: "+confirmUrl+
+                "\n\nIgnore this email if you did not signup for registration.\n Regards,\n Team FarmMart");
         return mailMessage;
     }
 }

@@ -28,10 +28,8 @@ class ContactServiceImplTest {
 
     @Mock
     private ContactRepository contactRepository;
-
     @InjectMocks
     ContactService contactService=new ContactServiceImpl();
-
     Contact contact;
 
     @BeforeEach
@@ -45,50 +43,36 @@ class ContactServiceImplTest {
         Mockito.when(contactRepository.save(contact)).thenReturn(contact);
 
         ArgumentCaptor<Contact> argumentCaptor=ArgumentCaptor.forClass(Contact.class);
-
         contactService.saveContact(contact);
-
         Mockito.verify(contactRepository, Mockito.times(1)).save(argumentCaptor.capture());
-
         Contact capturedContact=argumentCaptor.getValue();
-
         assertEquals(capturedContact, contact);
     }
 
     @Test
     void testThatYouCanMockFindContactByIdMethod() throws ContactNotFoundException {
         Long id=2L;
-
         Mockito.when(contactRepository.findById(id)).thenReturn(Optional.of(contact));
-
         contactService.findContactById(id);
-
         Mockito.verify(contactRepository, Mockito.times(1)).findById(id);
     }
 
     @Test
     void testThatYouMockFindAllContactMethod() {
+        Integer pageNumber=0;
+        Pageable pageable=PageRequest.of(pageNumber,10);
         List<Contact> contactList=new ArrayList<>();
-
         Page<Contact> contacts=new PageImpl<>(contactList);
-
-        Pageable pageable= PageRequest.of(0, 10);
-
         Mockito.when(contactRepository.findAll(pageable)).thenReturn(contacts);
-
-        contactService.findAllContact(0, 10);
-
+        contactService.findAllContact(pageNumber);
         Mockito.verify(contactRepository, times(1)).findAll(pageable);
     }
 
     @Test
     void updateContact() throws ContactNotFoundException {
         Long id=1L;
-
         Mockito.when(contactRepository.findById(id)).thenReturn(Optional.of(contact));
-
         contactService.updateContact(contact, id);
-
         Mockito.verify(contactRepository, Mockito.times(1)).save(contact);
     }
 
@@ -96,19 +80,14 @@ class ContactServiceImplTest {
     void deleteContactById() throws ContactNotFoundException {
         Long id=2L;
         doNothing().when(contactRepository).deleteById(id);
-
         contactService.deleteContactById(id);
-
         Mockito.verify(contactRepository, times(1)).deleteById(id);
     }
 
     @Test
     void deleteAllContact() {
-
         doNothing().when(contactRepository).deleteAll();
-
         contactService.deleteAllContact();
-
         verify(contactRepository, times(1)).deleteAll();
     }
 }

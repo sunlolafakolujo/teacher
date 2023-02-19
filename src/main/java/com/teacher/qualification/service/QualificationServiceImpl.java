@@ -34,35 +34,25 @@ public class QualificationServiceImpl implements QualificationService{
     @Override
     public Qualification findQualificationById(Long id) throws QualificationNotFoundException {
         log.info("fetching Qualification by id {}", id);
-
         Qualification qualification=qualificationRepository.findById(id)
                 .orElseThrow(()->new QualificationNotFoundException("Qualification ID "+id+" Not found"));
-
         return qualification;
     }
 
     @Override
-    public List<Qualification> findAllQualifications(Pageable pageable) {
-
+    public List<Qualification> findAllQualifications(Integer pageNumber) {
         log.info("fetching all Qualification");
-
-        pageable = PageRequest.of(0, 10);
-
+        Pageable pageable = PageRequest.of(0, 10);
         Page<Qualification> pageResult= qualificationRepository.findAll(pageable);
-
         return pageResult.toList();
     }
 
     @Override
     public void deleteQualificationById(Long id) throws QualificationNotFoundException {
-
         log.info("deleting Qualification by id {}", id);
-
-        qualificationRepository.deleteById(id);
-
-        Optional<Qualification> optionalQualification=qualificationRepository.findById(id);
-
-        if (optionalQualification.isPresent()){
+        if (qualificationRepository.existsById(id)) {
+            qualificationRepository.deleteById(id);
+        }else {
             throw new QualificationNotFoundException("Qualification ID "+id+" is not deleted");
         }
     }
@@ -70,7 +60,6 @@ public class QualificationServiceImpl implements QualificationService{
     @Override
     public void deleteAllQualification() {
         log.info("deleting all Qualifications");
-
         qualificationRepository.deleteAll();
     }
 }

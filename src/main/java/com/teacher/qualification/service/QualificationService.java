@@ -10,7 +10,7 @@ import java.util.List;
 public interface QualificationService {
     Qualification saveQualification(Qualification qualification);
     Qualification findQualificationById(Long id) throws QualificationNotFoundException;
-    List<Qualification> findAllQualifications(Pageable pageable);
+    List<Qualification> findAllQualifications(Integer pageNumber);
     void deleteQualificationById(Long id) throws QualificationNotFoundException;
     void deleteAllQualification();
 

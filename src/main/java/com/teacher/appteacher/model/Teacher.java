@@ -42,7 +42,7 @@ public class Teacher extends BaseAudit {
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private MeanOfIdentification meanOfIdentification;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
     private Image image;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)

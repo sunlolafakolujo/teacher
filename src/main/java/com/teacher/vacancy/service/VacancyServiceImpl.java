@@ -3,6 +3,7 @@ package com.teacher.vacancy.service;
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
+import com.teacher.configuration.jwt.JwtRequestFilter;
 import com.teacher.vacancy.exception.VacancyNotFoundException;
 import com.teacher.vacancy.model.Vacancy;
 import com.teacher.vacancy.repository.VacancyRepository;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -27,7 +29,12 @@ public class VacancyServiceImpl implements VacancyService{
     private AppUserRepository appUserRepository;
 
     @Override
-    public Vacancy saveVacancy(Vacancy vacancy) {
+    public Vacancy saveVacancy(Vacancy vacancy) throws AppUserNotFoundException {
+        String searchKey= JwtRequestFilter.CURRENT_USER;
+        AppUser appUser=appUserRepository.findByUsernameOrEmailOrMobile(searchKey,searchKey,searchKey,searchKey)
+                .orElseThrow(()->new AppUserNotFoundException("User "+searchKey+" Not Found"));
+        vacancy.setAppUser(appUser);
+        vacancy.setJobCode("JOBID".concat(String.valueOf(new Random().nextInt(1000))));
         return vacancyRepository.save(vacancy);
     }
 
@@ -39,8 +46,14 @@ public class VacancyServiceImpl implements VacancyService{
     }
 
     @Override
-    public List<Vacancy> findVacancyByJobTitle(String jobTitle, Pageable pageable) throws VacancyNotFoundException {
-        pageable= PageRequest.of(0, 10);
+    public Vacancy findVacancyByJobCode(String jobCode) throws VacancyNotFoundException {
+        return vacancyRepository.findByJobCode(jobCode)
+                .orElseThrow(()->new VacancyNotFoundException("Vacancy code "+jobCode+" Not found"));
+    }
+
+    @Override
+    public List<Vacancy> findVacancyByJobTitle(String jobTitle, Integer pageNumber) throws VacancyNotFoundException {
+        Pageable pageable= PageRequest.of(pageNumber, 10);
         List<Vacancy> vacancies=vacancyRepository.findByJobTitle(jobTitle,pageable);
         if (vacancies==null){
             throw new VacancyNotFoundException("Vacancy Not Found");
@@ -49,23 +62,22 @@ public class VacancyServiceImpl implements VacancyService{
     }
 
     @Override
-    public List<Vacancy> findAllVacancies(Pageable pageable) {
-        pageable=PageRequest.of(0, 10);
-        Page<Vacancy> vacancyPage=vacancyRepository.findAll(pageable);
-        return vacancyPage.toList();
+    public List<Vacancy> findAllVacanciesOrByEmailOrMobileOrUsernameOrUserId(String searchKey,Integer pageNumber)
+                                                                                throws AppUserNotFoundException {
+        Pageable pageable=PageRequest.of(0, 10);
+        AppUser appUser=appUserRepository.findByUsernameOrEmailOrMobile(searchKey,searchKey,searchKey,searchKey)
+                .orElseThrow(()->new AppUserNotFoundException("User "+searchKey+" Not Found"));
+        if (searchKey.equals("")){
+            return vacancyRepository.findAll(pageable).toList();
+        }else {
+            return vacancyRepository.findByEmailOrUsernameOrMobileOrUserId(appUser,pageable);
+        }
     }
 
     @Override
     public Long countVacancy() {
         return vacancyRepository.count();
     }
-
-//    @Override
-//    public List<Vacancy> findVacancyByUser(AppUser appUser, String username) throws AppUserNotFoundException {
-//        appUser=appUserRepository.findUserByUsername(username)
-//                .orElseThrow(()-> new AppUserNotFoundException("Username "+username+" Not Found"));
-//        return vacancyRepository.findVacancyByUser(appUser);
-//    }
 
     @Override
     public Vacancy updateVacancy(Vacancy vacancy, Long id) throws VacancyNotFoundException {
@@ -98,11 +110,29 @@ public class VacancyServiceImpl implements VacancyService{
     }
 
     @Override
+    public void deleteAllUserVacancies(Integer pageNumber) throws AppUserNotFoundException {
+        Pageable pageable=PageRequest.of(pageNumber,10);
+        String search=JwtRequestFilter.CURRENT_USER;
+        AppUser appUser=appUserRepository.findByUsernameOrEmailOrMobile(search,search,search,search)
+                .orElseThrow(()->new AppUserNotFoundException("User "+search+" Not Found"));
+        List<Vacancy> vacancy=vacancyRepository.findByEmailOrUsernameOrMobileOrUserId(appUser,pageable);
+        vacancyRepository.deleteAll(vacancy);
+    }
+
+    @Override
+    public void deleteUserVacancyById(String jobCode) throws AppUserNotFoundException {
+        String search=JwtRequestFilter.CURRENT_USER;
+        AppUser appUser=appUserRepository.findByUsernameOrEmailOrMobile(search,search,search,search)
+                .orElseThrow(()->new AppUserNotFoundException("User "+search+" Not Found"));
+        vacancyRepository.deleteUserVacancyById(jobCode,appUser);
+    }
+
+    @Override
     public void deleteVacancyById(Long id) throws VacancyNotFoundException {
-        vacancyRepository.deleteById(id);
-        Optional<Vacancy> optionalVacancy=vacancyRepository.findById(id);
-        if (optionalVacancy.isPresent()){
-            throw new VacancyNotFoundException("Vacancy Not Deleted");
+        if (vacancyRepository.existsById(id)){
+            vacancyRepository.deleteById(id);
+        }else {
+            throw new VacancyNotFoundException("Vacancy ID "+id+" Not Found");
         }
     }
 

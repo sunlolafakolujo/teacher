@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.baseaudit.BaseAudit;
+import com.teacher.image.model.Image;
 import com.teacher.staticdata.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,4 +43,7 @@ public class WorkExperience extends BaseAudit {
 
     @Column(updatable = false)
     private LocalDate endDate;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Image resume;
 }

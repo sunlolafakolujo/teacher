@@ -14,8 +14,8 @@ public interface AppUserService {
     AppUser userRegistration(AppUser appUser) throws AppUserNotFoundException;
     AppUser findUserById(Long id) throws AppUserNotFoundException;
     AppUser findByUsernameOrEmailOrMobileOrUserId(String searchKey) throws AppUserNotFoundException;
-    List<AppUser> findByUserType(UserType userType, Pageable pageable) throws AppUserNotFoundException;
-    List<AppUser> findAllUsers(Pageable pageable);
+//    List<AppUser> findByUserType(UserType userType, Pageable pageable) throws AppUserNotFoundException;
+    List<AppUser> findAllUsers(UserType userType,Integer pageNumber);
     Long countUsers();
     AppUser updateUser(AppUser appUser, Long id) throws AppUserNotFoundException;
     void deleteUserById(Long id) throws AppUserNotFoundException;

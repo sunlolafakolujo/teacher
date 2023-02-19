@@ -47,7 +47,7 @@ class ContactRestControllerTest {
         contact.setHouseNumber("17");
         contact.setStreetName("Wakeman Street, Alagomeji");
         contact.setCity("Lagos Island");
-        contact.setLandMark("AP Club");
+        contact.setLandmark("AP Club");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
 
@@ -93,7 +93,7 @@ class ContactRestControllerTest {
         contact.setHouseNumber("9");
         contact.setStreetName("Ganiat Street, Alahun Osumba, Maza Maza");
         contact.setCity("Amuwo Odofin");
-        contact.setLandMark("Monkey Village");
+        contact.setLandmark("Monkey Village");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
 

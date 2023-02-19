@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateSchool {
+public class UpdateTeacher {
     private Long id;
     private AppUser appUser;
     private Image image;

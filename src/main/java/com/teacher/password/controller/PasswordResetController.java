@@ -1,4 +1,4 @@
-package com.teacher.appuser.controller;
+package com.teacher.password.controller;
 
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
@@ -19,9 +19,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "api/teacher/appUser")
+@RequestMapping(path = "api/teacher")
 @AllArgsConstructor
-public class AppUserPasswordRestController {
+public class PasswordResetController {
     private final PasswordTokenService passwordTokenService;
     private final AppUserService appUserService;
     private final ApplicationEventPublisher publisher;
@@ -29,22 +29,18 @@ public class AppUserPasswordRestController {
     @PostMapping("/resetPassword")
     public String resetUserPassword(@RequestBody PasswordModel passwordModel,
                                     HttpServletRequest request) throws AppUserNotFoundException {
-
-        AppUser appUser= appUserService.findByUsernameOrEmailOrMobileOrUserId(passwordModel.getUsernameOrEmailOrMobileOrUserId());
-
+        AppUser appUser= appUserService
+                .findByUsernameOrEmailOrMobileOrUserId(passwordModel.getUsernameOrEmailOrMobileOrUserId());
         if (appUser!=null){
             publisher.publishEvent(new PasswordEvent(applicationUrl(request), appUser));
         }else throw new AppUserNotFoundException("User Not Found");
-
         return "An email will be sent to you to reset your password";
     }
 
-    @PostMapping("/savePassword/{token}")
+    @PostMapping("/savePassword")
     public String savePassword(@RequestBody @Valid PasswordModel passwordModel,
-                               @PathVariable(value = "token") String token)  {
-
+                               @RequestParam("token") String token)  {
         Optional<AppUser> optionalAppUser= passwordTokenService.findUserByPasswordToken(token);
-
         if (optionalAppUser.isPresent()){
             passwordTokenService.changeUserPassword(optionalAppUser.get(), passwordModel.getNewPassword());
             return "Password Reset Successfully";
@@ -54,17 +50,15 @@ public class AppUserPasswordRestController {
     @PostMapping("/changePassword")
     public String changeUserPassword(@RequestBody PasswordModel passwordModel) throws PasswordNotFoundException,
                                                                                     AppUserNotFoundException {
-
-        AppUser appUser=appUserService.findByUsernameOrEmailOrMobileOrUserId(passwordModel.getUsernameOrEmailOrMobileOrUserId());
+        AppUser appUser=appUserService
+                .findByUsernameOrEmailOrMobileOrUserId(passwordModel.getUsernameOrEmailOrMobileOrUserId());
         if (appUser==null){
             throw new AppUserNotFoundException("User Not Found");
         }
         if (!passwordTokenService.checkIfOldPasswordExist(appUser,passwordModel.getOldPassword())){
             return "Invalid old password";
         }else passwordTokenService.changeUserPassword(appUser,passwordModel.getNewPassword() );
-
         return  "Password changed successfully";
-
     }
 
     private String applicationUrl(HttpServletRequest request){

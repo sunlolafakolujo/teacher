@@ -24,10 +24,8 @@ import static org.mockito.Mockito.*;
 class QualificationServiceImplTest {
     @Mock
     private QualificationRepository qualificationRepository;
-
     @InjectMocks
     QualificationService  qualificationService=new QualificationServiceImpl();
-
     Qualification qualification;
 
     @BeforeEach
@@ -38,18 +36,12 @@ class QualificationServiceImplTest {
 
     @Test
     void testThatYouCanMockSaveQualificationMethod() {
-
         Mockito.when(qualificationRepository.save(qualification)).thenReturn(qualification);
-
         qualificationService.saveQualification(qualification);
-
         ArgumentCaptor<Qualification> qualificationArgumentCaptor=ArgumentCaptor.forClass(Qualification.class);
-
         Mockito.verify(qualificationRepository, Mockito.times(1))
                 .save(qualificationArgumentCaptor.capture());
-
         Qualification captureQualification=qualificationArgumentCaptor.getValue();
-
         assertEquals(captureQualification, qualification);
 
     }
@@ -58,47 +50,33 @@ class QualificationServiceImplTest {
     void testThatYouCanMockFindQualificationByIdMethod() throws QualificationNotFoundException {
         Long id=1L;
         Mockito.when(qualificationRepository.findById(id)).thenReturn(Optional.of(qualification));
-
         qualificationService.findQualificationById(id);
-
         Mockito.verify(qualificationRepository, Mockito.times(1)).findById(id);
     }
 
     @Test
     void testThatYoCanMockFindAllQualificationsMethod() {
-
         List<Qualification> qualificationList=new ArrayList<>();
-
         Page<Qualification> qualificationPage=new PageImpl<>(qualificationList);
-
-        Pageable pageable=PageRequest.of(0, 10);
-
+        Integer pageNumber=0;
+        Pageable pageable=PageRequest.of(pageNumber, 10);
         Mockito.when(qualificationRepository.findAll(pageable)).thenReturn(qualificationPage);
-
-        qualificationService.findAllQualifications(pageable);
-
+        qualificationService.findAllQualifications(pageNumber);
         Mockito.verify(qualificationRepository, Mockito.times(1)).findAll(pageable);
     }
 
     @Test
     void testThatYouCanMockDeleteQualificationByIdMethod() throws QualificationNotFoundException {
-
         Long id =1L;
-
         doNothing().when(qualificationRepository).deleteById(id);
-
         qualificationService.deleteQualificationById(id);
-
         verify(qualificationRepository, times(1)).deleteById(id);
     }
 
     @Test
     void testThatYouCanMockDeleteAllQualificationMethod() {
-
         doNothing().when(qualificationRepository).deleteAll();
-
         qualificationService.deleteAllQualification();
-
         verify(qualificationRepository, times(1)).deleteAll();
     }
 }

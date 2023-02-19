@@ -3,7 +3,8 @@ package com.teacher.staticdata;
 public enum UserType {
     TEACHER("TEACHER"),
     PARENT("PARENT"),
-    SCHOOL("SCHOOL");
+    SCHOOL("SCHOOL"),
+    EMPLOYEE("EMPLOYEE");
 
     private final String userType;
 

@@ -26,7 +26,7 @@ public class Contact extends BaseAudit {
     private String houseNumber;
     private String streetName;
     private String city;
-    private String landMark;
+    private String landmark;
     private String stateProvince;
     private String country;
 

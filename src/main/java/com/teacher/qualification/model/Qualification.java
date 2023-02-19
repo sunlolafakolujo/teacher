@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.baseaudit.BaseAudit;
 import com.teacher.contact.model.Contact;
+import com.teacher.image.model.Image;
 import com.teacher.staticdata.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,10 +18,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -48,8 +46,9 @@ public class Qualification extends BaseAudit {
 
     @Column(updatable = false,nullable = false)
     private LocalDate startDate;
-
     private LocalDate endDate;
-
     private String institutionAddress;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Image> certificates;
 }

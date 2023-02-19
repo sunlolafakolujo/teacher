@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.baseaudit.BaseAudit;
+import com.teacher.image.model.Image;
 import com.teacher.staticdata.Title;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class Referee extends BaseAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String refereeCode;
 
     @Enumerated(EnumType.STRING)
     private Title title;
@@ -38,4 +40,7 @@ public class Referee extends BaseAudit {
     @Email(message = "input correct email")
     private String email;
     private String phone;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Image> referenceLetters;
 }

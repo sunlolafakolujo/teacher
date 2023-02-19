@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TeacherRepositoryCustom {
-    @Query("FROM Teacher t WHERE t.teacherId=?1")
-    Optional<Teacher> findByTeacherId(String teacherId);
+    @Query("FROM Teacher t WHERE t.teacherCode=?1")
+    Optional<Teacher> findByTeacherId(String teacherCode);
 
     @Query("FROM Teacher t WHERE t.firstName=?1 OR t.lastName=?2")
     List<Teacher> findByFirstOrLastName(String key1, String key2, Pageable pageable);

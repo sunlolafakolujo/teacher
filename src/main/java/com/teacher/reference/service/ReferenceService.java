@@ -10,7 +10,7 @@ public interface ReferenceService {
 
     Referee saveReferee(Referee referee);
     Referee findRefereeById(Long id) throws ReferenceNotFoundException;
-    List<Referee> findAllReferees(Pageable pageable);
+    List<Referee> findAllReferees(Integer pageNumber);
     Referee updateReferee(Referee referee, Long id) throws ReferenceNotFoundException;
     void deleteRefereeById(Long id) throws ReferenceNotFoundException;
     void deleteAllReferees();

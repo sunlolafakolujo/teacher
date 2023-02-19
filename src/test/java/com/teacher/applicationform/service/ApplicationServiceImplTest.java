@@ -3,6 +3,7 @@ package com.teacher.applicationform.service;
 import com.teacher.applicationform.exception.ApplicationFormNotFoundException;
 import com.teacher.applicationform.model.ApplicationForm;
 import com.teacher.applicationform.repository.ApplicationFormRepository;
+import com.teacher.appuser.exception.AppUserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,7 +43,7 @@ class ApplicationServiceImplTest {
     }
 
     @Test
-    void testThatYouCanMockSaveApplicationMethod() {
+    void testThatYouCanMockSaveApplicationMethod() throws AppUserNotFoundException {
         when(applicationFormRepository.save(applicationForm)).thenReturn(applicationForm);
         applicationFormService.saveApplication(applicationForm);
         ArgumentCaptor<ApplicationForm> applicationFormArgumentCaptor=ArgumentCaptor.forClass(ApplicationForm.class);
@@ -61,11 +62,12 @@ class ApplicationServiceImplTest {
 
     @Test
     void testThatYouCanMockFindAllApplicationsMethod() {
-        Pageable pageable= PageRequest.of(0, 10);
+        Integer pageNumber=0;
+        Pageable pageable= PageRequest.of(pageNumber, 10);
         List<ApplicationForm> applicationFormList=new ArrayList<>();
         Page<ApplicationForm> applicationFormPage=new PageImpl<>(applicationFormList);
         when(applicationFormRepository.findAll(pageable)).thenReturn(applicationFormPage);
-        applicationFormService.findAllApplications(pageable);
+        applicationFormService.findAllApplications(pageNumber);
         verify(applicationFormRepository, times(1)).findAll(pageable);
     }
 

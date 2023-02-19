@@ -121,7 +121,7 @@ public class ParentController {
         parentDto.setMeansOfIdentificationExpiryDate(parent.getMeanOfIdentification().getMeansOfIdentificationExpiryDate());
         parentDto.setHomeNumber(parent.getAppUser().getContact().getHouseNumber());
         parentDto.setStreetName(parent.getAppUser().getContact().getStreetName());
-        parentDto.setLandmark(parent.getAppUser().getContact().getLandMark());
+        parentDto.setLandmark(parent.getAppUser().getContact().getLandmark());
         parentDto.setStateProvince(parent.getAppUser().getContact().getStateProvince());
         parentDto.setCountry(parent.getAppUser().getContact().getCountry());
         parentDto.setProfession(parent.getProfession());
@@ -131,7 +131,7 @@ public class ParentController {
         parentDto.setEmployerOfficeNumber(parent.getEmployer().getEmployerAddress().getHouseNumber());
         parentDto.setEmployerOfficeStreet(parent.getEmployer().getEmployerAddress().getStreetName());
         parentDto.setEmployerOfficeCity(parent.getEmployer().getEmployerAddress().getCity());
-        parentDto.setEmployerOfficeLandmark(parent.getEmployer().getEmployerAddress().getLandMark());
+        parentDto.setEmployerOfficeLandmark(parent.getEmployer().getEmployerAddress().getLandmark());
         parentDto.setEmployerOfficeState(parent.getEmployer().getEmployerAddress().getStateProvince());
         parentDto.setEmployerOfficeCountry(parent.getEmployer().getEmployerAddress().getCountry());
         parentDto.setReferees(parent.getReferees().stream().map(r -> {

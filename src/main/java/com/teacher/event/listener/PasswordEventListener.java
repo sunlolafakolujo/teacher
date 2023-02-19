@@ -12,6 +12,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
 import java.util.UUID;
 @Component
 public class PasswordEventListener implements ApplicationListener<PasswordEvent> {
@@ -32,19 +33,18 @@ public class PasswordEventListener implements ApplicationListener<PasswordEvent>
 
         AppUser appUser=event.getAppUser();
         String token= UUID.randomUUID().toString();
-
         passwordTokenService.createPasswordResetTokenForUser(token, appUser);
         SimpleMailMessage message= constructPasswordTokenEmail(event,appUser,token);
         mailSender.send(message);
     }
 
     private SimpleMailMessage constructPasswordTokenEmail(PasswordEvent event, AppUser appUser, String token) {
-
-        String link=event.getApplicationUrl() +"/api/teacher/appUser/savePassword/"+token;
+        String link=event.getApplicationUrl() +"/api/teacher/savePassword?token="+token;
         String to= appUser.getEmail();
         String from="fakolujos@gmail.com";
         String subject="Reset Password";
-        String text="Dear "+appUser.getUsername()+",\r\n"+"Click on the link to reset password "+link;
+        String text="Dear "+appUser.getUsername()+",\n\n"+"Click on the link to reset your password "+link+
+                "\n\nIgnore this email if you did not initialize password reset"+"\n\n Regards,\n Team FarmMart";
 
         SimpleMailMessage message=new SimpleMailMessage();
         message.setTo(to);

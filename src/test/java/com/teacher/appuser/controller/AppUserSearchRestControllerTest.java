@@ -90,7 +90,7 @@ class AppUserSearchRestControllerTest {
         contact.setHouseNumber("23");
         contact.setStreetName("Coast Street Ebute Metta");
         contact.setCity("Lagos Mainland");
-        contact.setLandMark("Oyingbo");
+        contact.setLandmark("Oyingbo");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
 
@@ -115,7 +115,7 @@ class AppUserSearchRestControllerTest {
         contact.setHouseNumber("40");
         contact.setStreetName("Oko Awo Street");
         contact.setCity("Lagos Island");
-        contact.setLandMark("Gorodom");
+        contact.setLandmark("Gorodom");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
         List<Contact> contacts=new ArrayList<>();
@@ -176,7 +176,7 @@ class AppUserSearchRestControllerTest {
         contact.setHouseNumber("6");
         contact.setStreetName("Osanyin Street Alagomeji");
         contact.setCity("Lagos Island");
-        contact.setLandMark("Rowpark");
+        contact.setLandmark("Rowpark");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
         List<Contact>contacts=new ArrayList<>();

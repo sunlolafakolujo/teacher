@@ -1,15 +1,14 @@
 package com.teacher.appuser.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teacher.applicationform.model.ApplicationForm;
 import com.teacher.appteacher.model.Teacher;
 import com.teacher.contact.model.Contact;
 import com.teacher.appparent.model.Parent;
 import com.teacher.staticdata.UserType;
 import com.teacher.userrole.model.UserRole;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.teacher.vacancy.model.Vacancy;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -17,7 +16,9 @@ import java.util.Collection;
 import java.util.HashSet;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppUser {
@@ -65,4 +66,10 @@ public class AppUser {
     @ToString.Exclude
     @OneToOne(mappedBy = "appUser")
     private Teacher teacher;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(mappedBy = "appUser")
+    private Vacancy vacancy;
+
 }

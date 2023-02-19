@@ -29,41 +29,35 @@ public class QualificationRestController {
 
     @PostMapping("/saveQualification")
     public ResponseEntity<NewQualification> saveQualification(@RequestBody @Valid NewQualification newQualification){
-
         Qualification qualification=modelMapper.map(newQualification, Qualification.class);
         Qualification postQualification=qualificationService.saveQualification(qualification);
         NewQualification posted =modelMapper.map(postQualification, NewQualification.class);
         return new ResponseEntity<>(posted, HttpStatus.CREATED);
     }
 
-    @GetMapping("/findQualificationById/{id}")
-    public ResponseEntity<QualificationDto> getQualificationById(@PathVariable(value = "id") Long id) throws QualificationNotFoundException {
-
+    @GetMapping("/findQualificationById")
+    public ResponseEntity<QualificationDto> getQualificationById(@RequestParam("id") Long id) throws QualificationNotFoundException {
         Qualification qualification=qualificationService.findQualificationById(id);
         QualificationDto qualificationDto=convertQualificationDto(qualification);
         return new ResponseEntity<>(qualificationDto, HttpStatus.OK);
     }
 
     @GetMapping("/findAllQualifications")
-    public ResponseEntity<List<QualificationDto>> getAllQualifications(){
-
-        Pageable pageable= PageRequest.of(0, 10);
-        return new ResponseEntity<>(qualificationService.findAllQualifications(pageable)
+    public ResponseEntity<List<QualificationDto>> getAllQualifications(@RequestParam(defaultValue = "")Integer pageNumber){
+        return new ResponseEntity<>(qualificationService.findAllQualifications(pageNumber)
                 .stream()
                 .map(this::convertQualificationDto)
                 .collect(Collectors.toList()),HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteQualificationById/{id}")
-    public ResponseEntity<?> deleteQualificationById(@PathVariable(value = "id") Long id) throws QualificationNotFoundException {
-
+    @DeleteMapping("/deleteQualificationById")
+    public ResponseEntity<?> deleteQualificationById(@RequestParam("id") Long id) throws QualificationNotFoundException {
         qualificationService.deleteQualificationById(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/deleteAllQualifications")
     public ResponseEntity<?> deleteAllQualifications(){
-
         qualificationService.deleteAllQualification();
         return ResponseEntity.noContent().build();
     }

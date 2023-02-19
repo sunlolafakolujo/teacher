@@ -21,27 +21,20 @@ public class RefereeServiceImpl implements ReferenceService{
 
     @Override
     public Referee saveReferee(Referee referee) {
-
         return refereeRepository.save(referee);
     }
 
     @Override
     public Referee findRefereeById(Long id) throws ReferenceNotFoundException {
-        Referee referee=refereeRepository
-                .findById(id)
+        Referee referee=refereeRepository.findById(id)
                 .orElseThrow(()->new ReferenceNotFoundException("Reference ID "+id+" Not Found"));
-
         return referee;
     }
 
     @Override
-    public List<Referee> findAllReferees(Pageable pageable) {
-
-        pageable= PageRequest.of(0,10);
-
-        Page<Referee> pageResult= refereeRepository.findAll(pageable);
-
-        return pageResult.toList();
+    public List<Referee> findAllReferees(Integer pageNumber) {
+        Pageable pageable= PageRequest.of(pageNumber,10);
+        return refereeRepository.findAll(pageable).toList();
     }
 
     @Override
@@ -59,6 +52,8 @@ public class RefereeServiceImpl implements ReferenceService{
             savedReferee.setPhone(referee.getPhone());
         }if (Objects.nonNull(referee.getEmail()) && !"".equalsIgnoreCase(referee.getEmail())){
             savedReferee.setEmail(referee.getEmail());
+        }if (Objects.nonNull(referee.getReferenceLetters()) &&!"".equals(referee.getReferenceLetters())){
+            savedReferee.setReferenceLetters(referee.getReferenceLetters());
         }
 
         return refereeRepository.save(savedReferee);

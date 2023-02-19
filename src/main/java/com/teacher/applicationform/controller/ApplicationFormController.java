@@ -5,7 +5,9 @@ import com.teacher.applicationform.model.ApplicationForm;
 import com.teacher.applicationform.model.ApplicationFormDto;
 import com.teacher.applicationform.model.NewApplicationForm;
 import com.teacher.applicationform.service.ApplicationFormService;
+import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.event.ApplicationFormEvent;
+import com.teacher.vacancy.exception.VacancyNotFoundException;
 import com.teacher.vacancy.model.Vacancy;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,12 +16,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping(path = "api/teacher/applicationForm")
@@ -30,61 +35,65 @@ public class ApplicationFormController {
     private final ApplicationEventPublisher publisher;
 
     @PostMapping("/saveApplication")
-    public ResponseEntity<NewApplicationForm> saveApplication(@RequestBody @Valid NewApplicationForm newApplicationForm){
-
-//        newApplicationForm.setApplicationId("APP-".concat(UUID.randomUUID().toString()));
-//        newApplicationForm.setJobTitle(newApplicationForm.getVacancy().getJobTitle());
+    public ResponseEntity<NewApplicationForm> saveApplication(@RequestBody @Valid NewApplicationForm newApplicationForm)
+                                                                                        throws AppUserNotFoundException {
         ApplicationForm applicationForm=modelMapper.map(newApplicationForm, ApplicationForm.class);
         ApplicationForm post=applicationFormService.saveApplication(applicationForm);
-        publisher.publishEvent(new ApplicationFormEvent(post));
         NewApplicationForm posted=modelMapper.map(post, NewApplicationForm.class);
-        return new ResponseEntity<>(posted, HttpStatus.CREATED);
+        publisher.publishEvent(new ApplicationFormEvent(posted.getTeacher().getAppUser()));
+        return new ResponseEntity<>(posted, CREATED);
     }
 
-    @GetMapping("/findApplicationById/{id}")
-    public ResponseEntity<ApplicationFormDto> getApplicationById(@PathVariable(value = "id") Long id) throws ApplicationFormNotFoundException {
+    @GetMapping("/findApplicationById")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApplicationFormDto> getApplicationById(@RequestParam("id") Long id) throws ApplicationFormNotFoundException {
         ApplicationForm applicationForm=applicationFormService.findApplicationById(id);
         ApplicationFormDto applicationFormDto=convertApplicationFormToDto(applicationForm);
-        return new ResponseEntity<>(applicationFormDto, HttpStatus.OK);
+        return new ResponseEntity<>(applicationFormDto, OK);
+    }
+
+    @GetMapping("/findApplicationByVacancyCode")
+    @PreAuthorize("hasAnyRole('SCHOOL','PARENT')")
+    public ResponseEntity<ApplicationFormDto> getApplicationByVacancyCode(@RequestParam("vacancyCode") String vacancyCode)
+                                                                                    throws VacancyNotFoundException {
+        ApplicationForm applicationForm= applicationFormService.findByVacancy(vacancyCode);
+        return new ResponseEntity<>(convertApplicationFormToDto(applicationForm), OK);
     }
 
     @GetMapping("/findAllApplications")
-    public ResponseEntity<List<ApplicationFormDto>> getAllApplications(){
-        Pageable pageable= PageRequest.of(0, 10);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<ApplicationFormDto>> getAllApplications(@RequestParam(defaultValue = "0")Integer pageNumber){
         return new ResponseEntity<>(applicationFormService
-                .findAllApplications(pageable)
+                .findAllApplications(pageNumber)
                 .stream()
                 .map(this::convertApplicationFormToDto)
-                .collect(Collectors.toList()), HttpStatus.OK);
+                .collect(Collectors.toList()), OK);
     }
 
-    @DeleteMapping("/deleteApplicationById/{id}")
-    public ResponseEntity<?> deleteApplicationById(Long id) throws ApplicationFormNotFoundException {
+    @DeleteMapping("/deleteApplicationById")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteApplicationById(@RequestParam("id") Long id) throws ApplicationFormNotFoundException {
         applicationFormService.deleteApplicationById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("Vacancy ID "+id+" has being deleted");
     }
 
     @DeleteMapping("/deleteAllApplications")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAllApplications() {
         applicationFormService.deleteAllApplications();
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("All vacancies has being deleted");
     }
 
 
 
     private ApplicationFormDto convertApplicationFormToDto(ApplicationForm applicationForm){
         ApplicationFormDto applicationFormDto=new ApplicationFormDto();
-
-//        applicationFormDto.setApplicationId(applicationForm.getApplicationId());
-        applicationFormDto.setFirstName(applicationForm.getFirstName());
-        applicationFormDto.setLastName(applicationForm.getLastName());
-        applicationFormDto.setEmail(applicationForm.getEmail());
-        applicationFormDto.setPhone(applicationForm.getPhone());
-        applicationFormDto.setLocation(applicationForm.getLocation());
-        applicationFormDto.setResumeUrl(applicationForm.getResumeUrl());
-        applicationFormDto.setCoverLetterUrl(applicationForm.getCoverLetterUrl());
         applicationFormDto.setJobTitle(applicationForm.getVacancy().getJobTitle());
-        applicationFormDto.setUsername(applicationForm.getVacancy().getAppUser().getUsername());
+        applicationFormDto.setFirstName(applicationForm.getTeacher().getFirstName());
+        applicationFormDto.setLastName(applicationForm.getTeacher().getLastName());
+        applicationFormDto.setEmail(applicationForm.getTeacher().getAppUser().getEmail());
+        applicationFormDto.setPhone(applicationForm.getTeacher().getAppUser().getMobile());
+        applicationFormDto.setLocation(applicationForm.getLocation());
         return applicationFormDto;
     }
 }

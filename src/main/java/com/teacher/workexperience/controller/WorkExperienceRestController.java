@@ -29,47 +29,36 @@ public class WorkExperienceRestController {
     @PostMapping("/saveWorkExperience")
     public ResponseEntity<NewWorkExperience> saveWorkExperience(@RequestBody NewWorkExperience newWorkExperience){
         WorkExperience workExperience=modelMapper.map(newWorkExperience, WorkExperience.class);
-
         WorkExperience post=workExperienceService.saveWorkExperience(workExperience);
-
         NewWorkExperience posted=modelMapper.map(post, NewWorkExperience.class);
-
         return new ResponseEntity<>(posted, HttpStatus.CREATED);
     }
 
-    @GetMapping("/findWorkExperienceById/{id}")
-    public ResponseEntity<WorkExperienceDto> getWorkExperienceById(@PathVariable(value = "id") Long id)
+    @GetMapping("/findWorkExperienceById")
+    public ResponseEntity<WorkExperienceDto> getWorkExperienceById(@RequestParam("id") Long id)
                                                             throws WorkExperienceNotFoundException {
-
         WorkExperience workExperience=workExperienceService.findWorkExperienceById(id);
-
-        WorkExperienceDto workExperienceDto=convertWorkExperienceToDto(workExperience);
-
-        return new ResponseEntity<>(workExperienceDto, HttpStatus.OK);
+        return new ResponseEntity<>(convertWorkExperienceToDto(workExperience), HttpStatus.OK);
     }
 
     @GetMapping("/findAllWorkExperiences")
-    public ResponseEntity<List<WorkExperienceDto>> getAllWorkExperiences(){
-        Pageable pageable= PageRequest.of(1, 10);
-
-        return new ResponseEntity<>(workExperienceService.findAllWorkExperience(pageable)
+    public ResponseEntity<List<WorkExperienceDto>> getAllWorkExperiences(@RequestParam(defaultValue = "0")Integer pageNumber){
+        return new ResponseEntity<>(workExperienceService.findAllWorkExperience(pageNumber)
                 .stream()
                 .map(this::convertWorkExperienceToDto)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteWorkExperienceById/{id}")
-    public ResponseEntity<?> deleteWorkExperienceById(@PathVariable(value = "id") Long id) throws WorkExperienceNotFoundException {
+    @DeleteMapping("/deleteWorkExperienceById")
+    public ResponseEntity<?> deleteWorkExperienceById(@RequestParam("id") Long id) throws WorkExperienceNotFoundException {
         workExperienceService.deleteWorkExperienceById(id);
-
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("Work Experience ID "+id+" has being deleted");
     }
 
     @DeleteMapping("/deleteAllWorkExperiences")
     public ResponseEntity<?> deleteAllWorkExperiences(){
         workExperienceService.deleteAllWorkExperience();
-
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("Work Experiences has being deleted");
     }
 
 

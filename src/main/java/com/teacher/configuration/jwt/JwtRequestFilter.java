@@ -33,17 +33,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String header = request.getHeader(HEADER_STRING);
-
         String username = null;
         String authToken = null;
 
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
-
             authToken=header.substring(7);
             try {
                 username = jwtUtil.extractUsername(authToken);
@@ -65,15 +62,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             if (jwtUtil.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = jwtUtil .getAuthenticationToken(authToken,
                         SecurityContextHolder.getContext().getAuthentication(), userDetails);
-
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
                 logger.info("authenticated user " + username + ", setting security context");
-
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-
         filterChain.doFilter(request, response);
     }
 }

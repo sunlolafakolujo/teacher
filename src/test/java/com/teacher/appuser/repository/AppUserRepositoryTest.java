@@ -91,7 +91,7 @@ class AppUserRepositoryTest {
         contact.setHouseNumber("2A");
         contact.setStreetName("Akinpetu Street Alagomeji");
         contact.setCity("Lagos Island");
-        contact.setLandMark("Algomeji Bus stop");
+        contact.setLandmark("Algomeji Bus stop");
         contact.setStateProvince("Lagos");
         contact.setCountry("Nigeria");
         List<Contact> contacts=new ArrayList<>();

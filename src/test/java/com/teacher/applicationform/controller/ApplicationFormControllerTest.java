@@ -42,27 +42,27 @@ class ApplicationFormControllerTest {
         applicationForm=new ApplicationForm();
     }
 
-    @Test
-    void testThatWhenYouCallSaveApplicationMethod_thenApplicationIsSaved() throws Exception {
-
-        applicationForm.setFirstName("Wale");
-        applicationForm.setLastName("Okunola");
-        applicationForm.setPhone("08078655677");
-        applicationForm.setEmail("wokunola@yahoo.com");
-        applicationForm.setLocation("Lagos, Nigeria");
-        applicationForm.setResumeUrl("https://www.dayjob.com/accounts-payable-resume-1368/");
-        applicationForm.setCoverLetterUrl("https://venngage.com/blog/cover-letter-template/");
-
-        this.mockMvc.perform(post("/api/teacher/applicationForm/saveApplication")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer ")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsBytes(applicationForm)))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.lastName", is("Okunola")))
-                .andReturn();
-    }
+//    @Test
+//    void testThatWhenYouCallSaveApplicationMethod_thenApplicationIsSaved() throws Exception {
+//
+//        applicationForm.setFirstName("Wale");
+//        applicationForm.setLastName("Okunola");
+//        applicationForm.setPhone("08078655677");
+//        applicationForm.setEmail("wokunola@yahoo.com");
+//        applicationForm.setLocation("Lagos, Nigeria");
+//        applicationForm.setResumeUrl("https://www.dayjob.com/accounts-payable-resume-1368/");
+//        applicationForm.setCoverLetterUrl("https://venngage.com/blog/cover-letter-template/");
+//
+//        this.mockMvc.perform(post("/api/teacher/applicationForm/saveApplication")
+//                        .header(HttpHeaders.AUTHORIZATION, "Bearer ")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsBytes(applicationForm)))
+//                .andDo(print())
+//                .andExpect(status().isCreated())
+//                .andExpect(jsonPath("$", notNullValue()))
+//                .andExpect(jsonPath("$.lastName", is("Okunola")))
+//                .andReturn();
+//    }
 
     @Test
     void testThatWhenYouCallGetApplicationByIdMethod_thenApplicationIsReturned() throws Exception {

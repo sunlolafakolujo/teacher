@@ -10,7 +10,7 @@ import java.util.List;
 public interface WorkExperienceService {
     WorkExperience saveWorkExperience(WorkExperience saveWorkExperience);
     WorkExperience findWorkExperienceById(Long id) throws WorkExperienceNotFoundException;
-    List<WorkExperience> findAllWorkExperience(Pageable pageable);
+    List<WorkExperience> findAllWorkExperience(Integer pageNumber);
     void deleteWorkExperienceById(Long id) throws WorkExperienceNotFoundException;
     void deleteAllWorkExperience();
 }

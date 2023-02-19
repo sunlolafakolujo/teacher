@@ -7,17 +7,23 @@ import com.teacher.appteacher.repository.TeacherRepository;
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;
+import com.teacher.image.model.Image;
 import com.teacher.staticdata.UserType;
 import com.teacher.userrole.exception.UserRoleNotFoundException;
 import com.teacher.userrole.model.UserRole;
 import com.teacher.userrole.repository.UserRoleRepository;
+import com.teacher.workexperience.model.WorkExperience;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 @Service
@@ -44,6 +50,7 @@ public class TeacherServiceImpl implements TeacherService{
             throw new AppUserNotFoundException("Mobile phone must be in one of these formats: " +
                     "10 or 11 digit, 0000 000 0000, 000 000 0000, 000-000-0000, 000-000-0000 ext0000");
         }
+        teacher.setAge(Period.between(teacher.getDateOfBirth(), LocalDate.now()).getYears());
         teacher.setTeacherCode("TCH".concat(String.valueOf(new Random().nextInt(100000))));
         teacher.getAppUser().setUserId("USER".concat(String.valueOf(new Random().nextInt(100000))));
         teacher.getAppUser().setPassword(passwordEncoder.encode(teacher.getAppUser().getPassword()));
@@ -84,6 +91,8 @@ public class TeacherServiceImpl implements TeacherService{
                 .orElseThrow(()->new TeacherNotFoundException("Teacher ID "+id+" Not Found"));
         if (Objects.nonNull(teacher.getAppUser().getContact()) && !"".equals(teacher.getAppUser().getContact())){
             savedTeacher.getAppUser().setContact(teacher.getAppUser().getContact());
+        }if (Objects.nonNull(teacher.getImage()) && !"".equals(teacher.getImage())){
+            savedTeacher.setImage(teacher.getImage());
         }
         return teacherRepository.save(savedTeacher);
     }

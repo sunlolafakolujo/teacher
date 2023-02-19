@@ -1,4 +1,4 @@
-package com.teacher.appuser.controller;
+package com.teacher.userrole.controller;
 
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.userrole.exception.UserRoleNotFoundException;
@@ -17,13 +17,13 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(path = "api/teacher/appUser")
 @AllArgsConstructor
-public class AppUserAddRoleToUserController {
+public class AddRoleToUserController {
     private final UserRoleService userRoleService;
 
     @PostMapping("/addRoleToUser")
     public ResponseEntity<?> addRoleToUser(@Valid @RequestBody AddRoleToUser addRoleToUser)
                                                               throws AppUserNotFoundException, UserRoleNotFoundException {
         userRoleService.addRoleToUser(addRoleToUser.getUsername(), addRoleToUser.getRoleName());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("Role "+addRoleToUser.getRoleName()+" has being granted to user "+addRoleToUser.getUsername());
     }
 }

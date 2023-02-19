@@ -9,14 +9,15 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface VacancyService {
-    Vacancy saveVacancy(Vacancy vacancy);
+    Vacancy saveVacancy(Vacancy vacancy) throws AppUserNotFoundException;
     Vacancy findVacancyById(Long id) throws VacancyNotFoundException;
-//    Vacancy findVacancyByJobId(String jobId) throws VacancyNotFoundException;
-    List<Vacancy> findVacancyByJobTitle(String jobTitle,Pageable pageable) throws VacancyNotFoundException;
-    List<Vacancy> findAllVacancies(Pageable pageable);
+    Vacancy findVacancyByJobCode(String jobCode) throws VacancyNotFoundException;
+    List<Vacancy> findVacancyByJobTitle(String jobTitle,Integer pageNumber) throws VacancyNotFoundException;
+    List<Vacancy> findAllVacanciesOrByEmailOrMobileOrUsernameOrUserId(String searchKey,Integer pageNumber) throws AppUserNotFoundException;
     Long countVacancy();
-//    List<Vacancy> findVacancyByUser(AppUser appUser, String username) throws AppUserNotFoundException;
     Vacancy updateVacancy(Vacancy vacancy, Long id) throws VacancyNotFoundException;
+    void deleteAllUserVacancies(Integer pageNumber) throws AppUserNotFoundException;
+    void deleteUserVacancyById(String jobCode) throws AppUserNotFoundException;
     void deleteVacancyById(Long id) throws VacancyNotFoundException;
     void deleteAllVacancies();
 }

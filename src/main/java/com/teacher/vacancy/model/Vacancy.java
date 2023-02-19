@@ -25,16 +25,10 @@ public class Vacancy extends BaseAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank(message = "Recruiter name is required")
-    private String recruiterName;
-
+    private String jobCode;
     private LocalDate publishedDate;
-
     private LocalDate closingDate;
-
     private String jobTitle;
-
     private String jobLocation;
 
     @Column(length = 1000000)
@@ -42,7 +36,6 @@ public class Vacancy extends BaseAudit {
 
     @Enumerated(EnumType.STRING)
     private JobType jobType;
-
     private String jobSchedule;
 
     @Column(length = 10000)
@@ -64,12 +57,7 @@ public class Vacancy extends BaseAudit {
     @Column(length = 600000)
     private String jobDetail;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private AppUser appUser;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "vacancy",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    List<ApplicationForm> applicationForms=new ArrayList<>();
 }

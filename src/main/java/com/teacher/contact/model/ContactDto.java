@@ -9,21 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactDto {
-
-//    @JsonIgnore
+    @JsonIgnore
     private Long id;
-
     private String streetNumber;
-
     private String streetName;
-
     private String city;
-
-    private String postZipCode;
-
-    private String landMark;
-
+    private String landmark;
     private String stateProvince;
-
     private String country;
 }

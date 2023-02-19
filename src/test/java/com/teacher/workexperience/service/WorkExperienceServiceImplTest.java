@@ -43,15 +43,10 @@ class WorkExperienceServiceImplTest {
     @Test
     void testThatYouCanMockSaveWorkExperienceMethod() {
         when(workExperienceRepository.save(workExperience)).thenReturn(workExperience);
-
         workExperienceService.saveWorkExperience(workExperience);
-
         ArgumentCaptor<WorkExperience> argumentCaptor=ArgumentCaptor.forClass(WorkExperience.class);
-
         Mockito.verify(workExperienceRepository, Mockito.times(1)).save(argumentCaptor.capture());
-
         WorkExperience capturedWorkExperience=argumentCaptor.getValue();
-
         assertEquals(capturedWorkExperience, workExperience);
     }
 
@@ -59,24 +54,18 @@ class WorkExperienceServiceImplTest {
     void testThatYoUCanMockFindWorkExperienceByIdMethod() throws WorkExperienceNotFoundException {
         Long id=2L;
         when(workExperienceRepository.findById(id)).thenReturn(Optional.of(workExperience));
-
         workExperienceService.findWorkExperienceById(id);
-
         Mockito.verify(workExperienceRepository, Mockito.times(1)).findById(id);
     }
 
     @Test
     void testThatYouCanMockFindAllWorkExperienceMethod() {
         List<WorkExperience> workExperiences=new ArrayList<>();
-
         Page<WorkExperience> experiencePage=new PageImpl<>(workExperiences);
-
-        Pageable pageable= PageRequest.of(0, 10);
-
+        Integer pageNumber=0;
+        Pageable pageable= PageRequest.of(pageNumber, 10);
         when(workExperienceRepository.findAll(pageable)).thenReturn(experiencePage);
-
-        workExperienceService.findAllWorkExperience(pageable);
-
+        workExperienceService.findAllWorkExperience(pageNumber);
         Mockito.verify(workExperienceRepository, Mockito.times(1)).findAll(pageable);
     }
 
@@ -84,19 +73,14 @@ class WorkExperienceServiceImplTest {
     void testThatYouCanMockDeleteWorkExperienceByIdMethod() throws WorkExperienceNotFoundException {
         Long id=2L;
         doNothing().when(workExperienceRepository).deleteById(id);
-
         workExperienceService.deleteWorkExperienceById(id);
-
         verify(workExperienceRepository, times(1)).deleteById(id);
     }
 
     @Test
     void testThatYouCanDeleteAllWorkExperienceMethod() {
-
         doNothing().when(workExperienceRepository).deleteAll();
-
         workExperienceService.deleteAllWorkExperience();
-
         verify(workExperienceRepository, times(1)).deleteAll();
     }
 }

@@ -13,29 +13,17 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class NewVacancy {
 
-    private String recruiterName;
-
     private String jobTitle;
-
+    private String jobCode;
     private String aboutUs;
-
     private JobType jobType;
-
     private String jobSchedule;
-
     private String jobLocation;
-
     private String keyResponsibility;
-
     private String skillRequirement;
-
     private String qualification;
-
     private LocalDate publishedDate;
-
     private LocalDate closingDate;
-
     private String messageToApplicant;
-
     private AppUser appUser;
 }

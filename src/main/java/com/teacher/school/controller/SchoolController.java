@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,19 +55,23 @@ public class SchoolController {
     }
 
     @GetMapping("/findSchool")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SchoolDto> getSchoolById(@RequestParam("id")Long id) throws SchoolNotFoundException {
         School school=schoolService.fetchById(id);
         return new ResponseEntity<>(convertSchoolToDto(school),OK);
     }
 
     @GetMapping("/findBySchoolId")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SchoolDto> getBySchoolId(@RequestParam("searchKey") String searchKey) throws SchoolNotFoundException {
         School school=schoolService.fetchBySchoolIdOrNameOrRcNumber(searchKey);
         return new ResponseEntity<>(convertSchoolToDto(school),OK);
     }
 
     @GetMapping("/findSchoolByEmailOrUsernameOrPhoneOrUserId")
-    public ResponseEntity<SchoolDto> getSchoolByEmailOrUsernameOrPhoneOrUserId(@RequestParam("searchKey") String searchKey) throws AppUserNotFoundException {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<SchoolDto> getSchoolByEmailOrUsernameOrPhoneOrUserId(@RequestParam("searchKey") String searchKey)
+                                                                                    throws AppUserNotFoundException {
         School school=schoolService.fetchByEmailOrUsernameOrPhoneOrUserId(searchKey);
         return new ResponseEntity<>(convertSchoolToDto(school),OK);
     }
@@ -80,6 +85,7 @@ public class SchoolController {
     }
 
     @PutMapping("/updateSchool")
+    @PreAuthorize("hasRole('SCHOOL')")
     public ResponseEntity<UpdateSchool> edit(@RequestBody UpdateSchool updateSchool,
                                              @RequestParam("id")Long id) throws SchoolNotFoundException {
         School school=modelMapper.map(updateSchool,School.class);
@@ -89,20 +95,18 @@ public class SchoolController {
     }
 
     @DeleteMapping("/deleteSchool")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteSchoolById(@RequestParam("id") Long id) throws SchoolNotFoundException {
         schoolService.deleteSchoolById(id);
         return ResponseEntity.ok().body("School ID "+id+" has being deleted");
     }
 
     @DeleteMapping("/deleteAllSchools")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAllSchools(){
         schoolService.deleteAllSchool();
         return ResponseEntity.ok().body("Schools has being deleted");
     }
-
-
-
-
 
 
     private SchoolDto convertSchoolToDto(School school){
@@ -119,7 +123,7 @@ public class SchoolController {
         schoolDto.setStreetNumber(school.getAppUser().getContact().getHouseNumber());
         schoolDto.setStreetName(school.getAppUser().getContact().getStreetName());
         schoolDto.setCity(school.getAppUser().getContact().getCity());
-        schoolDto.setLandmark(school.getAppUser().getContact().getLandMark());
+        schoolDto.setLandmark(school.getAppUser().getContact().getLandmark());
         schoolDto.setStateProvince(school.getAppUser().getContact().getStateProvince());
         schoolDto.setCountry(school.getAppUser().getContact().getCountry());
         schoolDto.setCacCertificate(school.getCacCertificate());
