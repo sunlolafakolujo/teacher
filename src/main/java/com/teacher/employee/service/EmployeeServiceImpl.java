@@ -1,6 +1,6 @@
 package com.teacher.employee.service;
 
-import com.teacher.appteacher.model.Teacher;
+
 import com.teacher.appuser.exception.AppUserNotFoundException;
 import com.teacher.appuser.model.AppUser;
 import com.teacher.appuser.repository.AppUserRepository;

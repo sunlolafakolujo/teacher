@@ -50,8 +50,9 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         mailMessage.setTo(to);
         mailMessage.setFrom(from);
         mailMessage.setSubject(subject);
-        mailMessage.setText("Dear "+appUser.getUsername()+",\n\n"+"Click the link to confirm registration: "+confirmUrl+
-                "\n\nIgnore this email if you did not signup for registration.\n Regards,\n Team FarmMart");
+        mailMessage.setText("Hi "+appUser.getUsername()+",\n\n"+"Thanks for registering an account with Logic Gate!\n" +
+                 "Before you get started, we'll need you to click on the link to verify your email: \n"+confirmUrl+
+                "\n\nIgnore this email if you did not signup for registration.\n Regards,\n Team Logic Gate");
         return mailMessage;
     }
 }

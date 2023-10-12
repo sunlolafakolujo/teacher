@@ -12,8 +12,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 @Entity
 @Getter
@@ -55,7 +57,7 @@ public class AppUser {
     @JoinTable(name = "app_user_user_roles",
     joinColumns = {@JoinColumn(name = "app_user_id", referencedColumnName = "id")},
     inverseJoinColumns = {@JoinColumn(name = "user_role_id", referencedColumnName = "id")})
-    private Collection<UserRole> userRoles=new HashSet<>();
+    private List<UserRole> userRoles=new ArrayList<>();
 
     @JsonIgnore
     @ToString.Exclude

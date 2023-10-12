@@ -1,23 +1,19 @@
 package com.teacher.configuration.authentication;
 
 
-import com.teacher.appuser.model.AppUser;
+import com.teacher.userrole.model.UserRole;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.List;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthResponse {
-    private final String username;
-    private final String token;
-
-    public AuthResponse(String username, String token) {
-        this.username = username;
-        this.token = token;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public String getToken() {
-        return this.token;
-    }
-
+    private String usernameOrEmailOrMobileOrUserId;
+    private String token;
+    private List<UserRole> userRoles;
 }

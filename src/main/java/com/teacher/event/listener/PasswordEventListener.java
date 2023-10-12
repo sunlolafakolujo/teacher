@@ -44,7 +44,7 @@ public class PasswordEventListener implements ApplicationListener<PasswordEvent>
         String from="fakolujos@gmail.com";
         String subject="Reset Password";
         String text="Dear "+appUser.getUsername()+",\n\n"+"Click on the link to reset your password "+link+
-                "\n\nIgnore this email if you did not initialize password reset"+"\n\n Regards,\n Team FarmMart";
+                "\n\nIgnore this email if you did not initiate password reset"+"\n\n Regards,\n Team FarmMart";
 
         SimpleMailMessage message=new SimpleMailMessage();
         message.setTo(to);

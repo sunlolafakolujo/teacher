@@ -6,6 +6,8 @@ import com.teacher.userrole.model.UserRole;
 import lombok.*;
 
 import java.util.Collection;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -20,5 +22,5 @@ public class NewAppUser {
     private String email;
     private String mobile;
     private Contact contact;
-    private Collection<UserRole> userRoles;
+    private List<UserRole> userRoles;
 }
